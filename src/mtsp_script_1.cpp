@@ -810,7 +810,7 @@ padre.indicador=0;
  INDICE=0;
  tope=pp[CIU].size()-1;
  
- cout <<"creo que el problema esta en inicializar las variables en repeticion" <<endl;
+ //cout <<"creo que el problema esta en inicializar las variables en repeticion" <<endl;
 
  // EMPIEZA REPETICION
  
@@ -957,6 +957,7 @@ std::vector<float> dos_tal;
  
   CIU=1;
   
+ cout << "DEPURANDO FALLOSssss"<<endl; cout<<endl;
   
   principal(puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
