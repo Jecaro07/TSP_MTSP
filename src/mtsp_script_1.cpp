@@ -7,6 +7,9 @@
 #include <stack>
 #include <algorithm>
 
+#include <fstream>
+#include <sstream>
+
 using namespace std;
  using std::vector;
 using namespace std;
@@ -38,36 +41,68 @@ struct nodo p;
 int contador;
 } ;
 
+
+void split(const string &s, char delim, vector<string> &elems) {
+    stringstream ss(s);
+    string item;
+    while (getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+}
+
+
+vector<string> split(const string &s, char delim) {
+    vector<string> elems;
+    split(s, delim, elems);
+    return elems;
+}
+
 void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,vector <int> &A, int &B,
  vector <vector<float>> &punto_final){
  
  int coordenadas,n_puntos,salir_b1=0,CAM=0;
   float pto;
 	
-	// COORDENADAS
-	do{		
-	cout << "Numero de coordenadas que manejamos (2/3): " << endl; 
-   cin >> coordenadas;		
-	}while(coordenadas!=3 && coordenadas!=2);
-   cout << "Coordenadas: " << coordenadas << endl;
-   
-   pp.resize(1); 
+string line; 
+    vector <string> words;
+	ifstream myfile;
+	myfile.open("mtsp_fallo.txt");
+	if (myfile.is_open()){
+	  
+	// COORDENADAS  
+   getline (myfile,line) ;
+		words = split(line,' ');
+		coordenadas=stoi(words[1]);
+     // cout << coordenadas<< '\n';  
+      words.clear();
+    //cout<<endl;
+    
+    pp.resize(1); 
    punto_final.resize(1);
    
    // PUNTO INICIAL
    pp[0].resize(1); 
    pp[0][0].resize(coordenadas); 
-   for(int j=0; j<coordenadas;j++){ 
-   cout << "Punto inicial; coordenada " << j+1 << " : " << endl; 
-	cin >> pto; 
-	pp[0][0][j]=pto; }// fin del for 
    
- while(salir_b1==0){  
+   getline (myfile,line) ;
+	words = split(line,' ');
+   for(int j=0; j<pp[0][0].size();j++){ 
+   pp[0][0][j]=stof(words[j+1]);
+   //cout << pp[0][0][j]<< ' ';
+	 }// fin del for 
+   //cout<<endl; 	
+   words.clear();
+   
+   
+   while(salir_b1==0){  
       
 	
 	// PUNTO FINAL
-	 cout << "Punto final (0 cancelar / 1 añadir): " << endl; 
-	 cin >> pto;
+	getline (myfile,line) ;
+	words = split(line,' ');
+	pto=stof(words[1]);
+	//cout<<pto<<endl; cout<<endl;
+	words.clear();
 	 if(pto==0){
 		salir_b1=1;
 	}
@@ -80,19 +115,27 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
     }
 		
 	punto_final[CAM].resize(coordenadas);
-	for(int j=0; j<coordenadas;j++){ 
-   cout << "Punto final; coordenada " << j+1 << " : " << endl; 
-	cin >> pto; 
 	
-	punto_final[CAM][j]=pto;
-	}// fin del for 
+	getline (myfile,line) ;
+	words = split(line,' ');
+   for(int j=0; j<punto_final[CAM].size();j++){ 
+   punto_final[CAM][j]=stof(words[j+1]);
+   //cout << punto_final[CAM][j]<< ' ';
+	 }// fin del for 
+   //cout<<endl; 	
+   words.clear();
+   
 	 }
 	
 	if(salir_b1==0){
 		
 		// CIUDADES INTERMEDIAS
-   cout << "Numero de ciudades intermedias (entero): " << endl; 
-   cin >> n_puntos;	
+   getline (myfile,line) ;
+	words = split(line,' ');	
+   n_puntos=stoi(words[1]);	
+     //cout<< n_puntos <<endl; cout<<endl;
+   words.clear();
+   getline (myfile,line) ;
    
    n_puntos=n_puntos+1;
    A.resize(CAM+1); A[CAM]=n_puntos;
@@ -100,13 +143,19 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
    
    
     // PUNTOS DE LA TRAYECTORIA
+
    for(int i=1; i<n_puntos;i++){
+	  getline (myfile,line) ;
+	  words = split(line,' ');
 	   pp[CAM][i].resize(coordenadas); // IMPORTANTE EL RESIZE
-	   for(int j=0; j<coordenadas;j++){   
-   	cout << "Punto de la trayectoria numero "<< i << " ; coordenada " << j+1 << " : " << endl; 
-	cin >> pto; 
-	pp[CAM][i][j]=pto;  
-   }} // fin de ambos for
+	   for(int j=0; j<coordenadas;j++){    
+		pp[CAM][i][j]=stof(words[j]); 
+		//cout << pp[CAM][i][j]<< ' ';
+		}
+		words.clear();
+		//cout<<endl;
+		} // fin de ambos for
+   //cout<<endl;
    
    CAM=CAM+1;
    pp.resize(CAM+1); 
@@ -116,23 +165,20 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 	
 	
 }
+
+	// NUMERO DE REPETICIONES  
+   getline (myfile,line) ;
+		words = split(line,' ');
+		cont_repeticion=stoi(words[1]);
+     //  cout << cont_repeticion<< '\n';  
+      words.clear();
+    //cout<<endl;
+    
+    myfile.close();	
 	
-   
-   
-   
-  
-  
-  
-  
-  
-	
-   
-  
-   
-   // NUMERO DE REPETICIONES DEL ALGORITMO
-   cout << "¿Cuántas repeticiones quieres hacer?: " << endl; 
-   cin >> cont_repeticion;		
-   
+	}
+	else{ cout << "Unable to open file"; 
+	} 
    B=coordenadas; // A=n_puntos;
  
  }

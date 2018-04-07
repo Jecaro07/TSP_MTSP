@@ -225,6 +225,3 @@ target_link_libraries(tsp_script ${catkin_LIBRARIES})
 add_executable(mtsp_script_1 src/mtsp_script_1.cpp)
 target_link_libraries(mtsp_script_1 ${catkin_LIBRARIES})
 
-add_executable(prueba_datos_mtsp src/prueba_datos_mtsp.cpp)
-target_link_libraries(prueba_datos_mtsp ${catkin_LIBRARIES})
-
