@@ -66,7 +66,7 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 string line; 
     vector <string> words;
 	ifstream myfile;
-	myfile.open("mtsp_fallo.txt");
+	myfile.open("mtsp_datos_2.txt");
 	if (myfile.is_open()){
 	  
 	// COORDENADAS  
@@ -1029,22 +1029,49 @@ std::vector<float> dos_tal;
 
   pedir_pantalla_f(pp, cont_repeticion,A, B, punto_final);
   
-  CIU=0;ccc=1;
-  
+
+  //for (int CIU=0;CIU<pp.size();CIU++){	
+  CIU=0;  
   principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
-  CIU=1;ccc=1;
-  
-  
-  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+ CIU=CIU+1;
+ 
+ principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
- cout<< "TAMAÑO DE A: " << A.size() << endl;
+ CIU=CIU+1;
+ 
+ principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
+  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
+ distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
+ 
+ CIU=CIU+1;
+ 
+ principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
+  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
+ distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
+//}
+
+  // AHORA ESTOY PROBANDO CON "mtsp_datos_2.txt" y me da fallo con más de 
+  // 2 ciudades intermedias
+  // TENGO QUE VER DONDE ESTA EL ERROR Y PONER PRINCIPAL EN BUCLE
+  
+  // Con 2 ciudades intermedias no da fallo; ponga en el orden que ponga
+  // la ruta más larga y la más corta 
+  
+ /* principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
+  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
+ distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
+ 
+ cout<< "TAMAÑO DE A: " << A.size() << endl;*/
   
  /* 
   // IMPORTANTE HACER EL RESIZE
