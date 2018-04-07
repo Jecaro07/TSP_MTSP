@@ -1213,8 +1213,10 @@ for (int i = 0; i < (A[0]); i++) {
 
 
     // Create the vertices for the points and lines
-    for (uint32_t ii = 0; ii < A.size(); ++ii){
-    for (uint32_t i = 0; i < (A[0]+1); ++i)
+    for (uint32_t ii = 0; ii < puntos_recorrido_def.size(); ++ii){
+   
+   // IDA 
+    for (uint32_t i = 0; i < puntos_recorrido_def[ii].size(); ++i)
     {
       geometry_msgs::Point p;
       p.x = (float)puntos_recorrido_def[ii][i][0] ;
@@ -1228,18 +1230,75 @@ for (int i = 0; i < (A[0]); i++) {
       po.points.push_back(p);
       line_strip.points.push_back(p);
      }
-     if(i==A[0]){
+     if(i==(puntos_recorrido_def[ii].size()-1)){
       pf.points.push_back(p);
       line_strip.points.push_back(p);
      }
-     if(i>0 && i<A[0]){
+     if(i>0 && i<(puntos_recorrido_def[ii].size()-1)){
       points.points.push_back(p);
       line_strip.points.push_back(p);
      }
-
     }
-
+    
+    // VUELTA
+    // Hay que poner este otro bucle para que vuelva desde el DESTINO 
+    // hasta el ORIGEN y a partir de ahi, recorra la siguiente ruta
+    // AHORA SE REPRESENTAN BIEN LAS RUTAS EN RVIZ
+    
+    for (uint32_t i = (puntos_recorrido_def[ii].size()); i > 0; --i)
+    {
+      geometry_msgs::Point p;
+      p.x = (float)puntos_recorrido_def[ii][i-1][0] ;
+      p.y = (float)puntos_recorrido_def[ii][i-1][1] ;
+      
+      if(B==3){
+     p.z = (float)puntos_recorrido_def[ii][i-1][2];
+	}
+	
+	if((i-1)==0){
+      po.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+     if((i-1)==(puntos_recorrido_def[ii].size()-1)){
+      pf.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+     if((i-1)>0 && (i-1)<(puntos_recorrido_def[ii].size()-1)){
+      points.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+    }
+    
   }// FIN DEFINITIVO FOR
+  
+  
+/*
+for (uint32_t i = 0; i < puntos_recorrido_def[1].size(); ++i)
+    {
+      geometry_msgs::Point p;
+      p.x = (float)puntos_recorrido_def[1][i][0] ;
+      p.y = (float)puntos_recorrido_def[1][i][1] ;
+      
+      if(B==3){
+     p.z = (float)puntos_recorrido_def[1][i][2];
+	}
+	
+	if(i==0){
+      po.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+     
+     if(i==(puntos_recorrido_def[1].size()-1)){
+      pf.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+     if(i>0 && i<(puntos_recorrido_def[1].size()-1)){
+      points.points.push_back(p);
+      line_strip.points.push_back(p);
+     }
+    }*/
+
+
 
 	marker_pub.publish(po);
 	marker_pub.publish(pf);
