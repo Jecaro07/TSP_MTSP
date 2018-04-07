@@ -376,7 +376,7 @@ float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector
 }
 
 
-struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,const vector<vector<float> > &dots,float dis,int counter){
+struct s_dev_hijo devuelve_hijo (int &CIU,int &ccc,int &B, struct nodo padre,const vector<vector<float> > &dots,float dis,int counter){
 	struct s_dev_hijo salida; 
     vector<vector<float> > aux;
     int flag; float dist,distancia;
@@ -385,6 +385,8 @@ struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,const vector<vector<f
    	//EMPIEZAN RESIZES
    	c.resize(2);
 	r1.resize(B); r2.resize(B); //numero de coordenadas
+	
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //5  VECES
 	
 	padre.camino.resize(padre.punto_sig.size());
 	padre.camino_activo.resize(padre.punto_sig.size());
@@ -417,16 +419,30 @@ struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,const vector<vector<f
 
 	}
 	
-	aux.resize(salida.p.camino_activo.size(), vector<float>(salida.p.camino_activo.size()));
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
+	
+	aux.resize(salida.p.camino_activo.size());
 
 	for(int i=0 ; i < salida.p.camino_activo.size() ; i++){ 
+		aux[i].resize(salida.p.camino_activo.size());
 	for(int j=0 ; j < salida.p.camino_activo.size() ; j++){
 	 aux[i][j]=1;
 	}}
 
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
+
+	
+	//cout<< "tamaño de escoge "<< ccc <<": "<<salida.p.escoge.size()<<endl; ccc=ccc+1;
+	// 2 2 1 0
+
 	salida.p.escoge=cut_matrix(aux,0,-1); 
 
+	cout<< "tamaño de escoge "<< ccc <<": "<<salida.p.escoge.size()<<endl; ccc=ccc+1;
+	// 2 2 1
+
 	flag=0;
+	
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //3  VECES
 
 		for(int i=0 ; i < salida.p.camino_activo.size() ; i++){
 		if(flag==0 && salida.p.camino_activo[i]==1){
@@ -439,6 +455,8 @@ struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,const vector<vector<f
 			
 		}
 		}
+		
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES	
 		
 		if(devuelve_activo(salida.p.camino_activo)==0){
 			salida.p.vivo=0;
@@ -464,12 +482,15 @@ struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,const vector<vector<f
     // DEVUELVO LA SALIDA
     salida.contador=counter;
    
+   
+   //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
+   
     return salida;
     
 }
 
 
-struct s_desg_nodo desglosa_nodo (int &B,struct nodo padre,const vector<vector<float> > &puntos2,float dis,int contador_dh){
+struct s_desg_nodo desglosa_nodo (int &CIU,int &ccc,int &B,struct nodo padre,const vector<vector<float> > &puntos2,float dis,int contador_dh){
 
 struct s_dev_hijo salida2;
 struct s_desg_nodo devuelto;
@@ -477,11 +498,13 @@ int salir,contador;
 
 salir=0; contador=1;
 
-
+// cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; // 4 VECES
 
  while(salir==0){
-
-	salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
+	 
+    //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //5  VECES
+	salida2=devuelve_hijo(CIU,ccc,B,padre,puntos2,dis,contador_dh);
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
 
 contador=contador+1;
 devuelto.a.push_back (salida2.h);
@@ -493,11 +516,15 @@ if(salida2.p.vivo==0){
 
 padre=salida2.p;
 contador_dh=salida2.contador;
-
+ 
+ //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
+ 
  }
 
 devuelto.p=padre;
 devuelto.contador=salida2.contador;
+
+// cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //3  VECES
 
 return devuelto;
 
@@ -572,7 +599,7 @@ for (int i = 0; i < salida_dn.a.size(); i++) {
 }
 
 
-void repeticion(int &CIU, int &B, int &salir,nodo &nodo_1,
+void repeticion(int &ccc,int &CIU, int &B, int &salir,nodo &nodo_1,
 vector<nodo> &nodo_desglosable,int &INDICE,float &distancia,
 vector< vector<float> > &puntos2, vector <float> &punto_final,
 s_desg_nodo &salida_dn, float &counter, vector<nodo> &v_n_maduros,
@@ -587,17 +614,23 @@ int &flag){
  nodo_1=nodo_desglosable[INDICE];  // en matlab pone nodo_desglosable[INDICE];
  distancia=nodo_1.distancia_recorrida;
  
+  //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; // 1 VEZ
  
  if(es_ultimo(B,nodo_desglosable[INDICE],puntos2,punto_final)>0){
  // no desgloso el nodo si está en el último nivel que quiero
 }
 
 else{
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //1  vez
 	
 	while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
-		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+	
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; // 3 veces
+	
+		salida_dn=desglosa_nodo(CIU,ccc,B,nodo_1,puntos2,distancia,counter);
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //2  veces	
 		counter=salida_dn.contador;
 		v_n_maduros.push_back(salida_dn.p);
 		nodo_1=salida_dn.a[0];
@@ -622,12 +655,16 @@ else{
 		salir=1;
 	} // FIN DEL IF
 				
+	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; // 2 veces
+				
 	} // FIN DEL WHILE
 	
-	
+  //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //0  veces
+
 	
 } // FIN DEL ELSE
 
+ //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; // 0 veces
 
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
@@ -655,7 +692,7 @@ else{
 	}// FIN DEL "FOR"
 	
 	 
- 
+ //cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //  0 veces
 // FIN "REPETICION"
 
 	
@@ -766,7 +803,7 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 	
 }
 
-void principal(vector<vector<vector<float>>> &puntos_recorrido_def,vector <float> &uno_tal,vector <float> &dos_tal, 
+void principal(int &ccc,vector<vector<vector<float>>> &puntos_recorrido_def,vector <float> &uno_tal,vector <float> &dos_tal, 
  vector< vector <vector<float>>> &pp, vector <float> &r2,
  vector <float> &c, vector <float> &r1, vector <float> &MINIMO,
  vector <float> &nodo_final, vector <float> &v, vector <int> &A, int &B,
@@ -814,14 +851,15 @@ padre.indicador=0;
 
  // EMPIEZA REPETICION
  
- for(int xz=0;xz<cont_repeticion;xz++){
  
- repeticion(CIU,B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
+
+ 
+ for(int xz=0;xz<cont_repeticion;xz++){
+ repeticion(ccc,CIU,B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
 pp[CIU], punto_final[CIU],salida_dn, counter, v_n_maduros,
 tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
 
 }
- 
 
 
 // EMPIEZA "BUSCA RECORRIDO"
@@ -910,7 +948,13 @@ for (int i=0;i<puntos_recorrido.size();i++){
 int main( int argc, char** argv )
 {
 
-int B,cont_repeticion;
+  ros::init(argc, argv, "points_and_lines");
+  ros::NodeHandle n;
+  ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
+  ros::Rate r(30);
+  float f = 0.0;
+
+int B,cont_repeticion,ccc;
 vector <int> A;
    vector<vector<float>> puntos,puntos3;
    vector <vector<vector<float>>> pp, puntos_recorrido_def;
@@ -946,20 +990,20 @@ std::vector<float> uno_tal;
 std::vector<float> dos_tal;
 
 
+
   pedir_pantalla_f(pp, cont_repeticion,A, B, punto_final);
   
-  CIU=0;
+  CIU=0;ccc=1;
   
-  principal(puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
-  CIU=1;
+  CIU=1;ccc=1;
   
- cout << "DEPURANDO FALLOSssss"<<endl; cout<<endl;
   
-  principal(puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
@@ -1058,11 +1102,7 @@ for (int i = 0; i < (A[0]); i++) {
 //FIN PRUEBAS
 */
 
-  ros::init(argc, argv, "points_and_lines");
-  ros::NodeHandle n;
-  ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
-  ros::Rate r(30);
-  float f = 0.0;
+
 
 
 
