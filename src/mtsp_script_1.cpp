@@ -389,6 +389,9 @@ struct s_dev_hijo devuelve_hijo (int &CIU,int &ccc,int &B, struct nodo padre,con
 	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //5  VECES
 	
 	padre.camino.resize(padre.punto_sig.size());
+	// cout<< "tamaño de punto_sig "<< ccc <<": "<<padre.punto_sig.size()<<endl; ccc=ccc+1;
+	//EMPIEZA SIENDO 2 Y DEBERIA EMPEZAR SIENDO 3 (CIU=1)
+	
 	padre.camino_activo.resize(padre.punto_sig.size());
 	padre.escoge.resize(padre.punto_sig.size());
 
@@ -404,6 +407,9 @@ struct s_dev_hijo devuelve_hijo (int &CIU,int &ccc,int &B, struct nodo padre,con
 	
 	if(salida.p.definido==1){}
 	else{
+	// cout<< "tamaño de punto_sig "<< ccc <<": "<<salida.p.punto_sig.size()<<endl; ccc=ccc+1;
+	//EMPIEZA SIENDO 2 Y DEBERIA EMPEZAR SIENDO 3 (CIU=1)
+
 		for(int i=0 ; i < salida.p.punto_sig.size() ; i++){
 			c[0]=salida.p.punto_act;
 			 c[1]=salida.p.punto_sig[i];
@@ -420,8 +426,10 @@ struct s_dev_hijo devuelve_hijo (int &CIU,int &ccc,int &B, struct nodo padre,con
 	}
 	
 	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
-	
+	aux.clear();
 	aux.resize(salida.p.camino_activo.size());
+    //cout<< "tamaño de camino_activo "<< ccc <<": "<<salida.p.camino_activo.size()<<endl; ccc=ccc+1;
+
 
 	for(int i=0 ; i < salida.p.camino_activo.size() ; i++){ 
 		aux[i].resize(salida.p.camino_activo.size());
@@ -430,14 +438,14 @@ struct s_dev_hijo devuelve_hijo (int &CIU,int &ccc,int &B, struct nodo padre,con
 	}}
 
 	//cout << "CIU: "<< CIU  << "; NUMERO "<< ccc <<endl; ccc=ccc+1; //4  VECES
-
+ 
 	
 	//cout<< "tamaño de escoge "<< ccc <<": "<<salida.p.escoge.size()<<endl; ccc=ccc+1;
 	// 2 2 1 0
 
 	salida.p.escoge=cut_matrix(aux,0,-1); 
 
-	cout<< "tamaño de escoge "<< ccc <<": "<<salida.p.escoge.size()<<endl; ccc=ccc+1;
+	//cout<< "tamaño de escoge "<< ccc <<": "<<salida.p.escoge.size()<<endl; ccc=ccc+1;
 	// 2 2 1
 
 	flag=0;
@@ -818,6 +826,9 @@ void principal(int &ccc,vector<vector<vector<float>>> &puntos_recorrido_def,vect
 uno_tal.resize(1);
 dos_tal.resize(pp[CIU].size()-1);
 
+//cout<< "Tamaño de dos_tal(CIU="<<  <<"):"<<dos_tal.size() <<endl;
+// AQUI NO ESTA EL PROBLEMA; CAMBIA DE 2 A 3 COMO DEBE SER (ENTRE CIUDADES)
+ 
  r2.resize(B); c.resize(1); 
  puntos_recorrido_def.resize(CIU+1);
 
@@ -830,20 +841,33 @@ uno_tal[0]=0;
 
 // DESGLOSA NODO
 
+padre.camino.clear();padre.camino_activo.clear();
+padre.escoge.clear();
+// ESTO NO HACE NADA
+
 padre.nivel=1;
 padre.definido=0;
 padre.distancia_recorrida=0;
 padre.punto_act=0;
 padre.indicador=0;
  padre.recorrido=uno_tal;
- padre.punto_sig=dos_tal; 
-
+ padre.punto_sig.clear();padre.punto_sig=dos_tal; 
+ // ESTO TAMPOCO HACE NADA
 
 // DATOS PREVIOS A "REPETICION" 
  counter=0;
   distancia=nodo_1.distancia_recorrida;
   salir=0; 
- nodo_desglosable.push_back(padre);
+ nodo_desglosable.clear();nodo_desglosable.push_back(padre);
+ 
+ //CLAVE: ESTABA AMONTONANDO SOBRE LOS NODOS DESGLOSABLES DEL OTRO
+ // CAMINO (CIU=0). 
+ // LOS QUITO CON "CLEAR" Y EMPIEZO CON EL PADRE QUE ESTOY DEFINIENDO
+ // EN (CIU=1), donde padre.punto_sig.size()=3 (más puntos quer al principio).
+ // Antes me quedaba sin memoria porque manejaba los datos de dimension 2 (2 CIUDADES
+ // INTERMEDIAS) de CIU=0.
+  
+ 
  INDICE=0;
  tope=pp[CIU].size()-1;
  
