@@ -860,12 +860,21 @@ padre.indicador=0;
   salir=0; 
  nodo_desglosable.clear();nodo_desglosable.push_back(padre);
  
+ 
  //CLAVE: ESTABA AMONTONANDO SOBRE LOS NODOS DESGLOSABLES DEL OTRO
  // CAMINO (CIU=0). 
  // LOS QUITO CON "CLEAR" Y EMPIEZO CON EL PADRE QUE ESTOY DEFINIENDO
  // EN (CIU=1), donde padre.punto_sig.size()=3 (más puntos quer al principio).
  // Antes me quedaba sin memoria porque manejaba los datos de dimension 2 (2 CIUDADES
  // INTERMEDIAS) de CIU=0.
+  
+   nodo_pre.clear(); nodo_final.clear(); aux.clear();
+ 
+ // TAMBIÉN TENÍA QUE HACER "CLEAR" CON ESTOS 3 VECTORES.
+ // USO "PUSH_BACK" CON ELLOS, Y TENGO QUE RESETEARLOS PARA QUE 
+ // QUE EMPIECEN A ACUMULAR DESDE EL PRINCIPIO DE CADA
+ // SCRIPT "PRINCIPAL" (Al principio de cada "CIU")
+  
   
  
  INDICE=0;
