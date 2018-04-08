@@ -66,7 +66,7 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 string line; 
     vector <string> words;
 	ifstream myfile;
-	myfile.open("mtsp_datos_2.txt");
+	myfile.open("mtsp_datos_3.txt");
 	if (myfile.is_open()){
 	  
 	// COORDENADAS  
@@ -823,6 +823,7 @@ void principal(int &ccc,vector<vector<vector<float>>> &puntos_recorrido_def,vect
  s_desg_nodo &salida_dn, float &counter, float &auxx, vector <float> &nodo_pre){  // definido en un buen lugar? (POSIBLES ERRORES)
 	
 	  // IMPORTANTE HACER EL RESIZE
+	int ffllaagg;
 	  
 	  dos_tal.reserve(2345);
 	  
@@ -914,9 +915,11 @@ tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
 
 // EMPIEZA "BUSCA RECORRIDO"
 
+ffllaagg=0;
+
 for (int i = 0; i < nodo_final.size(); i++) {
-	if(minimo(nodo_final)==nodo_final[i]){
-		vital=i;
+	if(minimo(nodo_final)==nodo_final[i] && ffllaagg==0){
+		vital=i; ffllaagg=1;
 	}// fin del if
 }// fin del "for"
 
@@ -1044,15 +1047,23 @@ vector<float> dos_tal;
   pedir_pantalla_f(pp, cont_repeticion,A, B, punto_final);
   
 
-  //for (int CIU=0;CIU<pp.size();CIU++){	
-  CIU=0;  ccc=1;
+ for (int lp=0;lp<(pp.size()-1);lp++){	
+  CIU=lp;  ccc=1;
   principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
+   CIU=CIU+1; 
+ }
  
- CIU=CIU+1; ccc=1;
+ //  YA HE PUESTO "principal" EN BUCLE
+ // OFICIALMENTE, HE ACABADO EL CASO CON LAS CIUDADES RESTRINGIDAS
  
+ // SOLO FALTARIA LIMPIAR TODOS LOS COMENTARIOS QUE ESTOY AÑADIENDO
+ // Y HACER MÁS PRUEBAS CON OTROS .txt
+ 
+ 
+ /*
  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
@@ -1070,8 +1081,8 @@ vector<float> dos_tal;
  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
- distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
-//}
+ distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre); */
+
 
   // AHORA ESTOY PROBANDO CON "mtsp_datos_2.txt" y me da fallo con más de 
   // 2 ciudades intermedias
