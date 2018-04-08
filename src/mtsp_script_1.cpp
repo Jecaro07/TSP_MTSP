@@ -1186,29 +1186,46 @@ for (int i = 0; i < (A[0]); i++) {
   while (ros::ok())
   {
 
-    visualization_msgs::Marker points ,pf, po, line_strip, line_list;
+    visualization_msgs::Marker points ,pf, po, line_list;
     
-    po.header.frame_id =pf.header.frame_id =points.header.frame_id = line_strip.header.frame_id = line_list.header.frame_id = "/my_frame";
-    po.header.stamp =pf.header.stamp =points.header.stamp = line_strip.header.stamp = line_list.header.stamp = ros::Time::now();
-    po.ns =pf.ns =points.ns = line_strip.ns = line_list.ns = "points_and_lines";
-    po.action =pf.action =points.action = line_strip.action = line_list.action = visualization_msgs::Marker::ADD;
-    po.pose.orientation.w =pf.pose.orientation.w =points.pose.orientation.w = line_strip.pose.orientation.w = line_list.pose.orientation.w = 1.0;
+    vector<visualization_msgs::Marker> line_strip;
+    line_strip.reserve(100);
+    line_strip.resize(puntos_recorrido_def.size());
+    
+    
+    po.header.frame_id =pf.header.frame_id =points.header.frame_id = line_list.header.frame_id = "/my_frame";
+    po.header.stamp =pf.header.stamp =points.header.stamp =  line_list.header.stamp = ros::Time::now();
+    po.ns =pf.ns =points.ns = line_list.ns = "points_and_lines";
+    po.action =pf.action =points.action =  line_list.action = visualization_msgs::Marker::ADD;
+    po.pose.orientation.w =pf.pose.orientation.w =points.pose.orientation.w =  line_list.pose.orientation.w = 1.0;
 
+
+ for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){
+	line_strip[i].header.frame_id = "/my_frame";
+    line_strip[i].header.stamp = ros::Time::now();
+    line_strip[i].ns = "points_and_lines";
+    line_strip[i].action = visualization_msgs::Marker::ADD;
+    line_strip[i].pose.orientation.w = 1.0;
+    }
 
 
     points.id = 0;
-    line_strip.id = 1;
-    line_list.id = 2;
-    pf.id = 3; po.id = 4;
-
+    line_list.id = 1;
+    pf.id = 2; po.id = 3;
+    
+    for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){ 
+    line_strip[i].id = i+4;
+      }
 
 
     points.type = visualization_msgs::Marker::POINTS; 
     po.type = visualization_msgs::Marker::POINTS;
     pf.type = visualization_msgs::Marker::POINTS;
-    line_strip.type = visualization_msgs::Marker::LINE_STRIP;
     line_list.type = visualization_msgs::Marker::LINE_LIST;
 
+	for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){ 
+		line_strip[i].type = visualization_msgs::Marker::LINE_STRIP;
+      }
 
 
     // POINTS markers use x and y scale for width/height respectively
@@ -1222,9 +1239,11 @@ for (int i = 0; i < (A[0]); i++) {
     pf.scale.y = 0.2;
 
     // LINE_STRIP/LINE_LIST markers use only the x component of scale, for the line width
-    line_strip.scale.x = 0.1;
-    line_list.scale.x = 0.1;
-
+    
+	
+	for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){ 
+		line_strip[i].scale.x = 0.1;
+      }
 
 
     // Ciudades intermedias verdes
@@ -1243,9 +1262,87 @@ for (int i = 0; i < (A[0]); i++) {
     
     
 
-    // Line strip is blue
-    line_strip.color.b = 1.0;
-    line_strip.color.a = 1.0;
+    // Line strip is blue   
+    for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){ 
+		
+		if(i==0){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 0;
+		line_strip[i].color.b = 0;
+		} 
+
+		if(i==1){
+		line_strip[i].color.r = 0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 0;
+		}
+
+		if(i==2){
+		line_strip[i].color.r = 0;
+		line_strip[i].color.g = 0;
+		line_strip[i].color.b = 1.0;
+		}
+		if(i==3){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 0;
+		}
+		if(i==4){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 0;
+		line_strip[i].color.b = 1.0;
+		}
+		if(i==5){
+		line_strip[i].color.r = 0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 1.0;
+		}
+		if(i==6){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 1.0;
+		}
+		
+		if(i==7){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 0.5;
+		line_strip[i].color.b = 0.5;
+		}
+		if(i==8){
+		line_strip[i].color.r = 0.5;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 0.5;
+		}
+		if(i==9){
+		line_strip[i].color.r = 0.5;
+		line_strip[i].color.g = 0.5;
+		line_strip[i].color.b = 1.0;
+		}
+		if(i==10){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 0.5;
+		}
+		if(i==11){
+		line_strip[i].color.r = 1.0;
+		line_strip[i].color.g = 0.5;
+		line_strip[i].color.b = 1.0;
+		}
+		if(i>11){  // COLOR CIAN
+		line_strip[i].color.r = 0;
+		line_strip[i].color.g = 1.0;
+		line_strip[i].color.b = 1.0;
+		}
+		
+	// FALTA PROBAR MUCHAS RUTAS SIMULTANEAS PARA VER COMO VARIAN LOS COLORES
+	// SE PODRIA MEJORAR PAR MAS DE 11 RUTAS (PARA AYUDAR A DISTINGUIR LOS
+	// CAMINOS, NADA MÁS)
+		
+		line_strip[i].color.a = 1.0;
+      }
+
+	// HAY QUE HACER UN "ROSLAUNCH" PARA QUE SE ABRA "RVIZ" CADA VEZ QUE
+	// RESUELVO MTSP; SI NO, LAS LINEAS DE DISTINTOS COLORES SE MEZCLAN
 
     // Line list is red
     line_list.color.r = 1.0;
@@ -1269,15 +1366,15 @@ for (int i = 0; i < (A[0]); i++) {
 	
 	if(i==0){
       po.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
      if(i==(puntos_recorrido_def[ii].size()-1)){
       pf.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
      if(i>0 && i<(puntos_recorrido_def[ii].size()-1)){
       points.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
     }
     
@@ -1298,15 +1395,15 @@ for (int i = 0; i < (A[0]); i++) {
 	
 	if((i-1)==0){
       po.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
      if((i-1)==(puntos_recorrido_def[ii].size()-1)){
       pf.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
      if((i-1)>0 && (i-1)<(puntos_recorrido_def[ii].size()-1)){
       points.points.push_back(p);
-      line_strip.points.push_back(p);
+      line_strip[ii].points.push_back(p);
      }
     }
     
@@ -1344,7 +1441,10 @@ for (uint32_t i = 0; i < puntos_recorrido_def[1].size(); ++i)
 	marker_pub.publish(po);
 	marker_pub.publish(pf);
     marker_pub.publish(points);
-    marker_pub.publish(line_strip);
+    
+    for(uint32_t i=0; i<puntos_recorrido_def.size(); i++){ 
+		marker_pub.publish(line_strip[i]);
+      }
 
     r.sleep();
 
