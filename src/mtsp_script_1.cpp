@@ -823,14 +823,28 @@ void principal(int &ccc,vector<vector<vector<float>>> &puntos_recorrido_def,vect
  s_desg_nodo &salida_dn, float &counter, float &auxx, vector <float> &nodo_pre){  // definido en un buen lugar? (POSIBLES ERRORES)
 	
 	  // IMPORTANTE HACER EL RESIZE
-uno_tal.resize(1);
-dos_tal.resize(pp[CIU].size()-1);
+	  
+	  dos_tal.reserve(2345);
+	  
+// IMPORTANTE: USAR UN RESERVE GORDO.
+// Por defecto, la capacidad del vector que creo es el tamaño del primer resize
+// que le hago al vector. RESERVE me dice el número de elementos que puede contener
+// "dos_tal". Con 2345, puedo manejar el numero de ciudades intermedias que
+//  me de la gana sin riesgo de quedarme sin memoria.
+	  
+//uno_tal.clear(); // NO USAR SWAP
+//dos_tal.clear(); // NO USAR SWAP
+// ME AHORRO HACER "CLEAR": CON EL RESIZE AJUSTO EL TAMAÑO SIN PROBLEMAS.
+// AUNQUE EL VECTOR QUEDE LLENO, MÁS ADELANTE SE MODIFICAN SUS
+// VALORES EN EL TAMAÑO QUE HE RESERVADO CON "RESIZE".
 
-//cout<< "Tamaño de dos_tal(CIU="<<  <<"):"<<dos_tal.size() <<endl;
-// AQUI NO ESTA EL PROBLEMA; CAMBIA DE 2 A 3 COMO DEBE SER (ENTRE CIUDADES)
+uno_tal.resize(1);
+dos_tal.resize(pp[CIU].size()-1); // (pp[CIU].size()-1)=5
+	
  
  r2.resize(B); c.resize(1); 
  puntos_recorrido_def.resize(CIU+1);
+
 
 
 for (int j=0;j<pp[CIU].size();j++){
@@ -1022,8 +1036,8 @@ float distancia;
 int contador_dh=1;
 vector<nodo> a;
 
-std::vector<float> uno_tal;
-std::vector<float> dos_tal;
+vector<float> uno_tal;
+vector<float> dos_tal;
 
 
 
@@ -1031,27 +1045,27 @@ std::vector<float> dos_tal;
   
 
   //for (int CIU=0;CIU<pp.size();CIU++){	
-  CIU=0;  
+  CIU=0;  ccc=1;
   principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
- CIU=CIU+1;
+ CIU=CIU+1; ccc=1;
  
  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
- CIU=CIU+1;
+ CIU=CIU+1; ccc=1;
  
  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
  
- CIU=CIU+1;
+ CIU=CIU+1; ccc=1;
  
  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
