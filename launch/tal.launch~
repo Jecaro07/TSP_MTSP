@@ -1,0 +1,7 @@
+<launch>
+
+
+<node pkg="rviz" type="rviz" name="rviz" output="screen" args="-f my_frame" />
+<node pkg="TSP_MTSP" type="tsp" name="mtsp_script_1" output="screen" />
+
+</launch>
