@@ -66,7 +66,7 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 string line; 
     vector <string> words;
 	ifstream myfile;
-	myfile.open("mtsp_datos_3.txt");
+	myfile.open("mtsp_datos_2.txt");
 	if (myfile.is_open()){
 	  
 	// COORDENADAS  
