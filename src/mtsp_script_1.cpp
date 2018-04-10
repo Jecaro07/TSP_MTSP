@@ -57,7 +57,7 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
-void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,vector <int> &A, int &B,
+void pedir_pantalla_f(int &n_aux,vector<vector<float>> &p_aux,vector <vector<vector<float>>> &pp, int &cont_repeticion,vector <int> &A, int &B,
  vector <vector<float>> &punto_final){
  
  int coordenadas,n_puntos,salir_b1=0,CAM=0;
@@ -66,7 +66,7 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 string line; 
     vector <string> words;
 	ifstream myfile;
-	myfile.open("mtsp_datos_3.txt");
+	myfile.open("mtsp_datos_2.txt");
 	if (myfile.is_open()){
 	  
 	// COORDENADAS  
@@ -77,11 +77,11 @@ string line;
       words.clear();
     //cout<<endl;
     
-    pp.resize(1); 
+   pp.reserve(100); pp.resize(1); 
    punto_final.resize(1);
    
    // PUNTO INICIAL
-   pp[0].resize(1); 
+   pp[0].reserve(100); pp[0].resize(1); 
    pp[0][0].resize(coordenadas); 
    
    getline (myfile,line) ;
@@ -109,7 +109,7 @@ string line;
 	else{
 		
 	if(CAM>0){ 
-    pp[CAM].resize(1); 
+    pp[CAM].reserve(100); pp[CAM].resize(1); 
     pp[CAM][0].resize(coordenadas); 
 	pp[CAM][0]=pp[0][0];  
     }
@@ -165,7 +165,36 @@ string line;
 	
 	
 }
+	// AÑADO CIUDADES AUXILIARES?
+	getline (myfile,line) ;
+		words = split(line,' ');
+		pto=stoi(words[1]);
+     //  cout << cont_repeticion<< '\n';  
+      words.clear();
+      
+      
+      // CIUDADES AUXILIARES
+	if(pto==1){
+		
+		getline (myfile,line) ;
+		words = split(line,' ');
+		n_aux=stoi(words[1]);
+     //  cout << cont_repeticion<< '\n';  
+      words.clear(); p_aux.resize(n_aux);
+      
+      for(int i=0;i<p_aux.size();i++){
+		 getline (myfile,line) ;
+		 words = split(line,' ');
+		p_aux[i].resize(coordenadas);
+		for(int j=0;j<coordenadas;j++){
+			p_aux[i][j]=stof(words[j]);
+			
+		}
+		words.clear();
+		}
 
+	}// END_IF
+	
 	// NUMERO DE REPETICIONES  
    getline (myfile,line) ;
 		words = split(line,' ');
@@ -813,7 +842,7 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 
 void principal(int &ccc,vector<vector<vector<float>>> &puntos_recorrido_def,vector <float> &uno_tal,vector <float> &dos_tal, 
  vector< vector <vector<float>>> &pp, vector <float> &r2,
- vector <float> &c, vector <float> &r1, vector <float> &MINIMO,
+ vector <float> &c, vector <float> &r1, vector <vector <float>> &MINIMO,
  vector <float> &nodo_final, vector <float> &v, vector <int> &A, int &B,
   int &cont_repeticion, int &tope, int &INDICE, int &salir,
   int &vital, int &flag, int &CIU, float &errorr, bool &c11,bool &c1,
@@ -890,7 +919,7 @@ padre.indicador=0;
  // QUE EMPIECEN A ACUMULAR DESDE EL PRINCIPIO DE CADA
  // SCRIPT "PRINCIPAL" (Al principio de cada "CIU")
   
-	MINIMO.clear();
+	//MINIMO.clear();
 	
  // PASABA LO MISMO CON MINIMO: ME QUEDABA CON LA DISTANCIA MINIMA DE 
  // LA PRIMERA INTERVENCIÓN DE "PRINCIPAL" (CIU=0)
@@ -915,7 +944,7 @@ tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
 
 // EMPIEZA "BUSCA RECORRIDO"
 
-ffllaagg=0;
+ffllaagg=0; MINIMO.resize(CIU+1);
 
 for (int i = 0; i < nodo_final.size(); i++) {
 	if(minimo(nodo_final)==nodo_final[i] && ffllaagg==0){
@@ -923,7 +952,7 @@ for (int i = 0; i < nodo_final.size(); i++) {
 	}// fin del if
 }// fin del "for"
 
-MINIMO.push_back(minimo(nodo_final));
+MINIMO[CIU].push_back(minimo(nodo_final));
 
 errorr=pow(10,-4);
 
@@ -991,7 +1020,7 @@ for (int i=0;i<puntos_recorrido.size();i++){
    
 // IMPRIMO RESULTADOS POR PANTALLA   
        
- imprimir_resultados(cont_repeticion,A[CIU],B,puntos_recorrido,pp[CIU],MINIMO,
+ imprimir_resultados(cont_repeticion,A[CIU],B,puntos_recorrido,pp[CIU],MINIMO[CIU],
    aux,vital);
 	
 }
@@ -1007,20 +1036,20 @@ int main( int argc, char** argv )
   ros::Rate r(30);
   float f = 0.0;
 
-int B,cont_repeticion,ccc;
-vector <int> A;
+int B,cont_repeticion,ccc,vital2,n_aux;
+vector <int> A,A_RES;
    vector<vector<float>> puntos,puntos3;
-   vector <vector<vector<float>>> pp, puntos_recorrido_def;
-   vector <vector<float>> punto_final;
+   vector <vector<vector<float>>> pp,p_res, puntos_recorrido_def;
+   vector <vector<float>> punto_final,p_aux;
   
 vector<vector<float>> puntos_recorrido;
 s_dev_hijo salida,salida2;
 s_desg_nodo salida_dn;
 nodo padre, nodo_1;
-vector<float> v,r1,r2,c;
+vector<float> v,r1,r2,c,min_val,MINIMO_RES;
 
 // VARIABLES DE "REPETICION"
-int INDICE,flag,fin,tope;
+int INDICE,flag,fin,tope,bandera;
 float auxx,counter;
 vector<float> nodo_pre, nodo_final;
 //
@@ -1029,7 +1058,7 @@ vector<float> nodo_pre, nodo_final;
 int vital, CIU;
 bool c11, c1,c2,c3;
 float errorr;
-vector<float> MINIMO;
+vector <vector<float>> MINIMO;
 vector<nodo> aux;
 nodo aux_var;
 vector<nodo> v_n_maduros, nodo_desglosable;
@@ -1044,8 +1073,8 @@ vector<float> dos_tal;
 
 
 
-  pedir_pantalla_f(pp, cont_repeticion,A, B, punto_final);
-  
+  pedir_pantalla_f(n_aux,p_aux,pp, cont_repeticion,A, B, punto_final);
+  p_res.reserve(100); p_res=pp;
 
  for (int lp=0;lp<(pp.size()-1);lp++){	
   CIU=lp;  ccc=1;
@@ -1056,142 +1085,164 @@ vector<float> dos_tal;
    CIU=CIU+1; 
  }
  
- //  YA HE PUESTO "principal" EN BUCLE
- // OFICIALMENTE, HE ACABADO EL CASO CON LAS CIUDADES RESTRINGIDAS
+ cout << "NUMERO DE CIUDADES: "<< MINIMO.size() <<endl;
+  cout << "COMPONENTES DE MINIMO: "<< MINIMO[0].size() <<endl;
+  
+  min_val.reserve(100); // NO REPETIR
+  min_val.resize(MINIMO.size()); // NO REPETIR
+  
+  for (int i=0; i<min_val.size() ;i++){
+	  min_val[i]=MINIMO[i][0];
+	cout<< min_val[i] << endl;  
+  
+  
+    MINIMO_RES.reserve(100); A_RES.reserve(100);// NO REPETIR
+  MINIMO_RES=min_val;  A_RES=A;  // NO REPETIR
+  
+  }
+  cout << endl;
+  bandera=0; 
+  for (int i=0; i<min_val.size() ;i++){
+	  if(minimo(min_val)==MINIMO[i][0] && bandera==0){
+		  bandera=1; vital2=i;
+	  } 
+  
+  }
+  cout<< vital2 << endl; cout<<endl;
+  
+  // IMPRIMIR PUNTOS AUXILIARES
+  for (int i=0; i<p_aux.size() ;i++){
+	for (int j=0; j<p_aux[i].size() ;j++){
+	
+	cout<< p_aux[i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
+  
+  //IMPRIMIR LA MATRIZ PP[VITAL] ANTES DE MODIFICARLA
+  for (int i=0; i<pp[vital2].size() ;i++){
+	for (int j=0; j<pp[vital2][i].size() ;j++){
+	
+	cout<< pp[vital2][i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
+  
+  //IMPRIMIR A (numero de ciudades) ANTES DE MODIFICARLA
+  for (int i=0; i<A.size() ;i++){	
+	cout<< A[i] << " ";	
+  }
+  cout<<endl;cout<<endl;
+  
+    // CAMBIAR
+    A[vital2]=A[vital2]+1;
+   pp[vital2].resize(A[vital2]); // IMPORTANTE EL RESIZE 
+   pp[vital2][A[vital2]-1]=p_aux[0];
  
- // SOLO FALTARIA LIMPIAR TODOS LOS COMENTARIOS QUE ESTOY AÑADIENDO
- // Y HACER MÁS PRUEBAS CON OTROS .txt
- 
- 
- /*
- principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
+ //IMPRIMIR LA MATRIZ PP[VITAL] DESPUES DE MODIFICARLA
+  for (int i=0; i<pp[vital2].size() ;i++){
+	for (int j=0; j<pp[vital2][i].size() ;j++){
+	
+	cout<< pp[vital2][i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
+  
+  //IMPRIMIR A (numero de ciudades) DESPUES DE MODIFICARLA
+  for (int i=0; i<A.size() ;i++){	
+	cout<< A[i] << " ";	
+  }
+  cout<<endl;cout<<endl;
+  
+   // HASTA AQUI TODO ESTA BIEN
+  
+  cout<< "AHORA VAMOS A VOLVER A RESOLVER PRINCIPAL"  <<endl;
+  
+  for (int lp=0;lp<(pp.size()-1);lp++){	
+  CIU=lp;  ccc=1;
+  principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
   cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
   aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
  distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
- 
- CIU=CIU+1; ccc=1;
- 
- principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
-  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
-  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
- distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
- 
- CIU=CIU+1; ccc=1;
- 
- principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
-  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
-  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
- distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre); */
+   CIU=CIU+1; 
+ }
 
-
-  // AHORA ESTOY PROBANDO CON "mtsp_datos_2.txt" y me da fallo con más de 
-  // 2 ciudades intermedias
-  // TENGO QUE VER DONDE ESTA EL ERROR Y PONER PRINCIPAL EN BUCLE
+cout << "NUMERO DE CIUDADES: "<< MINIMO.size() <<endl;
+  cout << "COMPONENTES DE MINIMO: "<< MINIMO[0].size() <<endl;
   
-  // Con 2 ciudades intermedias no da fallo; ponga en el orden que ponga
-  // la ruta más larga y la más corta 
+  //min_val.reserve(100); // NO REPETIR
+  //min_val.resize(MINIMO.size()); // NO REPETIR
   
- /* principal(ccc,puntos_recorrido_def,uno_tal,dos_tal,pp,r2,c,r1,MINIMO,nodo_final,v,A, B,
-  cont_repeticion,tope, INDICE,salir,vital,flag, CIU, errorr, c11,c1,c2,c3,
-  aux,aux_var,puntos_recorrido,nodo_desglosable,v_n_maduros,padre,
- distancia,nodo_1,punto_final,salida_dn, counter, auxx, nodo_pre);
- 
- cout<< "TAMAÑO DE A: " << A.size() << endl;*/
+  for (int i=0; i<min_val.size() ;i++){
+	  min_val[i]=MINIMO[i][0];
+	cout<< min_val[i] << endl;  
   
- /* 
-  // IMPORTANTE HACER EL RESIZE
-uno_tal.resize(1);
-dos_tal.resize(pp[0].size()-1);
- r2.resize(B); c.resize(1); 
-for (int j=0;j<pp[0].size();j++){
-dos_tal[j]=j+1;
-}
-uno_tal[0]=0;
-// DESGLOSA NODO
-padre.nivel=1;
-padre.definido=0;
-padre.distancia_recorrida=0;
-padre.punto_act=0;
-padre.indicador=0;
- padre.recorrido=uno_tal;
- padre.punto_sig=dos_tal; 
-// DATOS PREVIOS A "REPETICION" 
- counter=0;
-  distancia=nodo_1.distancia_recorrida;
-  salir=0; 
- nodo_desglosable.push_back(padre);
- INDICE=0;
- tope=pp[0].size()-1;
- 
- // EMPIEZA REPETICION
- 
- for(int xz=0;xz<cont_repeticion;xz++){
- 
- repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
-pp[0], punto_final[0],salida_dn, counter, v_n_maduros,
-tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
-}
-// EMPIEZA "BUSCA RECORRIDO"
-for (int i = 0; i < nodo_final.size(); i++) {
-	if(minimo(nodo_final)==nodo_final[i]){
-		vital=i;
-	}// fin del if
-}// fin del "for"
-MINIMO.push_back(minimo(nodo_final));
-errorr=pow(10,-4);
-for(int i=0; i<nodo_desglosable.size(); i++){
+  }
+  
+  cout << endl;
+  bandera=0; 
+  for (int i=0; i<min_val.size() ;i++){
+	  if(minimo(min_val)==MINIMO[i][0] && bandera==0){
+		  bandera=1; vital2=i;
+	  } 
+  
+  }
+  cout<< vital2 << endl; cout<<endl;
+  
+  // IMPRIMIR PUNTOS AUXILIARES
+  for (int i=0; i<p_aux.size() ;i++){
+	for (int j=0; j<p_aux[i].size() ;j++){
 	
-	distancia=norma(resta(punto_final[0],cut_matrix(pp[0],nodo_desglosable[i].punto_act,-1)));
-	
-	c11= nodo_desglosable[i].punto_sig.size()==0;
-	c1= nodo_desglosable[i].nivel==(tope+1); 
-	c2=distancia-(nodo_final[vital]-nodo_pre[vital])<errorr;
-	c3=nodo_desglosable[i].distancia_recorrida==nodo_pre[vital];
-	
-	if (c1 && c2 && c3){		
-		aux.push_back(nodo_desglosable[i]);	  
-	}// fin del if
-	
-}// fin del for
-if(aux.size()>1){
-	aux_var=aux[0];
-	aux.clear();
-	aux.push_back(aux_var);
-}
-// EN CUALQUIER CASO, AUX TENDRÁ DIMENSIÓN 1
-  cout << endl;	
-  cout << "RECORRIDO CIUDADES INTERMEDIAS: " << endl;
-	for (int j = 1; j < aux[0].recorrido.size(); j++) {
-            cout << aux[0].recorrido[j] << " ";
-        }   
-  cout << endl;cout << endl;
+	cout<< p_aux[i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
   
+  //IMPRIMIR LA MATRIZ PP[VITAL] ANTES DE MODIFICARLA
+  for (int i=0; i<pp[vital2].size() ;i++){
+	for (int j=0; j<pp[vital2][i].size() ;j++){
+	
+	cout<< pp[vital2][i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
   
-  // AHORA SOLO ME FALTA VOLCAR EN "PUNTOS_RECORRIDO" 
-  // LOS PUNTOS EN EL ORDEN EN EL QUE SE UNIRÁN EN RVIZ (puntos2(ordenado) + punto_final)
-puntos_recorrido.resize(A[0]+1);
-for (int i = 0; i < (A[0]); i++) {
-	puntos_recorrido[i].resize(B);
-	for (int j = 0; j < (B); j++) {
-		puntos_recorrido[i][j]=pp[0][aux[0].recorrido[i]][j];
-		}
-        }
-                
-        puntos_recorrido[A[0]].resize(B); 
-        for (int j = 0; j < (B); j++) {
-		puntos_recorrido[A[0]][j]=punto_final[0][j];
-		}  
-   
-// IMPRIMO RESULTADOS POR PANTALLA   
-       
- imprimir_resultados(cont_repeticion,A[0],B,puntos_recorrido,pp[0],MINIMO,
-   aux,vital);
-       
-//FIN PRUEBAS
-*/
+  //IMPRIMIR A (numero de ciudades) ANTES DE MODIFICARLA
+  for (int i=0; i<A.size() ;i++){	
+	cout<< A[i] << " ";	
+  }
+  cout<<endl;cout<<endl;
+  
+  //vector MINIMO_RES
+  for (int i=0; i<MINIMO_RES.size() ;i++){	
+	cout<< MINIMO_RES[i] << " ";	
+  }
+  cout<<endl;cout<<endl;
+
+  //IMPRIMIR LA MATRIZ P_res ANTES DE MODIFICARLA
+for (int i=0; i<p_res[vital2].size() ;i++){
+	for (int j=0; j<p_res[vital2][i].size() ;j++){
+	
+	cout<< p_res[vital2][i][j] << " ";
+	}
+	cout<<endl;
+  }
+  cout<<endl;
 
 
 
+//											//
+//											//
+//											//
+//											//
+//											//
+//											//
+//											//
 
 
   while (ros::ok())
