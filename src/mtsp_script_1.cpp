@@ -41,6 +41,7 @@ struct nodo p;
 int contador;
 } ;
 
+std::string input_file = "";
 
 void split(const string &s, char delim, vector<string> &elems) {
     stringstream ss(s);
@@ -66,7 +67,7 @@ void pedir_pantalla_f(vector <vector<vector<float>>> &pp, int &cont_repeticion,v
 string line; 
     vector <string> words;
 	ifstream myfile;
-	myfile.open("mtsp_datos_2.txt");
+	myfile.open(input_file);
 	if (myfile.is_open()){
 	  
 	// COORDENADAS  
@@ -1000,7 +1001,11 @@ for (int i=0;i<puntos_recorrido.size();i++){
 
 int main( int argc, char** argv )
 {
-
+	if(argc < 2){
+		std::cout << "Not enough input arguments" << std::endl;
+		return -1;
+	}
+	input_file = argv[1];
   ros::init(argc, argv, "points_and_lines");
   ros::NodeHandle n;
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
