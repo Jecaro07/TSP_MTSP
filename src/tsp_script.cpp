@@ -786,7 +786,9 @@ puntos={
 
 punto_final={-5,9};*/
 
-
+for(int yy=0;yy<8;yy++){
+	
+	
 // IMPORTANTE HACER EL RESIZE
 uno_tal.resize(1);
 dos_tal.resize(puntos.size()-1);
@@ -851,22 +853,22 @@ errorr=pow(10,-4);
 
 for(int i=0; i<nodo_desglosable.size(); i++){
  for (int j=0; j<nodo_desglosable[i].punto_sig.size();j++){
-	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< nodo_desglosable[i].punto_sig[j]  << endl;
+	//cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< nodo_desglosable[i].punto_sig[j]  << endl;
 }}
 cout<<endl;
 
 for(int i=0; i<nodo_desglosable.size(); i++){
-	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< nodo_desglosable[i].distancia_recorrida << endl;
+	//cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< nodo_desglosable[i].distancia_recorrida << endl;
 }
 cout<<endl;
 
 for(int i=0; i<nodo_final.size(); i++){
-	cout<< "Componente "<< i <<" de NODO FINAL: "<< nodo_final[i]  << endl;
+	//cout<< "Componente "<< i <<" de NODO FINAL: "<< nodo_final[i]  << endl;
 }
 cout<<endl;
 
 for(int i=0; i<nodo_pre.size(); i++){
-	cout<< "Componente "<< i <<" de NODO PRE: "<< nodo_pre[i]  << endl;
+	//cout<< "Componente "<< i <<" de NODO PRE: "<< nodo_pre[i]  << endl;
 }
 cout<<endl;
 // FIN DEPURAR
@@ -889,12 +891,12 @@ for(int i=0; i<nodo_desglosable.size(); i++){
 // DEPURAR
 for(int i=0; i<aux.size(); i++){
  for (int j=0; j<aux[i].punto_sig.size();j++){
-	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< aux[i].punto_sig[j]  << endl;
+	//cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< aux[i].punto_sig[j]  << endl;
 }}
 cout<<endl;
 
 for(int i=0; i<aux.size(); i++){
-	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< aux[i].distancia_recorrida << endl;
+	//cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< aux[i].distancia_recorrida << endl;
 }
 cout<<endl;
 
@@ -941,7 +943,8 @@ for (int i = 0; i < (A); i++) {
  imprimir_resultados(cont_repeticion,A,B,puntos_recorrido,puntos,MINIMO,
    aux,vital);
        
-       
+ 
+}      
 //FIN PRUEBAS
 /*
   ros::init(argc, argv, "tsp_script");
