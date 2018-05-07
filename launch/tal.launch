@@ -1,0 +1,7 @@
+<launch>
+
+
+<node pkg="rviz" type="rviz" name="rviz" args="$(find TSP_MTSP)/rviz/vins_rviz_config.rviz" />
+<node pkg="TSP_MTSP" type="mtsp_script_1" name="mtsp" output="screen" args="/home/jesus/catkin_ws/src/TSP_MTSP/mtsp_datos_2.txt" />
+
+</launch>

@@ -41,6 +41,8 @@ struct nodo p;
 int contador;
 } ;
 
+std::string input_file = "";
+
 void split(const string &s, char delim, vector<string> &elems) {
     stringstream ss(s);
     string item;
@@ -68,7 +70,7 @@ vector<string> split(const string &s, char delim) {
     vector <float> p_inicial;
     vector <vector<float>> p;
   ifstream myfile;
-  myfile.open("tsp_datos.txt");
+  myfile.open(input_file);
   if (myfile.is_open()){
 	  
 	// COORDENADAS  
@@ -732,7 +734,11 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 
 int main( int argc, char** argv )
 {
-
+if(argc < 2){
+		std::cout << "Not enough input arguments" << std::endl;
+		return -1;
+	}
+	input_file = argv[1];
 ros::init(argc, argv, "tsp_script");
   ros::NodeHandle n;
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
