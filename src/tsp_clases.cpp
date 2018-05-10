@@ -52,7 +52,7 @@ class matriz_2
         }
         
         
-        void llenar() // USAR DESPUES DE COPIAR
+        vector <vector <float>> llenar() // USAR DESPUES DE COPIAR
        {
 		   float valor;
 		   for(int i=0;i<m_llenar.size();i++){
@@ -62,10 +62,11 @@ class matriz_2
 			  m_llenar[i][j]=valor;				  
 		  }
 		  }
+		  return m_llenar;
         }
        
-       /*
-       void copiar(vector <float> mat) // Mat es lo que yo pongo a la entrada
+       
+       vector <vector <float>> copiar(vector <vector <float>> mat) // Mat es lo que yo pongo a la entrada
        {
 		   // RESERVA MEMORIA 2X2
 		   m_copiar.resize(mat.size());
@@ -78,16 +79,16 @@ class matriz_2
 			  m_copiar[i][j]=mat[i][j];				  
 		  }
 		  }
-	
+		  return m_copiar;
         }
-        
-		*/
-       void imprimir() // USAR DESPUES DE COPIAR
+		
+		
+       void imprimir(vector <vector <float>> a) // USAR DESPUES DE COPIAR
        {
-		   cout<<"VALOR DE M: "<<endl;
-           for(int i=0;i<m_llenar.size();i++){
-          for(int j=0;j<m_llenar[i].size();j++){
-			  cout<< m_llenar[i][j] <<" ";				  
+		   cout<<"VALOR DE m: "<<endl;
+           for(int i=0;i<a.size();i++){
+          for(int j=0;j<a[i].size();j++){
+			  cout<< a[i][j] <<" ";				  
 		  }
 		  cout<<endl;
 		  }cout<<endl;
@@ -96,11 +97,16 @@ class matriz_2
 
  int main()
  {
-	 vector <vector <float>> m_llear;
       matriz_2 m;
+      vector <vector <float>> a,c;
       m.reserva(2,3);
-     m.llenar();
-      m.imprimir();
-      m.m_llenar.clear();
+     a=m.llenar();
+     c=m.copiar(a);
+     
+      m.imprimir(a);
+      m.imprimir(c);
+      
       return 0;
+      
+      
  }
