@@ -58,6 +58,71 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
+class matriz_c
+{
+    private:
+        vector <vector <float>> m_copiar; // lo devuelvo en teoría
+        vector <vector <float>> m_llenar; // lo devuelvo en teoría
+    public:
+       
+       vector <vector <float>> reserva(int filas,int columnas) // USAR DESPUES DE COPIAR
+       {
+		   m_llenar.resize(filas);
+		   for(int i=0;i<m_llenar.size();i++){
+		  m_llenar[i].resize(columnas);				  
+		  }
+		  return m_llenar;
+        }
+        
+        
+        vector <vector <float>> llenar() // USAR DESPUES DE COPIAR
+       {
+		   float valor;
+		   for(int i=0;i<m_llenar.size();i++){
+          for(int j=0;j<m_llenar[i].size();j++){
+			  cout<<"Valor introducido: ";
+			  cin >> valor;cout<<endl;
+			  m_llenar[i][j]=valor;				  
+		  }
+		  }
+		  return m_llenar;
+        }
+       
+       
+       vector <vector <float>> copiar(vector <vector <float>> mat) // Mat es lo que yo pongo a la entrada
+       {
+		   // RESERVA MEMORIA 2X2
+		   m_copiar.resize(mat.size());
+          for(int i=0;i<m_copiar.size();i++){
+			  m_copiar[i].resize(mat[i].size());				  
+		  }
+		  
+		  for(int i=0;i<m_copiar.size();i++){
+          for(int j=0;j<m_copiar[i].size();j++){
+			  m_copiar[i][j]=mat[i][j];				  
+		  }
+		  }
+		  return m_copiar;
+        }
+		
+		
+       void imprimir_2(vector <vector <float>> a) // USAR DESPUES DE COPIAR
+       {
+           for(int i=0;i<a.size();i++){
+          for(int j=0;j<a[i].size();j++){
+			  cout<< a[i][j] <<" ";				  
+		  }
+		  cout<<endl;
+		  }cout<<endl;
+        } 
+        
+        void imprimir_1(vector <float> a) // USAR DESPUES DE COPIAR
+       {
+           for(int i=0;i<a.size();i++){
+			  cout<< a[i] <<" ";
+		  }cout<<endl;cout<<endl;
+        }
+};
 
  void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, vector<vector<float>> &puntos,
  vector<float> &punto_final){
@@ -347,6 +412,7 @@ float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector
 struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,
 const vector<vector<float> > &dots,float dis,int counter){
 	struct s_dev_hijo salida; 
+	matriz_c m;
     vector<vector<float> > aux;
     int flag; float dist,distancia;
    	vector<float> mul,c,r1,r2;
@@ -376,6 +442,11 @@ const vector<vector<float> > &dots,float dis,int counter){
 			 c[1]=salida.p.punto_sig[i];
 			r1=cut_matrix(dots,c[0],-1);
 	        r2=cut_matrix(dots,c[1],-1);
+	        
+	        cout<<"RESTA: "<<endl;
+			m.imprimir_1(resta(r1,r2));
+	        cout<<"NORMA_RESTA: "<< norma(resta(r1,r2)) <<endl;
+	        
 			 distancia=norma(resta(r1,r2));
 			salida.p.camino[i]=distancia;
 			salida.p.camino_activo[i]=1;
@@ -407,7 +478,8 @@ const vector<vector<float> > &dots,float dis,int counter){
 			salida.h.punto_act=salida.p.punto_sig[i]; 
 			
 		}
-		}
+		} 
+
 		
 		if(devuelve_activo(salida.p.camino_activo)==0){
 			salida.p.vivo=0;
@@ -437,7 +509,8 @@ const vector<vector<float> > &dots,float dis,int counter){
 }
 
 
-struct s_desg_nodo desglosa_nodo (int &B,struct nodo padre,const vector<vector<float> > &puntos2,float dis,int contador_dh){
+struct s_desg_nodo desglosa_nodo (int &B,struct nodo padre,
+const vector<vector<float> > &puntos2,float dis,int contador_dh){
 
 struct s_dev_hijo salida2;
 struct s_desg_nodo devuelto;
@@ -732,13 +805,16 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 }
 
 
+
+
 int main( int argc, char** argv )
 {
+	/*
 if(argc < 2){
 		std::cout << "Not enough input arguments" << std::endl;
 		return -1;
 	}
-	input_file = argv[1];
+	input_file = argv[1];*/
 ros::init(argc, argv, "tsp_script");
   ros::NodeHandle n;
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
@@ -779,19 +855,12 @@ std::vector<float> uno_tal;
 std::vector<float> dos_tal;
 
 
-  pedir_pantalla_f(cont_repeticion,A, B,puntos,punto_final);
-/*
-cont_repeticion=20;
-A=3; B=2; // TRABAJAMOS EN 2D
-puntos={
-	{0,0}, 
-	{3.7,1.5},
-	{2.3,5},
-	{4,5},	
-};
-
-punto_final={-5,9};*/
-
+  //pedir_pantalla_f(cont_repeticion,A, B,puntos,punto_final);
+matriz_c mmm;
+B=3;A=3;
+puntos=mmm.reserva(A,B);
+      puntos=mmm.llenar();
+      mmm.imprimir_2(puntos);
 
 // IMPORTANTE HACER EL RESIZE
 uno_tal.resize(1);
@@ -827,8 +896,33 @@ padre.indicador=0;
  tope=puntos.size()-1;
  
  
- // EMPIEZA REPETICION
+salida=devuelve_hijo(B,padre,puntos,0,0);
+
+		cout<<"PADRE: "<<endl;
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(salida.p.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(salida.p.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(salida.p.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(salida.p.punto_sig);
+		
+		cout<<"HIJO: "<<endl;
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(salida.h.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(salida.h.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(salida.h.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(salida.h.punto_sig);
+		
+		
  
+ 
+ // EMPIEZA REPETICION
+ /*
  for(int xz=0;xz<cont_repeticion;xz++){
  
  repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
@@ -949,13 +1043,11 @@ for (int i = 0; i < (A); i++) {
        
        
 //FIN PRUEBAS
-/*
-  ros::init(argc, argv, "tsp_script");
-  ros::NodeHandle n;
-  ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
-  ros::Rate r(30);
-  float f = 0.0; */
 
+  */
+
+
+/*
   while (ros::ok())
   {
 
@@ -1061,6 +1153,6 @@ for (int i = 0; i < (A); i++) {
     r.sleep();
 
   }
-  
+  */
   return 0;
  } 

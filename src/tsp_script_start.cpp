@@ -14,6 +14,12 @@ using namespace std;
  using std::vector;
 using namespace std;
 
+ 
+ struct bal {
+vector<float> punto_sig;
+vector<float> camino_activo;
+vector<float> recorrido;
+} ;
   
 struct nodo {
 vector<float>  escoge;
@@ -27,7 +33,7 @@ vector<float> punto_sig;
 vector<float> camino;
 vector<float> camino_activo;
 vector<float> recorrido;
-} prueba;
+} ;
 
 struct s_dev_hijo {
 struct nodo p;
@@ -734,7 +740,7 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 	
 }
 
-class matriz_2
+class matriz_c
 {
     private:
         vector <vector <float>> m_copiar; // lo devuelvo en teoría
@@ -782,9 +788,8 @@ class matriz_2
         }
 		
 		
-       void imprimir(vector <vector <float>> a) // USAR DESPUES DE COPIAR
+       void imprimir_2(vector <vector <float>> a) // USAR DESPUES DE COPIAR
        {
-		   cout<<"VALOR DE m: "<<endl;
            for(int i=0;i<a.size();i++){
           for(int j=0;j<a[i].size();j++){
 			  cout<< a[i][j] <<" ";				  
@@ -792,6 +797,13 @@ class matriz_2
 		  cout<<endl;
 		  }cout<<endl;
         } 
+        
+        void imprimir_1(vector <float> a) // USAR DESPUES DE COPIAR
+       {
+           for(int i=0;i<a.size();i++){
+			  cout<< a[i] <<" ";
+		  }cout<<endl;cout<<endl;
+        }
 };
 
 class nodo_c
@@ -810,14 +822,28 @@ class nodo_c
 		vector<float> recorrido;
     public:
        
+       
+       void imprime() 
+       {
+		matriz_c m;      
+		cout<<"camino: "<<endl;
+		m.imprimir_1(camino);
+		cout<<"camino_activo: "<<endl;
+		m.imprimir_1(camino_activo);
+		cout<<"recorrido: "<<endl;
+		m.imprimir_1(recorrido);
+		cout<<"punto_sig: "<<endl;
+		m.imprimir_1(punto_sig);
+        }
+       
        void ini_padre(vector <vector <float>> puntos) 
        {
 		vector<float> dos_tal,uno_tal;
-		   
+		
 		uno_tal.resize(1);
 		dos_tal.resize(puntos.size()-1);
 		for (int j=0;j<puntos.size();j++){
-		dos_tal[j]=j+1;}
+		dos_tal[j]=j+1; }
 		uno_tal[0]=0;
 		   
 		nivel=1;
@@ -827,14 +853,15 @@ class nodo_c
 		indicador=0;
 		recorrido=uno_tal;
 		punto_sig=dos_tal; 
+		
         }
          
         
-        vector <float> actu_padre(int distancia,vector <vector <float>> puntos) 
+        bal actu_padre(float distancia,vector <vector <float>> puntos) 
        {
-		   int flag;
+		   int flag; bal b;
 		   float var1,var2;
-		   matriz_2 m;
+		   matriz_c m;
 		   vector<float> r1,r2,auxiliar;
 		   vector <vector<float>> aux;
 		   
@@ -858,6 +885,8 @@ class nodo_c
 			camino=auxiliar; 
 			}
 			
+			
+			
 			//
 			aux=m.reserva(camino_activo.size(),camino_activo.size());
 			for(int i=0 ; i < camino_activo.size() ; i++){ 
@@ -865,11 +894,14 @@ class nodo_c
 				aux[i][j]=1;}}
 			escoge=cut_matrix(aux,0,-1); 
 			
-			return camino_activo;
+			b.camino_activo=camino_activo;
+			b.punto_sig=punto_sig;
+			b.recorrido=recorrido;
+			return b;
 		   
         }
         
-        float actu_padre_2() 
+        float actu_padre_2(int i) 
        {
 		   float dist;
 		   camino_activo[i]=0;
@@ -880,11 +912,38 @@ class nodo_c
 		   
         }
         
-         void actu_hijo(float dist) 
+        
+        
+        vector<float> actu_padre_3() 
        {
+		vector<float> mul;
 		   
+        if(devuelve_activo(camino_activo)==0){
+			vivo=0;}
+		definido=1;
+	   	mul.resize(escoge.size());
+		for(int i=0 ; i < escoge.size() ; i++){ 
+			mul[i]=punto_sig[i]*escoge[i];}
+        
+        return mul;
+        }
+        
+        
+        
+         void actu_hijo(float dist,float dis,vector <float> p_s,int i) 
+       {
+		   distancia_recorrida=dist+dis; 
+		   punto_act=p_s[i]; 
 		   
         }
+        
+       void actu_hijo_2(vector<float> mul,vector<float> rec){  
+		   
+        punto_sig=refresca_auxiliar_f(mul);	
+	    recorrido=rec;	
+        recorrido.push_back (punto_act);
+    }	
+        
         
         void madura() 
        {
@@ -895,110 +954,41 @@ class nodo_c
         
         
 };
- /*
+ 
 class d_h
 {
     private:
-        nodo_c p;
-        nodo_c h;
+        nodo_c padre;
+        nodo_c hijo;
         int contador;
+        
     public:
     
-	 void devuelve_hijo(int B,
- vector<vector<float> > dots,float dis,int counter) 
-       {
-		   nodo_c padre,hijo;
-    vector<vector<float> > aux;
-    int flag; float dist,distancia;
-   	vector<float> mul,c,r1,r2;
-   	
- 
-   	c.resize(2);
-	
-	padre.ini_padre();
-	padre.actu_padre();
-
-  
-   	
-   	salida.p=padre;
-	
-	salida.h.indicador=counter; counter=counter+1;
-	salida.h.nivel=1+salida.p.nivel;
-	salida.h.definido=0;
-		 
-
-	
-	if(salida.p.definido==1){}
-	else{
-		for(int i=0 ; i < salida.p.punto_sig.size() ; i++){
-			c[0]=salida.p.punto_act;
-			 c[1]=salida.p.punto_sig[i];
-			r1=cut_matrix(dots,c[0],-1);
-	        r2=cut_matrix(dots,c[1],-1);
-			 distancia=norma(resta(r1,r2));
-			salida.p.camino[i]=distancia;
-			salida.p.camino_activo[i]=1;
-
-		}//FIN DEL FOR 
-		salida.p.vivo=1;	
-		salida.p=ordena_nodo(salida.p);	
-
-	}
-	
-	aux.resize(salida.p.camino_activo.size(), vector<float>(salida.p.camino_activo.size()));
-
-	for(int i=0 ; i < salida.p.camino_activo.size() ; i++){ 
-	for(int j=0 ; j < salida.p.camino_activo.size() ; j++){
-	 aux[i][j]=1;
-	}}
-
-	salida.p.escoge=cut_matrix(aux,0,-1); 
-
+    void dev_hijo_c(vector <vector<float>> puntos,
+float distancia){  
+		
+float dist,dis;
+int flag,counter;
+bal ret;vector<float> mul;
+		
+      padre.ini_padre(puntos);	
+      padre.madura();
+      ret=padre.actu_padre(distancia,puntos);  
 	flag=0;
-
-		for(int i=0 ; i < salida.p.camino_activo.size() ; i++){
-		if(flag==0 && salida.p.camino_activo[i]==1){
+	for(int i=0 ; i < ret.camino_activo.size() ; i++){
+		if(flag==0 && ret.camino_activo[i]==1){
 			flag=1;
-			salida.p.camino_activo[i]=0;
-			salida.p.escoge[i]=0;
-			dist=salida.p.camino[i];
-			salida.h.distancia_recorrida=dist+dis; 
-			salida.h.punto_act=salida.p.punto_sig[i]; 
-			
+			dist=padre.actu_padre_2(i);	
+			hijo.actu_hijo(dist,dis,ret.punto_sig,i);}}
+  
+	  mul=padre.actu_padre_3();
+	  hijo.actu_hijo_2(mul,ret.recorrido);
+      contador=counter;
+	  padre.imprime();	 hijo.imprime();
 		}
-		}
-		
-		if(devuelve_activo(salida.p.camino_activo)==0){
-			salida.p.vivo=0;
-		}
-		
-		salida.p.definido=1;
-	
-	//MULTIPLICO ELEMENTO A ELEMENTO--->BEGIN
-	//se hace el resize
-	   	mul.resize(salida.p.escoge.size());
-	
-	for(int i=0 ; i < salida.p.escoge.size() ; i++){ 
-		mul[i]=salida.p.punto_sig[i]*salida.p.escoge[i];
-	}
-	
-
-	salida.h.punto_sig=refresca_auxiliar_f(mul);	
-	
-	// REPASAR ESTAS DOS ÚLTIMAS LÍNEAS
-	salida.h.recorrido=salida.p.recorrido;	
-    salida.h.recorrido.push_back (salida.h.punto_act);	
     
-    // DEVUELVO LA SALIDA
-    salida.contador=counter;
-   
-    return salida;
-    
-        }
-	
-        
 };
-*/
+
 
 int main( int argc, char** argv ){
 
@@ -1009,36 +999,50 @@ int main( int argc, char** argv ){
   float f = 0.0; 
 
 vector <vector<float>> puntos;
-vector <float> c_activo;
-float dist,dis;
-matriz_2 m;
-int distancia,flag;
-// PRIVADAS:
-nodo_c padre,hijo;
-int contador;
-
-		
-	distancia=0;
-      puntos=m.reserva(2,3);
+float distancia;
+d_h a; matriz_c m;
+	
+	  distancia=0;
+      puntos=m.reserva(3,3);
       puntos=m.llenar();
-      m.imprimir(puntos);
-      padre.ini_padre(puntos);	
-      padre.madura();
-      c_activo=padre.actu_padre(distancia,puntos);
+      m.imprimir_2(puntos);
+      
+      // EMPIEZA "DEVUELVE_HIJO"
+     a.dev_hijo_c(puntos,distancia);
+	  // ACABA "DEVUELVE_HIJO"
   
-	flag=0;
-	for(int i=0 ; i < c_activo.size() ; i++){
-		if(flag==0 && c_activo[i]==1){
-			flag=1;
-			dist=padre.actu_padre_2();
-			
-			hijo.actu_hijo(dist);
-			
-			salida.h.distancia_recorrida=dist+dis; 
-			salida.h.punto_act=salida.p.punto_sig[i]; 
-			
-		}
-		}
+// EMPIEZA "DESGLOSA NODO"  
+struct s_dev_hijo salida2;
+struct s_desg_nodo devuelto;
+int salir,contador;
+
+salir=0; contador=1;
+
+
+
+ while(salir==0){
+
+	salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
+
+contador=contador+1;
+devuelto.a.push_back (salida2.h);
+
+
+if(salida2.p.vivo==0){
+	salir=1;
+}
+
+padre=salida2.p;
+contador_dh=salida2.contador;
+
+ }
+
+devuelto.p=padre;
+devuelto.contador=salida2.contador;
+
+return devuelto;
+// FIN DE "DESGLOSA NODO"
+  
   
   
   return 0;
