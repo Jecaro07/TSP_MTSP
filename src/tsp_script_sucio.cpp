@@ -896,27 +896,28 @@ padre.indicador=0;
  tope=puntos.size()-1;
  
  
-salida=devuelve_hijo(B,padre,puntos,0,0);
+salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 
 		cout<<"PADRE: "<<endl;
 		cout<<"camino: "<<endl;
-		mmm.imprimir_1(salida.p.camino);
+		mmm.imprimir_1(salida_dn.p.camino);
 		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(salida.p.camino_activo);
+		mmm.imprimir_1(salida_dn.p.camino_activo);
 		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(salida.p.recorrido);
+		mmm.imprimir_1(salida_dn.p.recorrido);
 		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(salida.p.punto_sig);
+		mmm.imprimir_1(salida_dn.p.punto_sig);
 		
-		cout<<"HIJO: "<<endl;
+		
+		cout<<"HIJO_1: "<<endl;
 		cout<<"camino: "<<endl;
-		mmm.imprimir_1(salida.h.camino);
+		mmm.imprimir_1(salida_dn.a[0].camino);
 		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(salida.h.camino_activo);
+		mmm.imprimir_1(salida_dn.a[0].camino_activo);
 		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(salida.h.recorrido);
+		mmm.imprimir_1(salida_dn.a[0].recorrido);
 		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(salida.h.punto_sig);
+		mmm.imprimir_1(salida_dn.a[0].punto_sig);
 		
 		
  
