@@ -840,8 +840,8 @@ class nodo_c
        {
 		vector<float> dos_tal,uno_tal;
 		
-		uno_tal.resize(1);
-		dos_tal.resize(puntos.size()-1);
+		uno_tal.resize(1);  recorrido.resize(uno_tal.size());
+		dos_tal.resize(puntos.size()-1);  punto_sig.resize(dos_tal.size());
 		for (int j=0;j<puntos.size();j++){
 		dos_tal[j]=j+1; }
 		uno_tal[0]=0;
@@ -853,7 +853,9 @@ class nodo_c
 		indicador=0;
 		recorrido=uno_tal;
 		punto_sig=dos_tal; 
-		
+		cout<< "DEPURANDO" <<endl;
+
+
         }
          
         
@@ -977,7 +979,8 @@ class d_h
 		int flag;//,counter;
 		bal ret;vector<float> mul;
 		
-      padre.ini_padre(puntos);	
+      //padre.ini_padre(puntos);	// SOLO LO PONGO LA PRIMERA VEZ QUE LLAMO "DEVUELVE_HIJO"
+      
       padre.madura();
       ret=padre.actu_padre(distancia,puntos);  
 	flag=0;
@@ -990,14 +993,20 @@ class d_h
 	  mul=padre.actu_padre_3();
 	  hijo.actu_hijo_2(mul,ret.recorrido);
       contador=counter;
-	  padre.imprime();	 hijo.imprime();
+	//  padre.imprime();	 hijo.imprime();
 		}
 		
-  void funcion(vector <nodo_c>* a,int *salir,nodo_c *padree){  
-		a->push_back(hijo); 
 		
-		padre.funcion(salir);  // esta bien??
+		
+  void inicializo(vector <vector<float>> puntos){  
+		padre.ini_padre(puntos);
+		}			
 
+
+
+  void funcion(vector <nodo_c>* a,int *salir,nodo_c *padree){  
+		a->push_back(hijo); 		
+		padre.funcion(salir);  // esta bien??
 		(*padree)=padre;    // SALIDA "DEV_HIJO"
 		}
 		
@@ -1030,11 +1039,17 @@ int salir,contador,contador_dh;
 //PRIVADAS (END)
 	contador_dh=0;
 	  distancia=0;
-      puntos=m.reserva(3,3);
+      puntos=m.reserva(4,3);
       puntos=m.llenar();
       m.imprimir_2(puntos);
-      
       salir=0; contador=1;
+      cout<< "DEPURANDO" <<endl;
+      padree.ini_padre(puntos); // EL ERROR ESTÁ AL USAR ESTE MÉTODO EN CONCRETO (SAME ERROR BELOW)
+      cout<< "DEPURANDO" <<endl;
+
+    //  aa.inicializo(puntos); // AQUÍ ESTA EL ERROR: A VECES SALE, Y OTRAS NO! ???
+      
+      
 // EMPIEZA "DESGLOSA NODO"  
 
   while(salir==0){
@@ -1043,10 +1058,15 @@ int salir,contador,contador_dh;
 	 // padre, hijo, contador
 	contador=contador+1;
 	aa.funcion(&a,&salir,&padree);
-    contador_dh=contador_; 
- }
+    contador_dh=contador_; }
+
 p=padree;   
 aa.funcion2(&contador_);
+
+// LO HE AÑADIDO YO PARA VER SI VA BIEN LA COSA
+    padree.imprime();
+    cout<<"TAMAÑO DE A: "<< a.size()<<endl;
+    a[a.size()-1].imprime(); 
 
 // FIN DE "DESGLOSA NODO" 
 

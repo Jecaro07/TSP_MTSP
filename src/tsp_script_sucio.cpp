@@ -522,18 +522,14 @@ salir=0; contador=1;
 
  while(salir==0){
 
-	salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
-
+salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
 contador=contador+1;
 devuelto.a.push_back (salida2.h);
-
-
 if(salida2.p.vivo==0){
-	salir=1;
-}
-
+	salir=1;}
 padre=salida2.p;
 contador_dh=salida2.contador;
+
 
  }
 
@@ -857,7 +853,7 @@ std::vector<float> dos_tal;
 
   //pedir_pantalla_f(cont_repeticion,A, B,puntos,punto_final);
 matriz_c mmm;
-B=3;A=3;
+B=3;A=4;
 puntos=mmm.reserva(A,B);
       puntos=mmm.llenar();
       mmm.imprimir_2(puntos);
@@ -909,15 +905,17 @@ salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 		mmm.imprimir_1(salida_dn.p.punto_sig);
 		
 		
+       cout<<"TAMAÑO DE A: "<< salida_dn.a.size()<<endl;
+		
 		cout<<"HIJO_1: "<<endl;
 		cout<<"camino: "<<endl;
-		mmm.imprimir_1(salida_dn.a[0].camino);
+		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].camino);
 		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(salida_dn.a[0].camino_activo);
+		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].camino_activo);
 		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(salida_dn.a[0].recorrido);
+		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].recorrido);
 		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(salida_dn.a[0].punto_sig);
+		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].punto_sig);
 		
 		
  
