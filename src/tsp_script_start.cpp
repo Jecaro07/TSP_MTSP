@@ -1074,10 +1074,95 @@ int salir,contador,contador_dh;
       bb.des_nodo_c(padree,puntos,distancia,contador_dh);
       
 
-// EMPIEZA "DESGLOSA NODO"  
+// EMPIEZA "REPETICION"  
 
+void repeticion(int &B, int &salir,nodo &nodo_1,
+vector<nodo> &nodo_desglosable,int &INDICE,float &distancia,
+vector< vector<float> > &puntos2, vector <float> &punto_final,
+s_desg_nodo &salida_dn, float &counter, vector<nodo> &v_n_maduros,
+int &tope, vector<float> &nodo_pre, vector<float> &c, vector<float> &r1,
+float &auxx, vector<float> &nodo_final, vector<float> &v,
+int &flag){
+	
+// EMPIEZA REPETICION 
+ 
+ // VARIABLES 
+ salir=0;
+ nodo_1=nodo_desglosable[INDICE];  // en matlab pone nodo_desglosable[INDICE];
+ distancia=nodo_1.distancia_recorrida;
+ 
+ 
+ if(es_ultimo(B,nodo_desglosable[INDICE],puntos2,punto_final)>0){
+ // no desgloso el nodo si está en el último nivel que quiero
+}
 
-// FIN DE "DESGLOSA NODO"
+else{
+	
+	while(salir==0){ // COMIENZO DEL WHILE
+	// desgloso los nodos del nivel inferior al que considero 
+	// y lo defino completamente	
+		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+		counter=salida_dn.contador;
+		v_n_maduros.push_back(salida_dn.p);
+		nodo_1=salida_dn.a[0];
+		distancia=salida_dn.a[0].distancia_recorrida;
+		
+		for (int j=0;j<salida_dn.a.size();j++){
+		nodo_desglosable.push_back(salida_dn.a[j]);}
+		
+	if (salida_dn.a[0].nivel>=(tope+1)){
+	
+	for(int ii=0;ii<salida_dn.a.size();ii++){
+		nodo_pre.push_back(salida_dn.a[ii].distancia_recorrida);
+		
+		
+		c[0]=salida_dn.a[ii].punto_act; 
+		
+		r1=cut_matrix(puntos2,c[0],-1);
+		auxx=norma(resta(r1,punto_final));
+		
+		nodo_final.push_back((salida_dn.a[ii].distancia_recorrida)+auxx);
+	} // FIN DEL FOR
+		salir=1;
+	} // FIN DEL IF
+				
+	} // FIN DEL WHILE
+	
+	
+	
+} // FIN DEL ELSE
+
+// SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
+	// Recorremos los nodos desarrollados, "v_n_maduros"
+
+	
+	for (int i=0; i<v_n_maduros.size();i++){
+		
+		if((v_n_maduros[i].indicador==0) || ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) || (componente_rep(v,v_n_maduros[i].indicador))){	
+		} 
+		else{
+			v.push_back(v_n_maduros[i].indicador);
+		}// fin del "IF"
+	} // fin del "for"
+
+	flag=0;
+	for (int i=0; i<nodo_desglosable.size();i++){
+	
+		if((nodo_desglosable[i].indicador>0) & (componente_rep(v,nodo_desglosable[i].indicador)==0) & (flag==0) & (nodo_desglosable[i].punto_sig.size()>0)){
+		
+		INDICE=i;
+		nodo_desglosable[i].indicador=0; flag=1;
+		
+		}// FIN DEL "IF"
+		
+	}// FIN DEL "FOR"
+	
+ 
+// FIN "REPETICION"
+	
+}
+
+// FIN DE "REPETICION"
 
 
 
