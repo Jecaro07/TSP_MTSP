@@ -840,9 +840,9 @@ class nodo_c
        {
 		vector<float> dos_tal,uno_tal;
 		
-		uno_tal.resize(1);  recorrido.resize(uno_tal.size());
-		dos_tal.resize(puntos.size()-1);  punto_sig.resize(dos_tal.size());
-		for (int j=0;j<puntos.size();j++){
+		uno_tal.resize(1); dos_tal.resize(puntos.size()-1);
+		recorrido.resize(1); punto_sig.resize(puntos.size()-1);
+		for (int j=0;j<puntos.size()-1;j++){
 		dos_tal[j]=j+1; }
 		uno_tal[0]=0;
 		   
@@ -851,11 +851,9 @@ class nodo_c
 		distancia_recorrida=0;
 		punto_act=0;
 		indicador=0;
-		recorrido=uno_tal;
-		punto_sig=dos_tal; 
-		cout<< "DEPURANDO" <<endl;
-
-
+		recorrido=uno_tal; 
+		punto_sig=dos_tal;
+		
         }
          
         
@@ -1043,13 +1041,11 @@ int salir,contador,contador_dh;
       puntos=m.llenar();
       m.imprimir_2(puntos);
       salir=0; contador=1;
-      cout<< "DEPURANDO" <<endl;
-      padree.ini_padre(puntos); // EL ERROR ESTÁ AL USAR ESTE MÉTODO EN CONCRETO (SAME ERROR BELOW)
-      cout<< "DEPURANDO" <<endl;
+      aa.inicializo(puntos); // AQUÍ ESTA EL ERROR: A VECES SALE, Y OTRAS NO! ???
+      cout<< "DEPURANDO2" <<endl;
+     // padree.ini_padre(puntos); // EL ERROR ESTÁ AL USAR ESTE MÉTODO EN CONCRETO (SAME ERROR BELOW)
+      cout<< "DEPURANDO3" <<endl;
 
-    //  aa.inicializo(puntos); // AQUÍ ESTA EL ERROR: A VECES SALE, Y OTRAS NO! ???
-      
-      
 // EMPIEZA "DESGLOSA NODO"  
 
   while(salir==0){

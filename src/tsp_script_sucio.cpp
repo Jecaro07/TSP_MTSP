@@ -865,7 +865,7 @@ dos_tal.resize(puntos.size()-1);
  r2.resize(B); c.resize(1); 
 
 
-for (int j=0;j<puntos.size();j++){
+for (int j=0;j<puntos.size()-1;j++){
 dos_tal[j]=j+1;
 }
 
@@ -905,7 +905,7 @@ salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 		mmm.imprimir_1(salida_dn.p.punto_sig);
 		
 		
-       cout<<"TAMAÑO DE A: "<< salida_dn.a.size()<<endl;
+        cout<<"TAMAÑO DE A: "<< salida_dn.a.size()<<endl;
 		
 		cout<<"HIJO_1: "<<endl;
 		cout<<"camino: "<<endl;
