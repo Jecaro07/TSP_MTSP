@@ -853,7 +853,7 @@ std::vector<float> dos_tal;
 
   //pedir_pantalla_f(cont_repeticion,A, B,puntos,punto_final);
 matriz_c mmm;
-B=3;A=4;
+B=3;A=5;
 puntos=mmm.reserva(A,B);
       puntos=mmm.llenar();
       mmm.imprimir_2(puntos);

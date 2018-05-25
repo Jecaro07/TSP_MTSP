@@ -1015,6 +1015,38 @@ class d_h
     
 };
 
+class d_n
+{
+    private:
+        vector <nodo_c> a;
+		nodo_c p;
+		int contador_;
+        
+    public:
+    
+ void des_nodo_c(nodo_c padree, vector <vector<float>> puntos, float distancia,int contador_dh){  	
+	 	
+		int salir,contador; d_h aa;
+		salir=0; contador=1;
+        aa.inicializo(puntos);    
+    while(salir==0){
+    aa.dev_hijo_c(puntos,distancia,contador_dh);
+	contador=contador+1;
+	aa.funcion(&a,&salir,&padree);
+    contador_dh=contador_; }
+	p=padree;   
+	aa.funcion2(&contador_);
+	
+	//POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
+	padree.imprime();
+    cout<<"TAMAÑO DE A: "<< a.size()<<endl;
+    a[a.size()-1].imprime();
+    //POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
+     }
+	
+    
+};
+
 
 int main( int argc, char** argv ){
 
@@ -1026,74 +1058,34 @@ int main( int argc, char** argv ){
 
 vector <vector<float>> puntos;
 float distancia;
-d_h aa; matriz_c m;nodo_c padree;
+d_n bb; matriz_c m;nodo_c padree;
 int salir,contador,contador_dh;
 
 //PRIVADAS (BEGIN)
- vector <nodo_c> a;
- nodo_c p;
- int contador_;
+ 
  
 //PRIVADAS (END)
 	contador_dh=0;
 	  distancia=0;
-      puntos=m.reserva(4,3);
+      puntos=m.reserva(5,3);
       puntos=m.llenar();
       m.imprimir_2(puntos);
-      salir=0; contador=1;
-      aa.inicializo(puntos); // AQUÍ ESTA EL ERROR: A VECES SALE, Y OTRAS NO! ???
-      cout<< "DEPURANDO2" <<endl;
-     // padree.ini_padre(puntos); // EL ERROR ESTÁ AL USAR ESTE MÉTODO EN CONCRETO (SAME ERROR BELOW)
-      cout<< "DEPURANDO3" <<endl;
+      
+      bb.des_nodo_c(padree,puntos,distancia,contador_dh);
+      
 
 // EMPIEZA "DESGLOSA NODO"  
 
-  while(salir==0){
-     aa.dev_hijo_c(puntos,distancia,contador_dh);
-     // PRIVADAS:
-	 // padre, hijo, contador
-	contador=contador+1;
-	aa.funcion(&a,&salir,&padree);
-    contador_dh=contador_; }
 
-p=padree;   
-aa.funcion2(&contador_);
+// FIN DE "DESGLOSA NODO"
+
+
 
 // LO HE AÑADIDO YO PARA VER SI VA BIEN LA COSA
-    padree.imprime();
+ /* padree.imprime();
     cout<<"TAMAÑO DE A: "<< a.size()<<endl;
-    a[a.size()-1].imprime(); 
+    a[a.size()-1].imprime(); */
 
-// FIN DE "DESGLOSA NODO" 
-
-// EMPIEZA "DESGLOSA_NODO"
-/*
-struct s_desg_nodo desglosa_nodo (int &B,struct nodo padre,
-const vector<vector<float> > &puntos2,float dis,int contador_dh){
-
-struct s_dev_hijo salida2;
-struct s_desg_nodo devuelto;
-int salir,contador;
-salir=0; contador=1;
-
- while(salir==0){
-	salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
-contador=contador+1;
-devuelto.a.push_back (salida2.h);
-
-if(salida2.p.vivo==0){
-	salir=1;}
-	
-padre=salida2.p;
-contador_dh=salida2.contador;
- }
  
-devuelto.p=padre;
-devuelto.contador=salida2.contador;
-return devuelto;
-}     
-* */
-// FIN DE "DESGLOSA_NODO"
-     
   return 0;
  } 
