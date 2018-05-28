@@ -351,6 +351,7 @@ float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector
 }
 
 
+
 struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,
 const vector<vector<float> > &dots,float dis,int counter){
 	struct s_dev_hijo salida; 
@@ -839,13 +840,13 @@ class nodo_c
        void ini_padre(vector <vector <float>> puntos) 
        {
 		vector<float> dos_tal,uno_tal;
-		
-		uno_tal.resize(1); dos_tal.resize(puntos.size()-1);
-		recorrido.resize(1); punto_sig.resize(puntos.size()-1);
-		for (int j=0;j<puntos.size()-1;j++){
+				   			   
+		uno_tal.resize(1);cout<<"ME HE EQUIVOCAO"<<endl; dos_tal.resize(puntos.size()-1);
+		recorrido.resize(1); punto_sig.resize(puntos.size()-1); 
+		for (int j=0;j<dos_tal.size();j++){
 		dos_tal[j]=j+1; }
 		uno_tal[0]=0;
-		   
+
 		nivel=1;
 		definido=0;
 		distancia_recorrida=0;
@@ -853,8 +854,25 @@ class nodo_c
 		indicador=0;
 		recorrido=uno_tal; 
 		punto_sig=dos_tal;
-		
+
         }
+        
+        void vuelca_distancia(float *distancia) 
+       {
+		(*distancia)=distancia_recorrida;
+        }
+        
+        void f_nodo_pre(vector <float> *c,vector <float>*nodo_pre) 
+       {
+		nodo_pre->push_back(distancia_recorrida);
+		c[0]=punto_act; // NO SE SI ESTA ES LA NOMENCLATURA 
+		}
+        
+       void f_nodo_final(vector <float>*nodo_final,float auxx) 
+       {
+		nodo_final->push_back((distancia_recorrida)+auxx);
+		}
+        
          
         
         bal actu_padre(float distancia,vector <vector <float>> puntos) 
@@ -943,6 +961,20 @@ class nodo_c
 		   
         }
         
+         void es_ultimo(float *distancia,vector<float> r1,vector<float> c,
+         vector <float> punto_final,vector <vector <float>> dots){			 
+			 
+		   if(punto_sig.size()==0){
+		     c[0]=punto_act; 
+		     r1=cut_matrix(dots,c[0],-1);
+		     (*distancia)=norma(resta(r1,punto_final));}
+			else{ (*distancia)=0;}
+			
+        }
+        
+        
+        
+        
        void actu_hijo_2(vector<float> mul,vector<float> rec){  
 		   
         punto_sig=refresca_auxiliar_f(mul);	
@@ -958,6 +990,7 @@ class nodo_c
 	    escoge.resize(punto_sig.size());
         }
         
+     
         
 };
  
@@ -1011,7 +1044,11 @@ class d_h
 		
 	void funcion2(int *contador_){  
 		(*contador_)=contador; 
-		}		
+		}	
+		
+	void llena_nodo_des(vector <nodo_c> *nodo_desglosable){
+		nodo_desglosable->push_back(padre);  
+		}	
     
 };
 
@@ -1021,6 +1058,8 @@ class d_n
         vector <nodo_c> a;
 		nodo_c p;
 		int contador_;
+		
+		d_h aa; // CREO QUE TENDRÍA QUE PONERLO.
         
     public:
     
@@ -1043,9 +1082,66 @@ class d_n
     a[a.size()-1].imprime();
     //POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
      }
+     
+     void inicializo(vector <vector<float>> puntos){  
+		aa.inicializo(puntos);
+		
+		}	
 	
+	 void llena_nodo_des(vector <nodo_c> *nodo_desglosable){
+	    aa.llena_nodo_des(nodo_desglosable);
+		}
+		
+		
+	void vuelca_resultados(int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
+	vector<nodo_c> *nodo_desglosable,int *tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
+	float *auxx,vector<float> *nodo_final,int *salir){
+		
+		(*contador)=contador_;
+		v_n_maduros->push_back(p);
+		nodo_1=a[0];
+		
+		// ANOTHER METHOD (DONE)
+		(*distancia)=a[0].vuelca_distancia(distancia);
+		// ANOTHER METHOD (DONE)
+
+		for (int j=0;j<a.size();j++){
+		nodo_desglosable->push_back(a[j]);}
+		
+	if (a[0].nivel>=(tope+1)){
+	
+	for(int ii=0;ii<a.size();ii++){
+		
+		// ANOTHER METHOD (BEGIN)
+		a[ii].f_nodo_pre(&c,&nodo_pre);
+		// ANOTHER METHOD (END)
+		
+		r1=cut_matrix(puntos,c[0],-1);
+		auxx=norma(resta(r1,punto_final));
+		
+		// ANOTHER METHOD (BEGIN)
+		a[ii].f_nodo_final(&nodo_final,auxx);
+		// ANOTHER METHOD (END)
+		
+	} // FIN DEL FOR
+		salir=1;
+	} // FIN DEL IF	
+		}
+		
+	    
     
 };
+
+float es_ultimo_c(int &B, nodo_c n,const vector<vector<float> > &dots, vector<float> punto_final){
+	
+	vector<float> c,r1;
+	float distancia;
+	r1.resize(B); c.resize(1); //numero de coordenadas
+	
+	n.es_ultimo(&distancia,r1,c,punto_final,dots);
+	
+	return distancia;
+}
 
 
 int main( int argc, char** argv ){
@@ -1057,25 +1153,76 @@ int main( int argc, char** argv ){
   float f = 0.0; 
 
 vector <vector<float>> puntos;
-float distancia;
 d_n bb; matriz_c m;nodo_c padree;
-int salir,contador,contador_dh;
+int contador,contador_dh,B=3;
 
-//PRIVADAS (BEGIN)
- 
- 
-//PRIVADAS (END)
-	contador_dh=0;
-	  distancia=0;
-      puntos=m.reserva(5,3);
+//VARIABLES ENTRADA (BEGIN)
+  int salir;
+  nodo_c nodo_1; // DE MOMENTO LO VOY A DEJAR (se supone que está vacío)
+ vector<nodo_c> nodo_desglosable;
+ int INDICE;
+ float distancia;
+ vector <float> punto_final;
+  vector<nodo_c> v_n_maduros;
+int tope; // CREO QUE NO HAY QUE QUITARLA
+ vector<float> nodo_pre;
+  vector<float> c;
+   vector<float> r1;
+float auxx;
+ vector<float> nodo_final;
+  vector<float> v;
+int flag;
+//VARIABLES ENTRADA (END)
+
+	  contador_dh=0;
+      puntos=m.reserva(B,3);
       puntos=m.llenar();
       m.imprimir_2(puntos);
+
+bb.inicializo(puntos); //daba error porque no tenía definido "puntos" antes
+
+// INICIALIZO LO QUE SEA (COPY-PASTE DEL ORIGINAL)
+ contador=0; // cuidado: es "counter" en el original
+  nodo_1.vuelca_distancia(&distancia); //distancia=nodo_1.distancia_recorrida; // debería dar error, no? (SE SUPONE QUE ES 0)
+  salir=0; 
+  bb.llena_nodo_des(&nodo_desglosable); // nodo_desglosable.push_back(padre);
+   INDICE=0;
+ tope=puntos.size()-1;
+// INICIALIZO LO QUE SEA (COPY-PASTE DEL ORIGINAL)
+
+
+// REPETICION ITERACIÓN 1 (EMPIEZA)
+		salir=0; // NO PASA NADA POR REPETIRLO DENTRO DE "REPETICIÓN"
+		nodo_1=nodo_desglosable[INDICE];  // en matlab pone nodo_desglosable[INDICE];
+		
+		nodo_1.vuelca_distancia(&distancia); // NO PASA NADA POR REPETIRLO DENTRO DE "REPETICIÓN"
+
+	if(es_ultimo_c(B,nodo_desglosable[INDICE],puntos,punto_final)>0){
+		// no desgloso el nodo si está en el último nivel que quiero
+	}
+else{
+	
+	while(salir==0){ // COMIENZO DEL WHILE
+	// desgloso los nodos del nivel inferior al que considero 
+	// y lo defino completamente	
+		bb.des_nodo_c(padree,puntos,distancia,contador_dh); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+		bb.vuelca_resultados(&contador,&v_n_maduros,&nodo_1,&distancia,
+	&nodo_desglosable,&tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir);
+		
+				
+	} // FIN DEL WHILE
+	
+	
+	
+} // FIN DEL ELSE
+
       
-      bb.des_nodo_c(padree,puntos,distancia,contador_dh);
-      
+// REPETICION ITERACIÓN 1 (ACABA)
+
+
+/* 
 
 // EMPIEZA "REPETICION"  
-
 void repeticion(int &B, int &salir,nodo &nodo_1,
 vector<nodo> &nodo_desglosable,int &INDICE,float &distancia,
 vector< vector<float> > &puntos2, vector <float> &punto_final,
@@ -1163,7 +1310,7 @@ else{
 }
 
 // FIN DE "REPETICION"
-
+*/
 
 
 // LO HE AÑADIDO YO PARA VER SI VA BIEN LA COSA
