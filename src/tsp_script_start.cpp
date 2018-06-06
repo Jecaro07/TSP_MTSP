@@ -857,23 +857,33 @@ class nodo_c
 
         }
         
-        void vuelca_distancia(float *distancia) 
+        float vuelca_distancia(float *distancia) 
        {
 		(*distancia)=distancia_recorrida;
+		
+		return (*distancia);
         }
         
-        void f_nodo_pre(vector <float> *c,vector <float>*nodo_pre) 
-       {
+      //  a[ii].f_nodo_pre(&c[0],&nodo_pre);
+        
+        void f_nodo_pre(vector <float> *c,vector <float> *nodo_pre){    
 		nodo_pre->push_back(distancia_recorrida);
 		c[0]=punto_act; // NO SE SI ESTA ES LA NOMENCLATURA 
 		}
         
-       void f_nodo_final(vector <float>*nodo_final,float auxx) 
-       {
+       void f_nodo_final(vector <float>*nodo_final,float auxx){ 
+       
 		nodo_final->push_back((distancia_recorrida)+auxx);
 		}
+		
+		
+        int devuelve_nivel(){
+		
+		int valor_compara;
+        valor_compara=nivel;
         
-         
+        return valor_compara;
+	 }
         
         bal actu_padre(float distancia,vector <vector <float>> puntos) 
        {
@@ -1097,23 +1107,30 @@ class d_n
 	vector<nodo_c> *nodo_desglosable,int *tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
 	float *auxx,vector<float> *nodo_final,int *salir){
 		
+		int *valor_compara;
+		
 		(*contador)=contador_;
 		v_n_maduros->push_back(p);
-		nodo_1=a[0];
-		
-		// ANOTHER METHOD (DONE)
+		(*nodo_1)=a[0];
+	
+		// ANOTHER METHOD (DONE)	
 		(*distancia)=a[0].vuelca_distancia(distancia);
 		// ANOTHER METHOD (DONE)
 
 		for (int j=0;j<a.size();j++){
 		nodo_desglosable->push_back(a[j]);}
 		
-	if (a[0].nivel>=(tope+1)){
+		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (BEGIN)
+		(*valor_compara)=a[0].devuelve_nivel();
+		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (END)
+		
+		
+	if (valor_compara>=(tope+1)){
 	
 	for(int ii=0;ii<a.size();ii++){
 		
 		// ANOTHER METHOD (BEGIN)
-		a[ii].f_nodo_pre(&c,&nodo_pre);
+		a[ii].f_nodo_pre(&c[0],&nodo_pre);
 		// ANOTHER METHOD (END)
 		
 		r1=cut_matrix(puntos,c[0],-1);
