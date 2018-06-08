@@ -866,9 +866,9 @@ class nodo_c
         
       //  a[ii].f_nodo_pre(&c[0],&nodo_pre);
         
-        void f_nodo_pre(vector <float> *c,vector <float> *nodo_pre){    
+        float f_nodo_pre(vector <float> *nodo_pre){    
 		nodo_pre->push_back(distancia_recorrida);
-		c[0]=punto_act; // NO SE SI ESTA ES LA NOMENCLATURA 
+		return punto_act; // NO SE SI ESTA ES LA NOMENCLATURA 
 		}
         
        void f_nodo_final(vector <float>*nodo_final,float auxx){ 
@@ -877,12 +877,8 @@ class nodo_c
 		}
 		
 		
-        int devuelve_nivel(){
-		
-		int valor_compara;
-        valor_compara=nivel;
-        
-        return valor_compara;
+        void devuelve_nivel(int *valor_compara){
+        (*valor_compara)=nivel;
 	 }
         
         bal actu_padre(float distancia,vector <vector <float>> puntos) 
@@ -1024,8 +1020,8 @@ class d_h
       
       padre.madura();
       ret=padre.actu_padre(distancia,puntos);  
-	flag=0;
-	for(int i=0 ; i < ret.camino_activo.size() ; i++){
+	  flag=0;
+	  for(int i=0 ; i < ret.camino_activo.size() ; i++){
 		if(flag==0 && ret.camino_activo[i]==1){
 			flag=1;
 			dist=padre.actu_padre_2(i);	
@@ -1103,45 +1099,47 @@ class d_n
 		}
 		
 		
-	void vuelca_resultados(int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
-	vector<nodo_c> *nodo_desglosable,int *tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
-	float *auxx,vector<float> *nodo_final,int *salir){
+	void vuelca_resultados(vector <vector<float>> puntos,int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
+	vector<nodo_c> *nodo_desglosable,int tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
+	float *auxx,vector<float> *nodo_final,int *salir,vector <float> *punto_final){
 		
-		int *valor_compara;
+		int valor_compara; float vv;
 		
 		(*contador)=contador_;
 		v_n_maduros->push_back(p);
 		(*nodo_1)=a[0];
-	
+
 		// ANOTHER METHOD (DONE)	
 		(*distancia)=a[0].vuelca_distancia(distancia);
 		// ANOTHER METHOD (DONE)
 
 		for (int j=0;j<a.size();j++){
 		nodo_desglosable->push_back(a[j]);}
-		
+
 		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (BEGIN)
-		(*valor_compara)=a[0].devuelve_nivel();
+		a[0].devuelve_nivel(&valor_compara);
 		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (END)
-		
-		
-	if (valor_compara>=(tope+1)){
+
+	cout<< "TOPE: "<< tope <<endl;
+		// valor_compara
+	if (3>=(tope+1)){
 	
 	for(int ii=0;ii<a.size();ii++){
 		
 		// ANOTHER METHOD (BEGIN)
-		a[ii].f_nodo_pre(&c[0],&nodo_pre);
+		vv=a[ii].f_nodo_pre(nodo_pre); // vv será c[0] por simplicidad
+		//c[0]=vv;
 		// ANOTHER METHOD (END)
 		
-		r1=cut_matrix(puntos,c[0],-1);
-		auxx=norma(resta(r1,punto_final));
+		(*r1)=cut_matrix(puntos,vv,-1);
+		(*auxx)=norma(resta(*r1,*punto_final));
 		
 		// ANOTHER METHOD (BEGIN)
-		a[ii].f_nodo_final(&nodo_final,auxx);
+	//	a[ii].f_nodo_final(&nodo_final,auxx);
 		// ANOTHER METHOD (END)
 		
 	} // FIN DEL FOR
-		salir=1;
+		(*salir)=1;
 	} // FIN DEL IF	
 		}
 		
@@ -1195,11 +1193,18 @@ int flag;
       puntos=m.reserva(B,3);
       puntos=m.llenar();
       m.imprimir_2(puntos);
+      
+      
+      punto_final.resize(3); 
+		punto_final[0]=13;
+		punto_final[1]=4;
+		punto_final[2]=6;
+      m.imprimir_1(punto_final);
 
 bb.inicializo(puntos); //daba error porque no tenía definido "puntos" antes
 
 // INICIALIZO LO QUE SEA (COPY-PASTE DEL ORIGINAL)
- contador=0; // cuidado: es "counter" en el original
+  contador=0; // cuidado: es "counter" en el original
   nodo_1.vuelca_distancia(&distancia); //distancia=nodo_1.distancia_recorrida; // debería dar error, no? (SE SUPONE QUE ES 0)
   salir=0; 
   bb.llena_nodo_des(&nodo_desglosable); // nodo_desglosable.push_back(padre);
@@ -1223,15 +1228,53 @@ else{
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
 		bb.des_nodo_c(padree,puntos,distancia,contador_dh); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
-		bb.vuelca_resultados(&contador,&v_n_maduros,&nodo_1,&distancia,
-	&nodo_desglosable,&tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir);
 		
+		bb.vuelca_resultados(puntos,&contador,&v_n_maduros,&nodo_1,&distancia,
+	    &nodo_desglosable,tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir,&punto_final);
 				
 	} // FIN DEL WHILE
 	
 	
 	
 } // FIN DEL ELSE
+
+
+
+cout<<endl;
+cout<<endl; cout<< "NODO_FINAL: "<<endl;
+m.imprimir_1(nodo_final);
+cout<< "NODO_PRE: "<<endl;
+m.imprimir_1(nodo_pre);
+/*
+cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.size()<<endl;cout<<endl;
+
+cout<< "nodo_desglosable[0].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[0].punto_sig);
+
+cout<< "nodo_desglosable[1].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[1].punto_sig);
+
+cout<< "nodo_desglosable[2].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[2].punto_sig);
+
+cout<< "nodo_desglosable[3].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[3].punto_sig);
+
+cout<< "nodo_desglosable[0].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[0].recorrido);
+
+cout<< "nodo_desglosable[1].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[1].recorrido);
+
+cout<< "nodo_desglosable[2].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[2].recorrido);
+
+cout<< "nodo_desglosable[3].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[3].recorrido);
+
+*/
+
+
 
       
 // REPETICION ITERACIÓN 1 (ACABA)

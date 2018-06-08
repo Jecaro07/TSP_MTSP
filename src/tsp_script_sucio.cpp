@@ -631,6 +631,7 @@ int &flag){
 
 else{
 	
+
 	while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
@@ -642,6 +643,9 @@ else{
 		
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
+		
+		cout << "salida_dn.a[0].nivel:"<< salida_dn.a[0].nivel <<endl;
+		
 		
 	if (salida_dn.a[0].nivel>=(tope+1)){
 	
@@ -853,10 +857,17 @@ std::vector<float> dos_tal;
 
   //pedir_pantalla_f(cont_repeticion,A, B,puntos,punto_final);
 matriz_c mmm;
-B=3;A=5;
+B=3;A=3;
 puntos=mmm.reserva(A,B);
       puntos=mmm.llenar();
       mmm.imprimir_2(puntos);
+      
+// INICIALIZAR Y LLENAR "PUNTO_FINAL"
+
+punto_final.resize(B); 
+punto_final[0]=13;
+punto_final[1]=4;
+punto_final[2]=6;
 
 // IMPORTANTE HACER EL RESIZE
 uno_tal.resize(1);
@@ -892,8 +903,60 @@ padre.indicador=0;
  tope=puntos.size()-1;
  
  
-salida_dn=desglosa_nodo(B,padre,puntos,0,0);
+//salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 
+repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
+puntos, punto_final,salida_dn, counter, v_n_maduros,
+tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
+
+cout<<endl;
+cout<<endl; cout<< "NODO_FINAL: "<<endl;
+mmm.imprimir_1(nodo_final);
+cout<< "NODO_PRE: "<<endl;
+mmm.imprimir_1(nodo_pre);
+
+cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.size()<<endl;cout<<endl;
+
+cout<< "nodo_desglosable[0].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[0].punto_sig);
+
+cout<< "nodo_desglosable[1].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[1].punto_sig);
+
+cout<< "nodo_desglosable[2].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[2].punto_sig);
+
+cout<< "nodo_desglosable[3].punto_sig: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[3].punto_sig);
+
+cout<< "nodo_desglosable[0].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[0].recorrido);
+
+cout<< "nodo_desglosable[1].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[1].recorrido);
+
+cout<< "nodo_desglosable[2].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[2].recorrido);
+
+cout<< "nodo_desglosable[3].recorrido: "<<endl;cout<<endl;
+mmm.imprimir_1(nodo_desglosable[3].recorrido);
+
+/*
+cout<< "nodo_desglosable[1].punto_sig: "<<endl;
+mmm.imprimir_2(nodo_desglosable[1].punto_sig);
+
+cout<< "nodo_desglosable[2].punto_sig: "<<endl;
+mmm.imprimir_2(nodo_desglosable[2].punto_sig);
+
+cout<< "nodo_desglosable[3].punto_sig: "<<endl;
+mmm.imprimir_2(nodo_desglosable[3].punto_sig);   */
+
+//cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.punto_sig.size()<<endl;cout<<endl;
+//cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.recorrido.size()<<endl;
+
+
+
+/*
 		cout<<"PADRE: "<<endl;
 		cout<<"camino: "<<endl;
 		mmm.imprimir_1(salida_dn.p.camino);
@@ -916,7 +979,7 @@ salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].recorrido);
 		cout<<"punto_sig: "<<endl;
 		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].punto_sig);
-		
+		*/
 		
  
  
