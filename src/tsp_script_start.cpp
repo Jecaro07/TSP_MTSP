@@ -810,23 +810,29 @@ class matriz_c
 class nodo_c
 {
     private:
-        vector<float>  escoge;
+        vector<float>  escoge; //
 		int nivel;
 		int vivo;
 		float indicador;
 		int definido;
 		float distancia_recorrida;
 		float punto_act;
-		vector<float> punto_sig;
-		vector<float> camino;
-		vector<float> camino_activo;
-		vector<float> recorrido;
+		vector<float> punto_sig; //
+		vector<float> camino; //
+		vector<float> camino_activo; //
+		vector<float> recorrido; //
     public:
        
        
        void imprime() 
        {
-		matriz_c m;      
+		matriz_c m; 
+		cout<<"NIVEL: "<<nivel<<endl;  
+		cout<<"VIVO: "<<vivo<<endl;
+		cout<<"INDICADOR: "<<indicador<<endl;
+		cout<<"DEFINIDO: "<<definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<punto_act<<endl;   
 		cout<<"camino: "<<endl;
 		m.imprimir_1(camino);
 		cout<<"camino_activo: "<<endl;
@@ -835,6 +841,8 @@ class nodo_c
 		m.imprimir_1(recorrido);
 		cout<<"punto_sig: "<<endl;
 		m.imprimir_1(punto_sig);
+		cout<<"escoge: "<<endl;
+		m.imprimir_1(escoge);	
         }
        
        void ini_padre(vector <vector <float>> puntos) 
@@ -1043,8 +1051,13 @@ class d_h
 
   void funcion(vector <nodo_c>* a,int *salir,nodo_c *padree){  
 		a->push_back(hijo); 		
+		
+		//cout<<"PRIMERA VEZ A[0]: "<<endl;
+		//a[0]->imprime();
+		
 		padre.funcion(salir);  // esta bien??
 		(*padree)=padre;    // SALIDA "DEV_HIJO"
+		
 		}
 		
 		
@@ -1077,7 +1090,11 @@ class d_n
     while(salir==0){
     aa.dev_hijo_c(puntos,distancia,contador_dh);
 	contador=contador+1;
-	aa.funcion(&a,&salir,&padree);
+	aa.funcion(&a,&salir,&padree); // se supone que aquí modifico "a" por primera vez
+	
+	cout<<"NODO PADREE: "<<endl;
+		padree.imprime();   // SALE DOS VECES POR PANTALLA
+	
     contador_dh=contador_; }
 	p=padree;   
 	aa.funcion2(&contador_);
@@ -1108,6 +1125,14 @@ class d_n
 		(*contador)=contador_;
 		v_n_maduros->push_back(p);
 		(*nodo_1)=a[0];
+		
+		// IMPRIMO CAMPOS DEL NODO a[0] (BEGIN)
+		
+		cout<<"NODO A[0]: "<<endl; cout<<endl;
+		a[0].imprime();
+		
+		// IMPRIMO CAMPOS DEL NODO a[0] (END)
+		
 
 		// ANOTHER METHOD (DONE)	
 		(*distancia)=a[0].vuelca_distancia(distancia);
@@ -1116,13 +1141,18 @@ class d_n
 		for (int j=0;j<a.size();j++){
 		nodo_desglosable->push_back(a[j]);}
 
+
+cout<< "VALOR COMPARA_1: "<< valor_compara <<endl; // VALOR BASURA: 1345534635
+
 		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (BEGIN)
 		a[0].devuelve_nivel(&valor_compara);
 		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (END)
 
 	cout<< "TOPE: "<< tope <<endl;
+	cout<< "VALOR COMPARA_2: "<< valor_compara <<endl; // VALOR "0"
+	
 		// valor_compara
-	if (3>=(tope+1)){
+	if (valor_compara>=(tope+1)){
 	
 	for(int ii=0;ii<a.size();ii++){
 		
@@ -1219,25 +1249,36 @@ bb.inicializo(puntos); //daba error porque no tenía definido "puntos" antes
 		
 		nodo_1.vuelca_distancia(&distancia); // NO PASA NADA POR REPETIRLO DENTRO DE "REPETICIÓN"
 
+		cout<<"NODO 1: "<<endl;
+		nodo_1.imprime();
+
+
+
 	if(es_ultimo_c(B,nodo_desglosable[INDICE],puntos,punto_final)>0){
 		// no desgloso el nodo si está en el último nivel que quiero
 	}
+
 else{
 	
-	while(salir==0){ // COMIENZO DEL WHILE
+//	while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
 		bb.des_nodo_c(padree,puntos,distancia,contador_dh); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
 		
-		bb.vuelca_resultados(puntos,&contador,&v_n_maduros,&nodo_1,&distancia,
-	    &nodo_desglosable,tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir,&punto_final);
+		
+		
+		//bb.vuelca_resultados(puntos,&contador,&v_n_maduros,&nodo_1,&distancia,
+	    //&nodo_desglosable,tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir,&punto_final);
 				
-	} // FIN DEL WHILE
+				
+		//cout<<"SALIR: "<<salir<<endl;		
+				
+//	} // FIN DEL WHILE
 	
 	
 	
 } // FIN DEL ELSE
-
+/* comento
 
 
 cout<<endl;
@@ -1245,6 +1286,9 @@ cout<<endl; cout<< "NODO_FINAL: "<<endl;
 m.imprimir_1(nodo_final);
 cout<< "NODO_PRE: "<<endl;
 m.imprimir_1(nodo_pre);
+comento */ 
+
+
 /*
 cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.size()<<endl;cout<<endl;
 

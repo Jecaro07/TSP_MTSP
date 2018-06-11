@@ -58,6 +58,7 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
+
 class matriz_c
 {
     private:
@@ -123,6 +124,7 @@ class matriz_c
 		  }cout<<endl;cout<<endl;
         }
 };
+
 
  void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, vector<vector<float>> &puntos,
  vector<float> &punto_final){
@@ -617,12 +619,35 @@ int &tope, vector<float> &nodo_pre, vector<float> &c, vector<float> &r1,
 float &auxx, vector<float> &nodo_final, vector<float> &v,
 int &flag){
 	
+	matriz_c mmm;
+	
 // EMPIEZA REPETICION 
  
  // VARIABLES 
  salir=0;
  nodo_1=nodo_desglosable[INDICE];  // en matlab pone nodo_desglosable[INDICE];
  distancia=nodo_1.distancia_recorrida;
+ 
+ /*
+cout<<endl; cout<< "NODO_1: "<<endl;
+ 
+		cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
+		cout<<"VIVO: "<<nodo_1.vivo<<endl;
+		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
+		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(nodo_1.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(nodo_1.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(nodo_1.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(nodo_1.punto_sig);
+		cout<<"escoge: "<<endl;
+		mmm.imprimir_1(nodo_1.escoge);	
+ */
  
  
  if(es_ultimo(B,nodo_desglosable[INDICE],puntos2,punto_final)>0){
@@ -632,10 +657,31 @@ int &flag){
 else{
 	
 
-	while(salir==0){ // COMIENZO DEL WHILE
+	//while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
 		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+		
+cout<<endl; cout<< "NODO_1: "<<endl;
+ 
+		cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
+		cout<<"VIVO: "<<nodo_1.vivo<<endl;
+		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
+		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(nodo_1.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(nodo_1.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(nodo_1.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(nodo_1.punto_sig);
+		cout<<"escoge: "<<endl;
+		mmm.imprimir_1(nodo_1.escoge);		
+		
+	/* de momento	
 		counter=salida_dn.contador;
 		v_n_maduros.push_back(salida_dn.p);
 		nodo_1=salida_dn.a[0];
@@ -663,12 +709,15 @@ else{
 		salir=1;
 	} // FIN DEL IF
 				
-	} // FIN DEL WHILE
+	//} // FIN DEL WHILE
 	
+	
+	cout<<"SALIR: "<<salir<<endl;
+	de momento */
 	
 	
 } // FIN DEL ELSE
-
+/* comento
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
 
@@ -697,7 +746,7 @@ else{
  
 // FIN "REPETICION"
 
-	
+	comento */
 }
 
 void imprimir_resultados(int cont_repeticion,int A, int B,
@@ -909,12 +958,12 @@ repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
 puntos, punto_final,salida_dn, counter, v_n_maduros,
 tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
 
-cout<<endl;
-cout<<endl; cout<< "NODO_FINAL: "<<endl;
-mmm.imprimir_1(nodo_final);
-cout<< "NODO_PRE: "<<endl;
-mmm.imprimir_1(nodo_pre);
+//cout<<endl;cout<< "TOPE: "<< tope <<endl;
 
+
+
+
+/*
 cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.size()<<endl;cout<<endl;
 
 cout<< "nodo_desglosable[0].punto_sig: "<<endl;cout<<endl;
@@ -940,7 +989,7 @@ mmm.imprimir_1(nodo_desglosable[2].recorrido);
 
 cout<< "nodo_desglosable[3].recorrido: "<<endl;cout<<endl;
 mmm.imprimir_1(nodo_desglosable[3].recorrido);
-
+*/
 /*
 cout<< "nodo_desglosable[1].punto_sig: "<<endl;
 mmm.imprimir_2(nodo_desglosable[1].punto_sig);
