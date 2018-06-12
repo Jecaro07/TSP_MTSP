@@ -432,6 +432,7 @@ const vector<vector<float> > &dots,float dis,int counter){
    	salida.p=padre;
 	
 	salida.h.indicador=counter; counter=counter+1;
+	cout<<"INIDICADOR: "<<salida.h.indicador<<endl;
 	salida.h.nivel=1+salida.p.nivel;
 	salida.h.definido=0;
 		 
@@ -514,7 +515,7 @@ const vector<vector<float> > &dots,float dis,int counter){
 struct s_desg_nodo desglosa_nodo (int &B,struct nodo padre,
 const vector<vector<float> > &puntos2,float dis,int contador_dh){
 
-struct s_dev_hijo salida2;
+struct s_dev_hijo salida2; matriz_c mmm;
 struct s_desg_nodo devuelto;
 int salir,contador;
 
@@ -525,6 +526,25 @@ salir=0; contador=1;
  while(salir==0){
 
 salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
+
+cout<<endl; cout<< "SALIDA2.H: "<<endl;
+		cout<<"NIVEL: "<<salida2.h.nivel<<endl;  
+		cout<<"VIVO: "<<salida2.h.vivo<<endl;
+		cout<<"INDICADOR: "<<salida2.h.indicador<<endl;
+		cout<<"DEFINIDO: "<<salida2.h.definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<salida2.h.distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<salida2.h.punto_act<<endl;   
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(salida2.h.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(salida2.h.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(salida2.h.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(salida2.h.punto_sig);
+		cout<<"escoge: "<<endl;
+		mmm.imprimir_1(salida2.h.escoge);	
+
 contador=contador+1;
 devuelto.a.push_back (salida2.h);
 if(salida2.p.vivo==0){
@@ -662,26 +682,6 @@ else{
 	// y lo defino completamente	
 		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
 		
-cout<<endl; cout<< "NODO_1: "<<endl;
- 
-		cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
-		cout<<"VIVO: "<<nodo_1.vivo<<endl;
-		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
-		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
-		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
-		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
-		cout<<"camino: "<<endl;
-		mmm.imprimir_1(nodo_1.camino);
-		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(nodo_1.camino_activo);
-		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(nodo_1.recorrido);
-		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(nodo_1.punto_sig);
-		cout<<"escoge: "<<endl;
-		mmm.imprimir_1(nodo_1.escoge);		
-		
-	/* de momento	
 		counter=salida_dn.contador;
 		v_n_maduros.push_back(salida_dn.p);
 		nodo_1=salida_dn.a[0];
@@ -690,9 +690,9 @@ cout<<endl; cout<< "NODO_1: "<<endl;
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
 		
-		cout << "salida_dn.a[0].nivel:"<< salida_dn.a[0].nivel <<endl;
+			
 		
-		
+	/* de momento	
 	if (salida_dn.a[0].nivel>=(tope+1)){
 	
 	for(int ii=0;ii<salida_dn.a.size();ii++){

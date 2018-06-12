@@ -813,7 +813,7 @@ class nodo_c
         vector<float>  escoge; //
 		int nivel;
 		int vivo;
-		float indicador;
+		int indicador; // FLOAT en un principio
 		int definido;
 		float distancia_recorrida;
 		float punto_act;
@@ -862,6 +862,16 @@ class nodo_c
 		indicador=0;
 		recorrido=uno_tal; 
 		punto_sig=dos_tal;
+
+        }
+        
+        void ini_hijo(int contador_def,int valor) 
+       {
+		
+		indicador=contador_def; contador_def=contador_def+1;
+		
+		nivel=1+valor;
+		definido=0;
 
         }
         
@@ -1018,13 +1028,17 @@ class d_h
     public:
     
  void dev_hijo_c(vector <vector<float>> puntos,
-		float distancia,int counter){  
+		float distancia,int contador_def){  
 		
 		float dist,dis;
-		int flag;//,counter;
+		int flag,valor;//,counter;
 		bal ret;vector<float> mul;
 		
       //padre.ini_padre(puntos);	// SOLO LO PONGO LA PRIMERA VEZ QUE LLAMO "DEVUELVE_HIJO"
+      
+      padre.devuelve_nivel(&valor);
+      
+      hijo.ini_hijo(contador_def,valor);
       
       padre.madura();
       ret=padre.actu_padre(distancia,puntos);  
@@ -1037,8 +1051,13 @@ class d_h
   
 	  mul=padre.actu_padre_3();
 	  hijo.actu_hijo_2(mul,ret.recorrido);
-      contador=counter;
+    //  contador=contador_def;
 	//  padre.imprime();	 hijo.imprime();
+	    cout<<"HIJO: "<<endl; cout<<endl;
+		hijo.imprime();
+		
+		cout<<"INDICADOR: "<<contador_def<<endl;
+		
 		}
 		
 		
@@ -1047,7 +1066,11 @@ class d_h
 		padre.ini_padre(puntos);
 		}			
 
-
+  void vuelca_contador(int *contador_){  
+		(*contador_)=contador;
+		}
+		
+	
 
   void funcion(vector <nodo_c>* a,int *salir,nodo_c *padree){  
 		a->push_back(hijo); 		
@@ -1076,33 +1099,41 @@ class d_n
     private:
         vector <nodo_c> a;
 		nodo_c p;
-		int contador_;
+		int contador; // antes; "contardor_"
 		
 		d_h aa; // CREO QUE TENDRÍA QUE PONERLO.
         
     public:
     
- void des_nodo_c(nodo_c padree, vector <vector<float>> puntos, float distancia,int contador_dh){  	
+ void des_nodo_c(nodo_c padree, vector <vector<float>> puntos,
+                 float distancia,int contador_def){  	
 	 	
-		int salir,contador; d_h aa;
+		int salir,contador; d_h aa; 
 		salir=0; contador=1;
         aa.inicializo(puntos);    
+        
     while(salir==0){
-    aa.dev_hijo_c(puntos,distancia,contador_dh);
+    aa.dev_hijo_c(puntos,distancia,contador_def);
+    
 	contador=contador+1;
 	aa.funcion(&a,&salir,&padree); // se supone que aquí modifico "a" por primera vez
-	
-	cout<<"NODO PADREE: "<<endl;
-		padree.imprime();   // SALE DOS VECES POR PANTALLA
-	
-    contador_dh=contador_; }
+    
+   // aa.vuelca_contador(&contador_); 
+   // contador_def=contador_; 
+    }
+    
 	p=padree;   
-	aa.funcion2(&contador_);
+	//aa.funcion2(&contador_);
+	
+	
+	
 	
 	//POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
-	padree.imprime();
-    cout<<"TAMAÑO DE A: "<< a.size()<<endl;
-    a[a.size()-1].imprime();
+	
+	//padree.imprime();
+    //cout<<"TAMAÑO DE A: "<< a.size()<<endl;
+    //a[a.size()-1].imprime();
+    
     //POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
      }
      
@@ -1116,12 +1147,59 @@ class d_n
 		}
 		
 		
-	void vuelca_resultados(vector <vector<float>> puntos,int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
+	void vuelca_resultados_1(vector <vector<float>> puntos,int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
 	vector<nodo_c> *nodo_desglosable,int tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
 	float *auxx,vector<float> *nodo_final,int *salir,vector <float> *punto_final){
 		
 		int valor_compara; float vv;
 		
+		//(*contador)=contador_;
+		v_n_maduros->push_back(p);
+		(*nodo_1)=a[0];
+		
+		(*distancia)=a[0].vuelca_distancia(distancia);
+
+		for (int j=0;j<a.size();j++){
+		nodo_desglosable->push_back(a[j]);}
+
+		a[0].devuelve_nivel(&valor_compara);
+	
+			
+
+	
+		// valor_compara
+		
+		/*
+	if (valor_compara>=(tope+1)){
+	
+	for(int ii=0;ii<a.size();ii++){
+		
+		// ANOTHER METHOD (BEGIN)
+		vv=a[ii].f_nodo_pre(nodo_pre); // vv será c[0] por simplicidad
+		//c[0]=vv;
+		// ANOTHER METHOD (END)
+		
+		(*r1)=cut_matrix(puntos,vv,-1);
+		(*auxx)=norma(resta(*r1,*punto_final));
+		
+		// ANOTHER METHOD (BEGIN)
+	//	a[ii].f_nodo_final(&nodo_final,auxx);
+		// ANOTHER METHOD (END)
+		
+	} // FIN DEL FOR
+		(*salir)=1;
+	} // FIN DEL IF	
+	
+	*/
+		}
+		
+		
+	void vuelca_resultados_2(vector <vector<float>> puntos,int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
+	vector<nodo_c> *nodo_desglosable,int tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
+	float *auxx,vector<float> *nodo_final,int *salir,vector <float> *punto_final){
+		
+		int valor_compara; float vv;
+		/*
 		(*contador)=contador_;
 		v_n_maduros->push_back(p);
 		(*nodo_1)=a[0];
@@ -1151,6 +1229,7 @@ cout<< "VALOR COMPARA_1: "<< valor_compara <<endl; // VALOR BASURA: 1345534635
 	cout<< "TOPE: "<< tope <<endl;
 	cout<< "VALOR COMPARA_2: "<< valor_compara <<endl; // VALOR "0"
 	
+	*/
 		// valor_compara
 	if (valor_compara>=(tope+1)){
 	
@@ -1171,7 +1250,7 @@ cout<< "VALOR COMPARA_1: "<< valor_compara <<endl; // VALOR BASURA: 1345534635
 	} // FIN DEL FOR
 		(*salir)=1;
 	} // FIN DEL IF	
-		}
+		}	
 		
 	    
     
@@ -1199,7 +1278,7 @@ int main( int argc, char** argv ){
 
 vector <vector<float>> puntos;
 d_n bb; matriz_c m;nodo_c padree;
-int contador,contador_dh,B=3;
+int contador,contador_def,B=3;
 
 //VARIABLES ENTRADA (BEGIN)
   int salir;
@@ -1219,7 +1298,7 @@ float auxx;
 int flag;
 //VARIABLES ENTRADA (END)
 
-	  contador_dh=0;
+	  contador_def=0;
       puntos=m.reserva(B,3);
       puntos=m.llenar();
       m.imprimir_2(puntos);
@@ -1249,8 +1328,8 @@ bb.inicializo(puntos); //daba error porque no tenía definido "puntos" antes
 		
 		nodo_1.vuelca_distancia(&distancia); // NO PASA NADA POR REPETIRLO DENTRO DE "REPETICIÓN"
 
-		cout<<"NODO 1: "<<endl;
-		nodo_1.imprime();
+		//cout<<"NODO 1: "<<endl;
+		//nodo_1.imprime();
 
 
 
@@ -1263,11 +1342,11 @@ else{
 //	while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
-		bb.des_nodo_c(padree,puntos,distancia,contador_dh); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+		bb.des_nodo_c(padree,puntos,distancia,contador_def); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
 		
 		
 		
-		//bb.vuelca_resultados(puntos,&contador,&v_n_maduros,&nodo_1,&distancia,
+		//bb.vuelca_resultados_1(puntos,&contador,&v_n_maduros,&nodo_1,&distancia,
 	    //&nodo_desglosable,tope,&nodo_pre,&c,&r1,&auxx,&nodo_final,&salir,&punto_final);
 				
 				
