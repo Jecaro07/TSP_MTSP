@@ -1002,6 +1002,8 @@ class nodo_c
         
          void actu_hijo(float dist,float dis,vector <float> p_s,int i) 
        {
+		   cout<<"DIST: "<<dist<<endl;
+		   cout<<"DIS: "<<dis<<endl;
 		   distancia_recorrida=dist+dis; 
 		   punto_act=p_s[i]; 
 		   
@@ -1050,9 +1052,9 @@ class d_h
     public:
     
  void dev_hijo_c(nodo_c &padre_argumento,vector <vector<float>> &puntos,
-		float &distancia,int &contador_def){  
+		float dis,int &contador_def){  
 		
-		float dist,dis;
+		float dist;
 		int flag,valor;//,counter;
 		bal ret;vector<float> mul;
 		
@@ -1067,7 +1069,7 @@ class d_h
       padre.madura();
             
       
-      ret=padre.actu_padre(distancia,puntos);  
+      ret=padre.actu_padre(dis,puntos);  
 	  flag=0;
 	  for(int i=0 ; i < ret.camino_activo.size() ; i++){
 		if(flag==0 && ret.camino_activo[i]==1){
@@ -1138,14 +1140,14 @@ class d_n
     public:
     
  void des_nodo_c(nodo_c &padre_argumento, vector <vector<float>> &puntos,
-                 float &distancia,int &contador_def){  	
+                 float dis,int &contador_def){  	
 	 	
 		int salir,contador; //d_h aa; 
 		salir=0; contador=1; 
 		  
         
     while(salir==0){
-    aa.dev_hijo_c(padre_argumento,puntos,distancia,contador_def);
+    aa.dev_hijo_c(padre_argumento,puntos,dis,contador_def);
     
     cout<<endl;cout<<"PADRE: "<<endl; 
     aa.imprime_padre();

@@ -477,6 +477,10 @@ const vector<vector<float> > &dots,float dis,int counter){
 			salida.p.camino_activo[i]=0;
 			salida.p.escoge[i]=0;
 			dist=salida.p.camino[i];
+			
+			cout<<"DIST: "<<dist<<endl;
+		   cout<<"DIS: "<<dis<<endl;
+			
 			salida.h.distancia_recorrida=dist+dis; 
 			salida.h.punto_act=salida.p.punto_sig[i]; 
 			
