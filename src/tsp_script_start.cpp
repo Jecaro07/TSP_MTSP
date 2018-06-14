@@ -1144,7 +1144,7 @@ class d_n
 	 	
 		int salir,contador; //d_h aa; 
 		salir=0; contador=1; 
-		  
+		 a.clear(); 
         
     while(salir==0){
     aa.dev_hijo_c(padre_argumento,puntos,dis,contador_def);
@@ -1194,27 +1194,36 @@ class d_n
 	float &auxx,vector<float> &nodo_final,int &salir,
 	vector <float> &punto_final){
 		
-		int valor_compara; float vv;
+		int valor; float vv;
 		
 		//(*contador)=contador_;
 		v_n_maduros.push_back(p);
 		padre_argumento=a[0];
+		
+		cout<<endl;cout<<"AAAAA_SIZE: "<<a.size()<<endl;
+		
+		cout<<endl;cout<<"AAAAA_0: "<<endl;
+		a[0].imprime();
+		
+		cout<<endl;cout<<"AAAAA_1: "<<endl;
+		a[1].imprime();
 		
 		a[0].vuelca_distancia(distancia);
 
 		for (int j=0;j<a.size();j++){
 		nodo_desglosable.push_back(a[j]);}
 
-		a[0].devuelve_nivel(valor_compara);
+		a[0].devuelve_nivel(valor);
 		
-		cout<<"VALOR_COMPARA: "<<valor_compara<<endl;
-			
+		cout<<endl;
+		cout<<"VALOR_COMPARA: "<<valor<<endl;
+		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;	
 
 	
 		// valor_compara
 		
 		
-	if (valor_compara>=(tope+1)){
+	if (valor>=(tope+1)){
 	
 	for(int ii=0;ii<a.size();ii++){
 		

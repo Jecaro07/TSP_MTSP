@@ -569,7 +569,8 @@ cout<<endl; cout<< "SALIDA2.H: "<<endl;
 		mmm.imprimir_1(salida2.h.escoge);	
 
 contador=contador+1;
-devuelto.a.push_back (salida2.h);
+devuelto.a.push_back (salida2.h); // devuelto se resetea en cada
+								  // llamada de "DESGLOSA_NODO" 
 if(salida2.p.vivo==0){
 	salir=1;}
 padre=salida2.p;
@@ -710,8 +711,15 @@ else{
 		nodo_1=salida_dn.a[0];
 		distancia=salida_dn.a[0].distancia_recorrida;
 		
+		cout<<endl;cout<<"AAAAA_0: "<<salida_dn.a.size()<<endl;
+
+		
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
+		
+		cout<<endl;
+		cout<<"VALOR_COMPARA: "<<salida_dn.a[0].nivel<<endl;
+		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;
 		
 	if (salida_dn.a[0].nivel>=(tope+1)){
 	
@@ -735,6 +743,7 @@ else{
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
 	
+	cout<<"SALIR: "<<salir<<endl;
 	
 	cout<<"STARTTTTTT"<<endl;
 
@@ -757,6 +766,7 @@ else{
 		cout<<"escoge: "<<endl;
 		mmm.imprimir_1(nodo_1.escoge);	
 	
+	
 	cout<<"distancia: "<<distancia<<endl;
 	cout<<"counter: "<<counter<<endl;
 	
@@ -767,8 +777,16 @@ else{
 		nodo_1=salida_dn.a[0];
 		distancia=salida_dn.a[0].distancia_recorrida;
 		
+		cout<<endl;cout<<"AAAAA_0: "<<salida_dn.a.size()<<endl;
+		
+		
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
+		
+		cout<<endl;
+		cout<<"VALOR_COMPARA: "<<salida_dn.a[0].nivel<<endl;
+		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;	
+
 		
 	if (salida_dn.a[0].nivel>=(tope+1)){
 	
