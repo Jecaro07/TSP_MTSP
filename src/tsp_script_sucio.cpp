@@ -819,10 +819,12 @@ cout<< "NODO_PRE: "<<endl;
 mmm.imprimir_1(nodo_pre);
 
 
-/* comento
+
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
 
+	cout<< "v_n_maduros.size() "<< v_n_maduros.size()<<endl;
+	
 	
 	for (int i=0; i<v_n_maduros.size();i++){
 		
@@ -834,6 +836,9 @@ mmm.imprimir_1(nodo_pre);
 			v.push_back(v_n_maduros[i].indicador);
 		}// fin del "IF"
 	} // fin del "for"
+	
+	mmm.imprimir_1(v); 
+
 
 	flag=0;
 	for (int i=0; i<nodo_desglosable.size();i++){
@@ -847,9 +852,10 @@ mmm.imprimir_1(nodo_pre);
 		
 	}// FIN DEL "FOR"
 	
+ cout<<"INDICE: "<<flag<<endl;
  
 // FIN "REPETICION"
-
+/* comento
 	comento */
 }
 

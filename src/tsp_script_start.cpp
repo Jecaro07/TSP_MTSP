@@ -898,6 +898,44 @@ class nodo_c
         void devuelve_nivel(int &valor){
         valor=nivel;
 	 }
+	 
+	 
+	 /*
+	 	v_n_maduros[i].condicion_v_n_maduros_2(v,ind,INDICE,i);
+	
+	
+		if((nodo_desglosable[i].indicador>0) 
+		& (componente_rep(v,nodo_desglosable[i].indicador)==0) 
+		& (flag==0) & (nodo_desglosable[i].punto_sig.size()>0)){
+		
+		INDICE=i;
+		nodo_desglosable[i].indicador=0; flag=1;}
+		*/
+		
+	 void condicion_nodo_desglosable(vector <float> &v,float &ind,
+	       int &INDICE,int i, int &flag){
+			   
+        if((indicador>0) 
+		& (componente_rep(v,indicador)==0) 
+		& (flag==0) & (punto_sig.size()>0)){
+		
+		INDICE=i;
+		indicador=0; flag=1;}
+	 }	
+	 
+	 
+	 void condicion_v_n_maduros(vector <float> &v,float &ind){
+        if((indicador==0) 
+        || ((indicador)-(ind)<0)
+         || (componente_rep(v,indicador))){} 
+		
+		else{v.push_back(indicador);}
+		
+	 }
+	 
+	 void devuelve_indicador(float &ind){
+        ind=indicador;
+	 }
         
         void iguala(nodo_c padre_argumento){
 			
@@ -1332,7 +1370,7 @@ int main( int argc, char** argv ){
 
 vector <vector<float>> puntos;
 d_n bb; matriz_c m;nodo_c padre_argumento;
-int contador,contador_def,B=3;
+int contador,contador_def,B=3; float ind;
 
 //VARIABLES ENTRADA (BEGIN)
   int salir;
@@ -1426,20 +1464,25 @@ m.imprimir_1(nodo_pre);
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
 
-/*
 for (int i=0; i<v_n_maduros.size();i++){
+	v_n_maduros[i-1].devuelve_indicador(ind);
+	v_n_maduros[i].condicion_v_n_maduros(v,ind);	
+}
+
+m.imprimir_1(v);
+
+// HATA AQUÍ, BIEN.
+
+	flag=0;
+	for (int i=0; i<nodo_desglosable.size();i++){
+	
+	nodo_desglosable[i].condicion_nodo_desglosable(v,ind,
+	INDICE, i, flag);
 		
-		if((v_n_maduros[i].indicador==0) ||
-	 ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) 
-	 || (componente_rep(v,v_n_maduros[i].indicador))){	
-		} 
-		else{
-			v.push_back(v_n_maduros[i].indicador);
-		}// fin del "IF"
-	} // fin del "for"*/
+	}// FIN DEL "FOR"
 
 
-
+ cout<<"INDICE: "<<flag<<endl;
 
 
 
