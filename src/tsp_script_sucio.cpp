@@ -811,6 +811,14 @@ else{
 	
 	
 } // FIN DEL ELSE
+
+cout<<endl;
+cout<<endl; cout<< "NODO_FINAL: "<<endl;
+mmm.imprimir_1(nodo_final);
+cout<< "NODO_PRE: "<<endl;
+mmm.imprimir_1(nodo_pre);
+
+
 /* comento
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
@@ -818,7 +826,9 @@ else{
 	
 	for (int i=0; i<v_n_maduros.size();i++){
 		
-		if((v_n_maduros[i].indicador==0) || ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) || (componente_rep(v,v_n_maduros[i].indicador))){	
+		if((v_n_maduros[i].indicador==0) ||
+	 ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) 
+	 || (componente_rep(v,v_n_maduros[i].indicador))){	
 		} 
 		else{
 			v.push_back(v_n_maduros[i].indicador);

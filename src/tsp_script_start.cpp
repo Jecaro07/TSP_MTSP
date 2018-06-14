@@ -1200,13 +1200,14 @@ class d_n
 		v_n_maduros.push_back(p);
 		padre_argumento=a[0];
 		
+		/*
 		cout<<endl;cout<<"AAAAA_SIZE: "<<a.size()<<endl;
 		
 		cout<<endl;cout<<"AAAAA_0: "<<endl;
 		a[0].imprime();
 		
 		cout<<endl;cout<<"AAAAA_1: "<<endl;
-		a[1].imprime();
+		a[1].imprime();*/
 		
 		a[0].vuelca_distancia(distancia);
 
@@ -1394,7 +1395,7 @@ padre_argumento.ini_padre(puntos);
 
 else{
 	
-//	while(salir==0){ // COMIENZO DEL WHILE
+	while(salir==0){ // COMIENZO DEL WHILE
 	// desgloso los nodos del nivel inferior al que considero 
 	// y lo defino completamente	
 		bb.des_nodo_c(padre_argumento,puntos,distancia,contador_def); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
@@ -1403,33 +1404,14 @@ else{
 		
 		bb.vuelca_resultados_1(puntos,contador,v_n_maduros,padre_argumento,distancia,
 	    nodo_desglosable,tope,nodo_pre,c,r1,auxx,nodo_final,salir,punto_final);
+		
 				
-				
-		cout<<"SALIR: "<<salir<<endl; cout<<endl;
-		
-	cout<<"STARTTTTTT"<<endl;
-	cout<<"nodo_1: "<<endl;
-	padre_argumento.imprime();cout<<endl;
-	cout<<"distancia: "<<distancia<<endl;
-	cout<<"counter: "<<contador_def<<endl;
-		
-		
-		bb.des_nodo_c(padre_argumento,puntos,distancia,contador_def); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
-		
-		
-		
-		bb.vuelca_resultados_1(puntos,contador,v_n_maduros,padre_argumento,distancia,
-	    nodo_desglosable,tope,nodo_pre,c,r1,auxx,nodo_final,salir,punto_final);
-				
-				
-		cout<<"SALIR: "<<salir<<endl;		
-				
-//	} // FIN DEL WHILE
+	} // FIN DEL WHILE
 	
 	
 	
 } // FIN DEL ELSE
-/* comento
+
 
 
 cout<<endl;
@@ -1437,7 +1419,34 @@ cout<<endl; cout<< "NODO_FINAL: "<<endl;
 m.imprimir_1(nodo_final);
 cout<< "NODO_PRE: "<<endl;
 m.imprimir_1(nodo_pre);
-comento */ 
+
+
+// HATA AQUÍ, BIEN.
+
+// SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
+	// Recorremos los nodos desarrollados, "v_n_maduros"
+
+/*
+for (int i=0; i<v_n_maduros.size();i++){
+		
+		if((v_n_maduros[i].indicador==0) ||
+	 ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) 
+	 || (componente_rep(v,v_n_maduros[i].indicador))){	
+		} 
+		else{
+			v.push_back(v_n_maduros[i].indicador);
+		}// fin del "IF"
+	} // fin del "for"*/
+
+
+
+
+
+
+
+
+
+
 
 
 /*
