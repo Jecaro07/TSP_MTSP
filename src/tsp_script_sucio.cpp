@@ -527,6 +527,25 @@ salir=0; contador=1;
 
 salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
 
+cout<<endl; cout<< "SALIDA2.P: "<<endl;
+		cout<<"NIVEL: "<<salida2.p.nivel<<endl;  
+		cout<<"VIVO: "<<salida2.p.vivo<<endl;
+		cout<<"INDICADOR: "<<salida2.p.indicador<<endl;
+		cout<<"DEFINIDO: "<<salida2.p.definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<salida2.p.distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<salida2.p.punto_act<<endl;   
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(salida2.p.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(salida2.p.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(salida2.p.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(salida2.p.punto_sig);
+		cout<<"escoge: "<<endl;
+		mmm.imprimir_1(salida2.p.escoge);
+
+
 cout<<endl; cout<< "SALIDA2.H: "<<endl;
 		cout<<"NIVEL: "<<salida2.h.nivel<<endl;  
 		cout<<"VIVO: "<<salida2.h.vivo<<endl;
@@ -690,9 +709,6 @@ else{
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
 		
-			
-		
-	/* de momento	
 	if (salida_dn.a[0].nivel>=(tope+1)){
 	
 	for(int ii=0;ii<salida_dn.a.size();ii++){
@@ -711,9 +727,65 @@ else{
 				
 	//} // FIN DEL WHILE
 	
+	//while(salir==0){ // COMIENZO DEL WHILE
+	// desgloso los nodos del nivel inferior al que considero 
+	// y lo defino completamente	
+	
+	
+	cout<<"STARTTTTTT"<<endl;
+
+	cout<<"nodo_1: "<<endl; cout<<endl;
+	
+	cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
+		cout<<"VIVO: "<<nodo_1.vivo<<endl;
+		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
+		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
+		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
+		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
+		cout<<"camino: "<<endl;
+		mmm.imprimir_1(nodo_1.camino);
+		cout<<"camino_activo: "<<endl;
+		mmm.imprimir_1(nodo_1.camino_activo);
+		cout<<"recorrido: "<<endl;
+		mmm.imprimir_1(nodo_1.recorrido);
+		cout<<"punto_sig: "<<endl;
+		mmm.imprimir_1(nodo_1.punto_sig);
+		cout<<"escoge: "<<endl;
+		mmm.imprimir_1(nodo_1.escoge);	
+	
+	cout<<"distancia: "<<distancia<<endl;
+	cout<<"counter: "<<counter<<endl;
+	
+		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
+		
+		counter=salida_dn.contador;
+		v_n_maduros.push_back(salida_dn.p);
+		nodo_1=salida_dn.a[0];
+		distancia=salida_dn.a[0].distancia_recorrida;
+		
+		for (int j=0;j<salida_dn.a.size();j++){
+		nodo_desglosable.push_back(salida_dn.a[j]);}
+		
+	if (salida_dn.a[0].nivel>=(tope+1)){
+	
+	for(int ii=0;ii<salida_dn.a.size();ii++){
+		nodo_pre.push_back(salida_dn.a[ii].distancia_recorrida);
+		
+		
+		c[0]=salida_dn.a[ii].punto_act; 
+		
+		r1=cut_matrix(puntos2,c[0],-1);
+		auxx=norma(resta(r1,punto_final));
+		
+		nodo_final.push_back((salida_dn.a[ii].distancia_recorrida)+auxx);
+	} // FIN DEL FOR
+		salir=1;
+	} // FIN DEL IF
+				
+	//} // FIN DEL WHILE
 	
 	cout<<"SALIR: "<<salir<<endl;
-	de momento */
+	
 	
 	
 } // FIN DEL ELSE
