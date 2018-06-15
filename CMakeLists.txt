@@ -234,3 +234,10 @@ target_link_libraries(tsp_clases ${catkin_LIBRARIES})
 add_executable(mtsp_script_1 src/mtsp_script_1.cpp)
 target_link_libraries(mtsp_script_1 ${catkin_LIBRARIES})
 
+add_executable(tsp_script_start_2 src/tsp_script_start_2.cpp)
+target_link_libraries(tsp_script_start_2 ${catkin_LIBRARIES})
+
+
+
+#add_executable(matriz_c src/matriz_c.cpp)
+#target_link_libraries(matriz_c ${catkin_LIBRARIES})

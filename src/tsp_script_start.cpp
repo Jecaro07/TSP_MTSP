@@ -7,6 +7,8 @@
 #include <stack>
 #include <algorithm>
 
+#include "matriz_c.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -741,71 +743,7 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 	
 }
 
-class matriz_c
-{
-    private:
-        vector <vector <float>> m_copiar; // lo devuelvo en teoría
-        vector <vector <float>> m_llenar; // lo devuelvo en teoría
-    public:
-       
-       vector <vector <float>> reserva(int filas,int columnas) // USAR DESPUES DE COPIAR
-       {
-		   m_llenar.resize(filas);
-		   for(int i=0;i<m_llenar.size();i++){
-		  m_llenar[i].resize(columnas);				  
-		  }
-		  return m_llenar;
-        }
-        
-        
-        vector <vector <float>> llenar() // USAR DESPUES DE COPIAR
-       {
-		   float valor;
-		   for(int i=0;i<m_llenar.size();i++){
-          for(int j=0;j<m_llenar[i].size();j++){
-			  cout<<"Valor introducido: ";
-			  cin >> valor;cout<<endl;
-			  m_llenar[i][j]=valor;				  
-		  }
-		  }
-		  return m_llenar;
-        }
-       
-       
-       vector <vector <float>> copiar(vector <vector <float>> mat) // Mat es lo que yo pongo a la entrada
-       {
-		   // RESERVA MEMORIA 2X2
-		   m_copiar.resize(mat.size());
-          for(int i=0;i<m_copiar.size();i++){
-			  m_copiar[i].resize(mat[i].size());				  
-		  }
-		  
-		  for(int i=0;i<m_copiar.size();i++){
-          for(int j=0;j<m_copiar[i].size();j++){
-			  m_copiar[i][j]=mat[i][j];				  
-		  }
-		  }
-		  return m_copiar;
-        }
-		
-		
-       void imprimir_2(vector <vector <float>> a) // USAR DESPUES DE COPIAR
-       {
-           for(int i=0;i<a.size();i++){
-          for(int j=0;j<a[i].size();j++){
-			  cout<< a[i][j] <<" ";				  
-		  }
-		  cout<<endl;
-		  }cout<<endl;
-        } 
-        
-        void imprimir_1(vector <float> a) // USAR DESPUES DE COPIAR
-       {
-           for(int i=0;i<a.size();i++){
-			  cout<< a[i] <<" ";
-		  }cout<<endl;cout<<endl;
-        }
-};
+
 
 class nodo_c
 {
