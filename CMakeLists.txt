@@ -222,8 +222,8 @@ target_link_libraries(points_and_lines_6 ${catkin_LIBRARIES})
 add_executable(tsp_script src/tsp_script.cpp)
 target_link_libraries(tsp_script ${catkin_LIBRARIES})
 
-add_executable(tsp_script_start src/tsp_script_start.cpp)
-target_link_libraries(tsp_script_start ${catkin_LIBRARIES})
+#add_executable(tsp_script_start src/tsp_script_start.cpp)
+#target_link_libraries(tsp_script_start ${catkin_LIBRARIES})
 
 add_executable(tsp_script_sucio src/tsp_script_sucio.cpp)
 target_link_libraries(tsp_script_sucio ${catkin_LIBRARIES})
