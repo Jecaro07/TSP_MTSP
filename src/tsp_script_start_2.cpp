@@ -7,8 +7,6 @@
 #include <stack>
 #include <algorithm>
 
-#include "matriz_c.h"
-
 #include <fstream>
 #include <sstream>
 
@@ -22,9 +20,6 @@ using namespace std;
 int main( int argc, char** argv ){
 
   vector <vector <float>> whatever;	
-  matriz_c m;
-  
-  whatever=m.reserva(2,2);
  
   return 0; }
  
