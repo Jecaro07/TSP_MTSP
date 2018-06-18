@@ -10,14 +10,17 @@
 #include <stack>
 #include <algorithm>
 
-void split(const string &s, char delim, std::vector<string> &elems);
+#include "nodo_c.h"
+#include "structure_bal.h"
+
+void split(const std::string &s, char delim, std::vector<std::string> &elems);
 
 
-std::vector<string> split(const string &s, char delim);
+std::vector<std::string> split(const std::string &s, char delim);
 
 
- void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, std::vector<std::vector<float>> &puntos,
- std::vector<float> &punto_final);
+/* void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, std::vector<std::vector<float>> &puntos,
+ std::vector<float> &punto_final);*/
 
 std::vector<float> cut_matrix (const std::vector<std::vector<float> > &matriz,
 float fila,float columna);
@@ -70,8 +73,13 @@ int &flag);
 
 void imprimir_resultados(int cont_repeticion,int A, int B,
   std::vector<std::vector<float>> puntos_recorrido,
-  std::vector<std::vector<float>> puntos, vector<float> MINIMO,
+  std::vector<std::vector<float>> puntos,
+std::vector<float> MINIMO,
   std::vector<nodo> aux, int vital);
+
+ float es_ultimo_c(int &B, nodo_c n,
+	const std::vector<std::vector<float> > &dots, 
+	std::vector<float> punto_final); 
 
 
 #endif

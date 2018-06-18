@@ -21,10 +21,11 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
-
+/*
  void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, vector<vector<float>> &puntos,
  vector<float> &punto_final){
- 
+ std::string input_file = "";
+ std::ifstream myfile;
  int coordenadas,n_puntos;
   float pto;
   
@@ -32,7 +33,7 @@ vector<string> split(const string &s, char delim) {
     vector <string> words;
     vector <float> p_inicial;
     vector <vector<float>> p;
-  ifstream myfile;
+  
   myfile.open(input_file);
   if (myfile.is_open()){
 	  
@@ -113,6 +114,7 @@ vector<string> split(const string &s, char delim) {
    B=coordenadas; A=n_puntos; 
  
  }
+*/
 
 std::vector<float> cut_matrix (const vector<vector<float> > &matriz,float fila,float columna){
 	
@@ -305,6 +307,8 @@ float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector
 	}
 	return distancia;
 }
+
+
 
 
 
@@ -697,4 +701,14 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 	
 }
 
-    
+
+   float es_ultimo_c(int &B, nodo_c n,const vector<vector<float> > &dots, vector<float> punto_final){
+	
+	vector<float> c,r1;
+	float distancia;
+	r1.resize(B); c.resize(1); //numero de coordenadas
+	
+	n.es_ultimo(&distancia,r1,c,punto_final,dots);
+	
+	return distancia;
+} 

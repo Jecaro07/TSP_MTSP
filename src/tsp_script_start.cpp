@@ -7,8 +7,10 @@
 #include <stack>
 #include <algorithm>
 
+#include "clases/funciones.h" // ESTRUCTURAS
+
 #include "clases/matriz_c.h"
-#include "clases/nodo_c.h"
+#include "clases/nodo_c.h"  // ESTRUCTURA BAL
 //#include "clases/d_h.h"
 
 
@@ -18,38 +20,6 @@
 using namespace std;
  using std::vector;
 using namespace std;
-
-
-struct nodo {
-vector<float>  escoge;
-int nivel;
-int vivo;
-float indicador;
-int definido;
-float distancia_recorrida;
-float punto_act;
-vector<float> punto_sig;
-vector<float> camino;
-vector<float> camino_activo;
-vector<float> recorrido;
-} ;
-
-struct s_dev_hijo {
-struct nodo p;
-struct nodo h;
-int contador;
-} ;
-
-struct s_desg_nodo {
-vector<nodo> a;
-struct nodo p;
-int contador;
-} ;
-
-
-
-std::string input_file = "";
-
 
 
 
@@ -322,16 +292,6 @@ cout<< "VALOR COMPARA_1: "<< valor_compara <<endl; // VALOR BASURA: 1345534635
     
 };
 
-float es_ultimo_c(int &B, nodo_c n,const vector<vector<float> > &dots, vector<float> punto_final){
-	
-	vector<float> c,r1;
-	float distancia;
-	r1.resize(B); c.resize(1); //numero de coordenadas
-	
-	n.es_ultimo(&distancia,r1,c,punto_final,dots);
-	
-	return distancia;
-}
 
 
 int main( int argc, char** argv ){

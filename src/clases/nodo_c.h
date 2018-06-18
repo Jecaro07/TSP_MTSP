@@ -10,6 +10,7 @@
 #include <vector>
 #include <stack>
 #include <algorithm>
+
 #include "structure_bal.h"
 #include "funciones.h"
 
