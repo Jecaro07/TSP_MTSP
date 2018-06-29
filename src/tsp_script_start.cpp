@@ -12,6 +12,7 @@
 #include "clases/funciones.h" //
 #include "clases/nodo_c.h"    //
 
+#include "clases/d_h.h"    //
 
 //#include "clases/d_h.h"
 
@@ -33,6 +34,7 @@ n.es_ultimo(&distancia,r1,c,punto_final,dots);
 return distancia;
 }
 
+/*
  class d_h
 {
     private:
@@ -117,7 +119,7 @@ return distancia;
 		nodo_desglosable.push_back(padre_argumento);
 		}
 
-};
+}; */
 
 
 class d_n
