@@ -34,7 +34,7 @@ std::vector<float> resta(std::vector<float> r1,std::vector<float> r2);
 std::vector<float> ordena_vector(std::vector<float> v);
 
 
-std::vector<float> reordena_vector2(std::vector<float> v_original, 
+std::vector<float> reordena_vector2(std::vector<float> v_original,
 std::vector<float> v_ordenado, std::vector<float> v_a_cambiar);
 
 nodo ordena_nodo(nodo p);
@@ -77,10 +77,6 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 std::vector<float> MINIMO,
   std::vector<nodo> aux, int vital);
 
- float es_ultimo_c(int &B, nodo_c n,
-	const std::vector<std::vector<float> > &dots, 
-	std::vector<float> punto_final); 
 
 
 #endif
-
