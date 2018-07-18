@@ -8,13 +8,10 @@
 #include <algorithm>
 
 #include "clases/matriz_c.h"  // INDEPENDIENTE DE TODAS LAS DEMÁS CLASES
-
 #include "clases/funciones.h" //
 #include "clases/nodo_c.h"    //
-
-//#include "clases/d_h.h"    //
-
-//#include "clases/d_h.h"
+#include "clases/desglosa_hijo.h"    //
+#include "clases/desglosa_nodo.h"
 
 
 #include <fstream>
@@ -34,7 +31,7 @@ n.es_ultimo(&distancia,r1,c,punto_final,dots);
 return distancia;
 }
 
-
+/*
  class d_h
 {
     private:
@@ -120,8 +117,10 @@ return distancia;
 		}
 
 };
+*/
 
 
+/*
 class d_n
 {
     private:
@@ -129,7 +128,7 @@ class d_n
 		nodo_c p;
 		int contador; // antes; "contardor_"
 
-		d_h aa; // CREO QUE TENDRÍA QUE PONERLO.
+		desglosa_hijo aa; // CREO QUE TENDRÍA QUE PONERLO.
 
     public:
 
@@ -194,14 +193,6 @@ class d_n
 		v_n_maduros.push_back(p);
 		padre_argumento=a[0];
 
-		/*
-		cout<<endl;cout<<"AAAAA_SIZE: "<<a.size()<<endl;
-
-		cout<<endl;cout<<"AAAAA_0: "<<endl;
-		a[0].imprime();
-
-		cout<<endl;cout<<"AAAAA_1: "<<endl;
-		a[1].imprime();*/
 
 		a[0].vuelca_distancia(distancia);
 
@@ -241,69 +232,8 @@ class d_n
 
 		}
 
-
-/*	void vuelca_resultados_2(vector <vector<float>> puntos,int *contador, vector<nodo_c> *v_n_maduros,nodo_c *nodo_1,float *distancia,
-	vector<nodo_c> *nodo_desglosable,int tope,vector<float> *nodo_pre,vector<float> *c,vector<float> *r1,
-	float *auxx,vector<float> *nodo_final,int *salir,vector <float> *punto_final){
-
-		int valor_compara; float vv;
-		/*
-		(*contador)=contador_;
-		v_n_maduros->push_back(p);
-		(*nodo_1)=a[0];
-
-		// IMPRIMO CAMPOS DEL NODO a[0] (BEGIN)
-
-		cout<<"NODO A[0]: "<<endl; cout<<endl;
-		a[0].imprime();
-
-		// IMPRIMO CAMPOS DEL NODO a[0] (END)
-
-
-		// ANOTHER METHOD (DONE)
-		(*distancia)=a[0].vuelca_distancia(distancia);
-		// ANOTHER METHOD (DONE)
-
-		for (int j=0;j<a.size();j++){
-		nodo_desglosable->push_back(a[j]);}
-
-
-cout<< "VALOR COMPARA_1: "<< valor_compara <<endl; // VALOR BASURA: 1345534635
-
-		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (BEGIN)
-		a[0].devuelve_nivel(&valor_compara);
-		//MÉTODO PARA DEVOLVER UN VALOR CON EL QUE COMPARAR (END)
-
-	cout<< "TOPE: "<< tope <<endl;
-	cout<< "VALOR COMPARA_2: "<< valor_compara <<endl; // VALOR "0"
-
-
-		// valor_compara
-	if (valor_compara>=(tope+1)){
-
-	for(int ii=0;ii<a.size();ii++){
-
-		// ANOTHER METHOD (BEGIN)
-		vv=a[ii].f_nodo_pre(nodo_pre); // vv será c[0] por simplicidad
-		//c[0]=vv;
-		// ANOTHER METHOD (END)
-
-		(*r1)=cut_matrix(puntos,vv,-1);
-		(*auxx)=norma(resta(*r1,*punto_final));
-
-		// ANOTHER METHOD (BEGIN)
-	//	a[ii].f_nodo_final(&nodo_final,auxx);
-		// ANOTHER METHOD (END)
-
-	} // FIN DEL FOR
-		(*salir)=1;
-	} // FIN DEL IF
-		}
-
-	*/
-
 };
-
+*/
 
 
 int main( int argc, char** argv ){
@@ -315,7 +245,8 @@ int main( int argc, char** argv ){
   float f = 0.0;
 
 vector <vector<float>> puntos;
-d_n bb; matriz_c m;nodo_c padre_argumento;
+ matriz_c m;nodo_c padre_argumento;
+  desglosa_nodo bb;
 int contador,contador_def,B=3; float ind;
 
 //VARIABLES ENTRADA (BEGIN)
