@@ -249,7 +249,7 @@ vector <vector<float>> puntos;
 int contador,contador_def,B=3; float ind;
 
 //VARIABLES ENTRADA (BEGIN)
-  int salir;
+  int salir,vital;
   nodo_c nodo_1; // DE MOMENTO LO VOY A DEJAR (se supone que está vacío)
  vector<nodo_c> nodo_desglosable;
  int INDICE;
@@ -261,7 +261,7 @@ int tope; // CREO QUE NO HAY QUE QUITARLA
   vector<float> c;
    vector<float> r1;
 float auxx;
- vector<float> nodo_final;
+ vector<float> nodo_final, MINIMO;
   vector<float> v;
 int flag;
 //VARIABLES ENTRADA (END)
@@ -314,8 +314,6 @@ else{
 	// y lo defino completamente
 		bb.des_nodo_c(padre_argumento,puntos,distancia,contador_def); //salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
 
-
-
 		bb.vuelca_resultados_1(puntos,contador,v_n_maduros,padre_argumento,distancia,
 	    nodo_desglosable,tope,nodo_pre,c,r1,auxx,nodo_final,salir,punto_final);
 
@@ -335,7 +333,7 @@ cout<< "NODO_PRE: "<<endl;
 m.imprimir_1(nodo_pre);
 
 
-// HATA AQUÍ, BIEN.
+// HASTA AQUÍ, BIEN.
 
 // SECCION DE "REPETICION" ENCARGADA DE REFRESCAR ÍNDICE ENTRE ITERACIONES
 	// Recorremos los nodos desarrollados, "v_n_maduros"
@@ -358,14 +356,26 @@ m.imprimir_1(v);
 	}// FIN DEL "FOR"
 
 
- cout<<"INDICE: "<<flag<<endl;
+ cout<<"INDICE: "<<INDICE<<endl;
+
+
+ // ----------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------
+ // EMPIEZA "BUSCA RECORRIDO"
+
+ for (int i = 0; i < nodo_final.size(); i++) {
+ 	if(minimo(nodo_final)==nodo_final[i]){
+ 		vital=i;
+ 	}// fin del if
+ }// fin del "for"
+
+ std::cout<< "VITAL:"<< vital <<std::endl;
 
 
 
-
-
-
-
+ MINIMO.push_back(minimo(nodo_final));
 
 
 /*

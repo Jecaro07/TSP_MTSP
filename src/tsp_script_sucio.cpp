@@ -14,7 +14,7 @@ using namespace std;
  using std::vector;
 using namespace std;
 
-  
+
 struct nodo {
 vector<float>  escoge;
 int nivel;
@@ -65,17 +65,17 @@ class matriz_c
         vector <vector <float>> m_copiar; // lo devuelvo en teoría
         vector <vector <float>> m_llenar; // lo devuelvo en teoría
     public:
-       
+
        vector <vector <float>> reserva(int filas,int columnas) // USAR DESPUES DE COPIAR
        {
 		   m_llenar.resize(filas);
 		   for(int i=0;i<m_llenar.size();i++){
-		  m_llenar[i].resize(columnas);				  
+		  m_llenar[i].resize(columnas);
 		  }
 		  return m_llenar;
         }
-        
-        
+
+
         vector <vector <float>> llenar() // USAR DESPUES DE COPIAR
        {
 		   float valor;
@@ -83,40 +83,40 @@ class matriz_c
           for(int j=0;j<m_llenar[i].size();j++){
 			  cout<<"Valor introducido: ";
 			  cin >> valor;cout<<endl;
-			  m_llenar[i][j]=valor;				  
+			  m_llenar[i][j]=valor;
 		  }
 		  }
 		  return m_llenar;
         }
-       
-       
+
+
        vector <vector <float>> copiar(vector <vector <float>> mat) // Mat es lo que yo pongo a la entrada
        {
 		   // RESERVA MEMORIA 2X2
 		   m_copiar.resize(mat.size());
           for(int i=0;i<m_copiar.size();i++){
-			  m_copiar[i].resize(mat[i].size());				  
+			  m_copiar[i].resize(mat[i].size());
 		  }
-		  
+
 		  for(int i=0;i<m_copiar.size();i++){
           for(int j=0;j<m_copiar[i].size();j++){
-			  m_copiar[i][j]=mat[i][j];				  
+			  m_copiar[i][j]=mat[i][j];
 		  }
 		  }
 		  return m_copiar;
         }
-		
-		
+
+
        void imprimir_2(vector <vector <float>> a) // USAR DESPUES DE COPIAR
        {
            for(int i=0;i<a.size();i++){
           for(int j=0;j<a[i].size();j++){
-			  cout<< a[i][j] <<" ";				  
+			  cout<< a[i][j] <<" ";
 		  }
 		  cout<<endl;
 		  }cout<<endl;
-        } 
-        
+        }
+
         void imprimir_1(vector <float> a) // USAR DESPUES DE COPIAR
        {
            for(int i=0;i<a.size();i++){
@@ -128,102 +128,102 @@ class matriz_c
 
  void pedir_pantalla_f(int &cont_repeticion,int &A, int &B, vector<vector<float>> &puntos,
  vector<float> &punto_final){
- 
+
  int coordenadas,n_puntos;
   float pto;
-  
-  string line; 
+
+  string line;
     vector <string> words;
     vector <float> p_inicial;
     vector <vector<float>> p;
   ifstream myfile;
   myfile.open(input_file);
   if (myfile.is_open()){
-	  
-	// COORDENADAS  
+
+	// COORDENADAS
    getline (myfile,line) ;
 		words = split(line,' ');
 		coordenadas=stoi(words[1]);
-      //cout << coordenadas<< '\n';  
+      //cout << coordenadas<< '\n';
       words.clear();
     //cout<<endl;
-    
-    // PUNTOS_INTERMEDIOS 
+
+    // PUNTOS_INTERMEDIOS
     getline (myfile,line) ;
 		words = split(line,' ');
 		n_puntos=stoi(words[1]);
-      //cout << n_puntos<< '\n';  
+      //cout << n_puntos<< '\n';
       n_puntos=n_puntos+1;
       words.clear();
     //cout<<endl;
-    
+
     puntos.resize(n_puntos);
-    
-    
-    // PUNTO_INICIAL 
+
+
+    // PUNTO_INICIAL
     getline (myfile,line) ;
 		words = split(line,' ');
 	puntos[0].resize(coordenadas);
 	for (int j=0;j<puntos[0].size();j++){
 	puntos[0][j]=stof(words[j+1]);
-	//cout << puntos[0][j]<< '\n'; 
-	} 
+	//cout << puntos[0][j]<< '\n';
+	}
       words.clear();
     //cout<<endl;
-    
-    // PUNTO_FINAL 
+
+    // PUNTO_FINAL
     getline (myfile,line) ;
 		words = split(line,' ');
 	punto_final.resize(coordenadas);
 	for (int j=0;j<punto_final.size();j++){
 	punto_final[j]=stof(words[j+1]);
-	//cout << punto_final[j]<< '\n'; 
-	} 
-      words.clear(); 
+	//cout << punto_final[j]<< '\n';
+	}
+      words.clear();
     //cout<<endl;
-  
+
   // PUNTOS TRAYECTORIA
   getline (myfile,line);
-  
-  for(int i=0;i<(n_puntos-1);i++){	  
+
+  for(int i=0;i<(n_puntos-1);i++){
   getline (myfile,line) ;
 		words = split(line,' ');
 	puntos[i+1].resize(coordenadas);
 	for (int j=0;j<puntos[i+1].size();j++){
 	puntos[i+1][j]=stof(words[j]);
-	//cout << puntos[i+1][j]<< '\n'; 
-	} 
+	//cout << puntos[i+1][j]<< '\n';
+	}
       words.clear();
     //cout<<endl;
   }
-  
-  
-  // NUMERO DE REPETICIONES  
+
+
+  // NUMERO DE REPETICIONES
    getline (myfile,line) ;
 		words = split(line,' ');
 		cont_repeticion=stoi(words[1]);
-       //cout << cont_repeticion<< '\n';  
+       //cout << cont_repeticion<< '\n';
       words.clear();
     //cout<<endl;
-    
+
     myfile.close();
   }
 
-  else{ cout << "Unable to open file"; 
+  else{ cout << "Unable to open file";
 }
-  
-  
-   
-   B=coordenadas; A=n_puntos; 
- 
+
+
+
+   B=coordenadas; A=n_puntos;
+
  }
 
 std::vector<float> cut_matrix (const vector<vector<float> > &matriz,float fila,float columna){
-	
+
 	if (columna==-1){
 		vector<float> resultado;
 		resultado.resize(matriz[0].size());
-		for (int i = 0; i < matriz[0].size(); i++) {	
+		for (int i = 0; i < matriz[0].size(); i++) {
 		resultado[i] = matriz[fila][i];
 		}
 			return resultado;
@@ -242,19 +242,19 @@ std::vector<float> cut_matrix (const vector<vector<float> > &matriz,float fila,f
 }
 
 float minimo(std::vector<float> temp){
-	float y; 
+	float y;
 	float v[temp.size()]; float *p;
-	
+
 	for(int i=0;i<temp.size();i++){
-		
+
 		v[i]=temp[i];
 	}
-	
+
 	p=std::min_element(v,v+temp.size()) ;
 	y=*p;
 
 	return y;
- 
+
 }
 
 float norma(std::vector<float> u){
@@ -268,7 +268,7 @@ float norma(std::vector<float> u){
 vector<float> resta(vector<float> r1,vector<float> r2){
 	vector<float> res;
 	res.resize(r1.size());
-	
+
 	for(int i=0; i<r1.size();i++){
 		res[i]=r1[i]-r2[i];
 	}
@@ -281,7 +281,7 @@ vector<float> ordena_vector(vector<float> v){
 	v_.resize(v.size());
 	v_aux.resize(v.size());
 	contt=0; ; cont_=0;
-	
+
 	for(int j=0;j<lon;j++){
 		flag=0;
 
@@ -290,13 +290,13 @@ vector<float> ordena_vector(vector<float> v){
 			if(minimo(v)==v[i] && flag==0){
 				v_[cont_]=v[i];
 				flag=1; v[i]=0; cont_=cont_+1;
-				
+
 			}
-			
+
 		}
-		
+
 		for(int i=0;i<v.size();i++){
-		
+
 		if(v[i]==0){}
 		else{
 			v_aux.resize(v.size()-1);
@@ -312,7 +312,7 @@ vector<float> ordena_vector(vector<float> v){
 	}
 			return v_;
 
-	
+
 }
 
 
@@ -322,18 +322,18 @@ vector<float> reordena_vector2(vector<float> v_original, vector<float> v_ordenad
 
 	for(int i=0; i<v_original.size(); i++){
 	for(int j=0; j<v_ordenado.size(); j++){
-		
+
 		if(v_original[j]==v_ordenado[i] && flag==0){
-			
+
 			v_cambiado[i]=v_a_cambiar[j];
-			v_original[j]=-1; flag=1;			
+			v_original[j]=-1; flag=1;
 		}
-			
-	}	
-	flag=0;	
+
+	}
+	flag=0;
 	}
 	return v_cambiado;
-	
+
 	}
 
 
@@ -342,12 +342,12 @@ vector<float> reordena_vector2(vector<float> v_original, vector<float> v_ordenad
 nodo ordena_nodo(nodo p){
 	vector<float> auxiliar;
 	auxiliar.resize(p.camino.size());
-	
-	auxiliar=ordena_vector(p.camino);	
+
+	auxiliar=ordena_vector(p.camino);
 	p.punto_sig=reordena_vector2(p.camino,auxiliar,p.punto_sig);
 	p.camino_activo=reordena_vector2(p.camino,auxiliar,p.camino_activo);
-	
-	p.camino=auxiliar; 
+
+	p.camino=auxiliar;
 	return p;
 }
 
@@ -368,7 +368,7 @@ vector<float> refresca_auxiliar_f( vector<float> entrada){
 
 
 int devuelve_activo(std::vector<float> v){
-	
+
 	int res, flag=0;
 	for(int i=0;i<v.size();i++){
 		if(flag==0 && v[i]==1){
@@ -386,21 +386,21 @@ int componente_rep(vector<float> v,int numero){
 	int res=0;
 	for(int i=0;i<v.size();i++){
 		if(numero==v[i]){
-			res=1;}		
+			res=1;}
 	}// fin del "for"
 	return res;
 } // fin de "componente_rep"
 
 
 float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector<float> punto_final){
-	
+
 	vector<float> c,r1;
 	float distancia;
 	r1.resize(B); c.resize(1); //numero de coordenadas
-	
-	
+
+
 	if(n.punto_sig.size()==0){
-		c[0]=n.punto_act; 
+		c[0]=n.punto_act;
 		r1=cut_matrix(dots,c[0],-1);
 		distancia=norma(resta(r1,punto_final));
 	}
@@ -413,31 +413,31 @@ float es_ultimo(int &B, struct nodo n,const vector<vector<float> > &dots, vector
 
 struct s_dev_hijo devuelve_hijo (int &B, struct nodo padre,
 const vector<vector<float> > &dots,float dis,int counter){
-	struct s_dev_hijo salida; 
+	struct s_dev_hijo salida;
 	matriz_c m;
     vector<vector<float> > aux;
     int flag; float dist,distancia;
    	vector<float> mul,c,r1,r2;
-   	
+
    	//EMPIEZAN RESIZES
    	c.resize(2);
 	//r1.resize(B); r2.resize(B); //numero de coordenadas
-	
+
 	padre.camino.resize(padre.punto_sig.size());
 	padre.camino_activo.resize(padre.punto_sig.size());
 	padre.escoge.resize(padre.punto_sig.size());
 
    	//ACABAN RESIZES
-   	
+
    	salida.p=padre;
-	
+
 	salida.h.indicador=counter; counter=counter+1;
 	cout<<"INIDICADOR: "<<salida.h.indicador<<endl;
 	salida.h.nivel=1+salida.p.nivel;
 	salida.h.definido=0;
-		 
 
-	
+
+
 	if(salida.p.definido==1){}
 	else{
 		for(int i=0 ; i < salida.p.punto_sig.size() ; i++){
@@ -445,29 +445,29 @@ const vector<vector<float> > &dots,float dis,int counter){
 			 c[1]=salida.p.punto_sig[i];
 			r1=cut_matrix(dots,c[0],-1);
 	        r2=cut_matrix(dots,c[1],-1);
-	        
+
 	        cout<<"RESTA: "<<endl;
 			m.imprimir_1(resta(r1,r2));
 	        cout<<"NORMA_RESTA: "<< norma(resta(r1,r2)) <<endl;
-	        
+
 			 distancia=norma(resta(r1,r2));
 			salida.p.camino[i]=distancia;
 			salida.p.camino_activo[i]=1;
 
-		}//FIN DEL FOR 
-		salida.p.vivo=1;	
-		salida.p=ordena_nodo(salida.p);	
+		}//FIN DEL FOR
+		salida.p.vivo=1;
+		salida.p=ordena_nodo(salida.p);
 
 	}
-	
+
 	aux.resize(salida.p.camino_activo.size(), vector<float>(salida.p.camino_activo.size()));
 
-	for(int i=0 ; i < salida.p.camino_activo.size() ; i++){ 
+	for(int i=0 ; i < salida.p.camino_activo.size() ; i++){
 	for(int j=0 ; j < salida.p.camino_activo.size() ; j++){
 	 aux[i][j]=1;
 	}}
 
-	salida.p.escoge=cut_matrix(aux,0,-1); 
+	salida.p.escoge=cut_matrix(aux,0,-1);
 
 	flag=0;
 
@@ -477,42 +477,42 @@ const vector<vector<float> > &dots,float dis,int counter){
 			salida.p.camino_activo[i]=0;
 			salida.p.escoge[i]=0;
 			dist=salida.p.camino[i];
-			
+
 			cout<<"DIST: "<<dist<<endl;
 		   cout<<"DIS: "<<dis<<endl;
-			
-			salida.h.distancia_recorrida=dist+dis; 
-			salida.h.punto_act=salida.p.punto_sig[i]; 
-			
-		}
-		} 
 
-		
+			salida.h.distancia_recorrida=dist+dis;
+			salida.h.punto_act=salida.p.punto_sig[i];
+
+		}
+		}
+
+
 		if(devuelve_activo(salida.p.camino_activo)==0){
 			salida.p.vivo=0;
 		}
 		salida.p.definido=1;
-	
+
 	//MULTIPLICO ELEMENTO A ELEMENTO--->BEGIN
 	//se hace el resize
 	   	mul.resize(salida.p.escoge.size());
-	
-	for(int i=0 ; i < salida.p.escoge.size() ; i++){ 
+
+	for(int i=0 ; i < salida.p.escoge.size() ; i++){
 		mul[i]=salida.p.punto_sig[i]*salida.p.escoge[i];
 	}
-	
 
-	salida.h.punto_sig=refresca_auxiliar_f(mul);	
-	
+
+	salida.h.punto_sig=refresca_auxiliar_f(mul);
+
 	// REPASAR ESTAS DOS ÚLTIMAS LÍNEAS
-	salida.h.recorrido=salida.p.recorrido;	
-    salida.h.recorrido.push_back (salida.h.punto_act);	
-    
+	salida.h.recorrido=salida.p.recorrido;
+    salida.h.recorrido.push_back (salida.h.punto_act);
+
     // DEVUELVO LA SALIDA
     salida.contador=counter;
-   
+
     return salida;
-    
+
 }
 
 
@@ -532,12 +532,12 @@ salir=0; contador=1;
 salida2=devuelve_hijo(B,padre,puntos2,dis,contador_dh);
 
 cout<<endl; cout<< "SALIDA2.P: "<<endl;
-		cout<<"NIVEL: "<<salida2.p.nivel<<endl;  
+		cout<<"NIVEL: "<<salida2.p.nivel<<endl;
 		cout<<"VIVO: "<<salida2.p.vivo<<endl;
 		cout<<"INDICADOR: "<<salida2.p.indicador<<endl;
 		cout<<"DEFINIDO: "<<salida2.p.definido<<endl;
 		cout<<"DISTANCIA_RECORRIDA: "<<salida2.p.distancia_recorrida<<endl;
-		cout<<"PUNTO_ACT: "<<salida2.p.punto_act<<endl;   
+		cout<<"PUNTO_ACT: "<<salida2.p.punto_act<<endl;
 		cout<<"camino: "<<endl;
 		mmm.imprimir_1(salida2.p.camino);
 		cout<<"camino_activo: "<<endl;
@@ -551,12 +551,12 @@ cout<<endl; cout<< "SALIDA2.P: "<<endl;
 
 
 cout<<endl; cout<< "SALIDA2.H: "<<endl;
-		cout<<"NIVEL: "<<salida2.h.nivel<<endl;  
+		cout<<"NIVEL: "<<salida2.h.nivel<<endl;
 		cout<<"VIVO: "<<salida2.h.vivo<<endl;
 		cout<<"INDICADOR: "<<salida2.h.indicador<<endl;
 		cout<<"DEFINIDO: "<<salida2.h.definido<<endl;
 		cout<<"DISTANCIA_RECORRIDA: "<<salida2.h.distancia_recorrida<<endl;
-		cout<<"PUNTO_ACT: "<<salida2.h.punto_act<<endl;   
+		cout<<"PUNTO_ACT: "<<salida2.h.punto_act<<endl;
 		cout<<"camino: "<<endl;
 		mmm.imprimir_1(salida2.h.camino);
 		cout<<"camino_activo: "<<endl;
@@ -566,11 +566,11 @@ cout<<endl; cout<< "SALIDA2.H: "<<endl;
 		cout<<"punto_sig: "<<endl;
 		mmm.imprimir_1(salida2.h.punto_sig);
 		cout<<"escoge: "<<endl;
-		mmm.imprimir_1(salida2.h.escoge);	
+		mmm.imprimir_1(salida2.h.escoge);
 
 contador=contador+1;
 devuelto.a.push_back (salida2.h); // devuelto se resetea en cada
-								  // llamada de "DESGLOSA_NODO" 
+								  // llamada de "DESGLOSA_NODO"
 if(salida2.p.vivo==0){
 	salir=1;}
 padre=salida2.p;
@@ -588,45 +588,45 @@ return devuelto;
 
 
 void salida_desglosa_nodo(s_desg_nodo salida_dn){
-	
+
 	ROS_INFO("DESGLOSE, Y'ALL: ");
   ROS_INFO("\n");
-	
+
 ROS_INFO("CONTADOR: ");
-            cout << salida_dn.contador << " "; 
-  ROS_INFO("\n");	
-	
-	
+            cout << salida_dn.contador << " ";
+  ROS_INFO("\n");
+
+
 	 ROS_INFO("NIVEL HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].nivel << " ";
-        }   
+        }
   ROS_INFO("\n");
- 
+
   ROS_INFO("DEFINIDO HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].definido << " ";
-        }   
+        }
   ROS_INFO("\n");
-  
+
   ROS_INFO("DIS_RECORR. HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].distancia_recorrida << " ";
-        }   
+        }
   ROS_INFO("\n");
- 
+
    ROS_INFO("PUNTO ACT. HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].punto_act << " ";
-        }   
+        }
   ROS_INFO("\n");
-  
+
      ROS_INFO("INDICADOR HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].indicador << " ";
-        }   
+        }
   ROS_INFO("\n");
-  
+
      ROS_INFO("RECORRIDO HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
 	cout << "HIJO " << i << ": " ;
@@ -634,9 +634,9 @@ for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].recorrido[j] << " ";
 		}
 		ROS_INFO("\n");
-        }   
+        }
   ROS_INFO("\n");
-  
+
      ROS_INFO("PUNTO SIG. HIJOS: ");
 for (int i = 0; i < salida_dn.a.size(); i++) {
 	cout << "HIJO " << i << ": " ;
@@ -644,7 +644,7 @@ for (int i = 0; i < salida_dn.a.size(); i++) {
             cout << salida_dn.a[i].punto_sig[j] << " ";
 		}
 		ROS_INFO("\n");
-        }   
+        }
   ROS_INFO("\n");
 
   ROS_INFO("¿CUANTOS PUNTOS SIGUIENTES HAY?: ");
@@ -662,25 +662,25 @@ s_desg_nodo &salida_dn, float &counter, vector<nodo> &v_n_maduros,
 int &tope, vector<float> &nodo_pre, vector<float> &c, vector<float> &r1,
 float &auxx, vector<float> &nodo_final, vector<float> &v,
 int &flag){
-	
+
 	matriz_c mmm;
-	
-// EMPIEZA REPETICION 
- 
- // VARIABLES 
+
+// EMPIEZA REPETICION
+
+ // VARIABLES
  salir=0;
  nodo_1=nodo_desglosable[INDICE];  // en matlab pone nodo_desglosable[INDICE];
  distancia=nodo_1.distancia_recorrida;
- 
+
  /*
 cout<<endl; cout<< "NODO_1: "<<endl;
- 
-		cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
+
+		cout<<"NIVEL: "<<nodo_1.nivel<<endl;
 		cout<<"VIVO: "<<nodo_1.vivo<<endl;
 		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
 		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
 		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
-		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
+		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;
 		cout<<"camino: "<<endl;
 		mmm.imprimir_1(nodo_1.camino);
 		cout<<"camino_activo: "<<endl;
@@ -690,71 +690,71 @@ cout<<endl; cout<< "NODO_1: "<<endl;
 		cout<<"punto_sig: "<<endl;
 		mmm.imprimir_1(nodo_1.punto_sig);
 		cout<<"escoge: "<<endl;
-		mmm.imprimir_1(nodo_1.escoge);	
+		mmm.imprimir_1(nodo_1.escoge);
  */
- 
- 
+
+
  if(es_ultimo(B,nodo_desglosable[INDICE],puntos2,punto_final)>0){
  // no desgloso el nodo si está en el último nivel que quiero
 }
 
 else{
-	
+
 
 	//while(salir==0){ // COMIENZO DEL WHILE
-	// desgloso los nodos del nivel inferior al que considero 
-	// y lo defino completamente	
+	// desgloso los nodos del nivel inferior al que considero
+	// y lo defino completamente
 		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
-		
+
 		counter=salida_dn.contador;
 		v_n_maduros.push_back(salida_dn.p);
 		nodo_1=salida_dn.a[0];
 		distancia=salida_dn.a[0].distancia_recorrida;
-		
+
 		cout<<endl;cout<<"AAAAA_0: "<<salida_dn.a.size()<<endl;
 
-		
+
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
-		
+
 		cout<<endl;
 		cout<<"VALOR_COMPARA: "<<salida_dn.a[0].nivel<<endl;
 		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;
-		
+
 	if (salida_dn.a[0].nivel>=(tope+1)){
-	
+
 	for(int ii=0;ii<salida_dn.a.size();ii++){
 		nodo_pre.push_back(salida_dn.a[ii].distancia_recorrida);
-		
-		
-		c[0]=salida_dn.a[ii].punto_act; 
-		
+
+
+		c[0]=salida_dn.a[ii].punto_act;
+
 		r1=cut_matrix(puntos2,c[0],-1);
 		auxx=norma(resta(r1,punto_final));
-		
+
 		nodo_final.push_back((salida_dn.a[ii].distancia_recorrida)+auxx);
 	} // FIN DEL FOR
 		salir=1;
 	} // FIN DEL IF
-				
+
 	//} // FIN DEL WHILE
-	
+
 	//while(salir==0){ // COMIENZO DEL WHILE
-	// desgloso los nodos del nivel inferior al que considero 
-	// y lo defino completamente	
-	
+	// desgloso los nodos del nivel inferior al que considero
+	// y lo defino completamente
+
 	cout<<"SALIR: "<<salir<<endl;
-	
+
 	cout<<"STARTTTTTT"<<endl;
 
 	cout<<"nodo_1: "<<endl; cout<<endl;
-	
-	cout<<"NIVEL: "<<nodo_1.nivel<<endl;  
+
+	cout<<"NIVEL: "<<nodo_1.nivel<<endl;
 		cout<<"VIVO: "<<nodo_1.vivo<<endl;
 		cout<<"INDICADOR: "<<nodo_1.indicador<<endl;
 		cout<<"DEFINIDO: "<<nodo_1.definido<<endl;
 		cout<<"DISTANCIA_RECORRIDA: "<<nodo_1.distancia_recorrida<<endl;
-		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;   
+		cout<<"PUNTO_ACT: "<<nodo_1.punto_act<<endl;
 		cout<<"camino: "<<endl;
 		mmm.imprimir_1(nodo_1.camino);
 		cout<<"camino_activo: "<<endl;
@@ -764,52 +764,52 @@ else{
 		cout<<"punto_sig: "<<endl;
 		mmm.imprimir_1(nodo_1.punto_sig);
 		cout<<"escoge: "<<endl;
-		mmm.imprimir_1(nodo_1.escoge);	
-	
-	
+		mmm.imprimir_1(nodo_1.escoge);
+
+
 	cout<<"distancia: "<<distancia<<endl;
 	cout<<"counter: "<<counter<<endl;
-	
+
 		salida_dn=desglosa_nodo(B,nodo_1,puntos2,distancia,counter);
-		
+
 		counter=salida_dn.contador;
 		v_n_maduros.push_back(salida_dn.p);
 		nodo_1=salida_dn.a[0];
 		distancia=salida_dn.a[0].distancia_recorrida;
-		
+
 		cout<<endl;cout<<"AAAAA_0: "<<salida_dn.a.size()<<endl;
-		
-		
+
+
 		for (int j=0;j<salida_dn.a.size();j++){
 		nodo_desglosable.push_back(salida_dn.a[j]);}
-		
+
 		cout<<endl;
 		cout<<"VALOR_COMPARA: "<<salida_dn.a[0].nivel<<endl;
-		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;	
+		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;
 
-		
+
 	if (salida_dn.a[0].nivel>=(tope+1)){
-	
+
 	for(int ii=0;ii<salida_dn.a.size();ii++){
 		nodo_pre.push_back(salida_dn.a[ii].distancia_recorrida);
-		
-		
-		c[0]=salida_dn.a[ii].punto_act; 
-		
+
+
+		c[0]=salida_dn.a[ii].punto_act;
+
 		r1=cut_matrix(puntos2,c[0],-1);
 		auxx=norma(resta(r1,punto_final));
-		
+
 		nodo_final.push_back((salida_dn.a[ii].distancia_recorrida)+auxx);
 	} // FIN DEL FOR
 		salir=1;
 	} // FIN DEL IF
-				
+
 	//} // FIN DEL WHILE
-	
+
 	cout<<"SALIR: "<<salir<<endl;
-	
-	
-	
+
+
+
 } // FIN DEL ELSE
 
 cout<<endl;
@@ -824,36 +824,39 @@ mmm.imprimir_1(nodo_pre);
 	// Recorremos los nodos desarrollados, "v_n_maduros"
 
 	cout<< "v_n_maduros.size() "<< v_n_maduros.size()<<endl;
-	
-	
+
+
 	for (int i=0; i<v_n_maduros.size();i++){
-		
+
 		if((v_n_maduros[i].indicador==0) ||
-	 ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0) 
-	 || (componente_rep(v,v_n_maduros[i].indicador))){	
-		} 
+	 ((v_n_maduros[i].indicador)-(v_n_maduros[i-1].indicador)<0)
+	 || (componente_rep(v,v_n_maduros[i].indicador))){
+		}
 		else{
 			v.push_back(v_n_maduros[i].indicador);
 		}// fin del "IF"
 	} // fin del "for"
-	
-	mmm.imprimir_1(v); 
 
+	mmm.imprimir_1(v);
+
+// HASTA AQUÍ BIEN
 
 	flag=0;
 	for (int i=0; i<nodo_desglosable.size();i++){
-	
-		if((nodo_desglosable[i].indicador>0) & (componente_rep(v,nodo_desglosable[i].indicador)==0) & (flag==0) & (nodo_desglosable[i].punto_sig.size()>0)){
-		
+
+		if((nodo_desglosable[i].indicador>0) &
+    (componente_rep(v,nodo_desglosable[i].indicador)==0) &
+    (flag==0) & (nodo_desglosable[i].punto_sig.size()>0)){
+
 		INDICE=i;
 		nodo_desglosable[i].indicador=0; flag=1;
-		
+
 		}// FIN DEL "IF"
-		
+
 	}// FIN DEL "FOR"
-	
- cout<<"INDICE: "<<flag<<endl;
- 
+
+ cout<<"INDICE: "<<INDICE<<endl;
+
 // FIN "REPETICION"
 /* comento
 	comento */
@@ -863,12 +866,12 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
   vector<vector<float>> puntos_recorrido,
   vector<vector<float>> puntos, vector<float> MINIMO,
   vector<nodo> aux, int vital){
-	
+
 	cout << "DATOS DE ENTRADA " << endl;
   cout << "Espacio " << B << "D " << endl;
   cout << "Número de repeticiones: " << cont_repeticion << endl;
 
-  
+
   cout << "Ciudad inicio= [ " ;
 	for (int i = 0; i < B; i++) {
 		if(i==(B-1)){
@@ -876,10 +879,10 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 		}
 		else{
             cout << puntos_recorrido[0][i] << ", ";
-        }   
+        }
 	}
   cout << endl;
-  
+
     cout << "Ciudad destino= [ " ;
 	for (int i = 0; i < B; i++) {
 		if(i==(B-1)){
@@ -887,14 +890,14 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 		}
 		else{
             cout << puntos_recorrido[A][i] << ", ";
-        }   
+        }
 	}
   cout << endl;
-  
+
   cout << "Ciudades intermedias ( " << (A-1) << " )"<< endl;
 	for (int i = 1; i < A; i++) {
 		for (int j=0; j<B;j++){
-			
+
 		if(j==0){
 			cout << "  " << i << ": [ " << puntos[i][j] << ", ";
 		}
@@ -904,31 +907,31 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 			}
 			else{
 			cout << puntos[i][j] << ", ";
-			}   
+			}
 		}}
 	}
-  
-  
+
+
   cout << endl;
-  
+
   cout << "DATOS DE SALIDA " << endl;
-  cout << "Distancia recorrida: " << MINIMO[0] << " uds" << endl;     
-  cout << "Recorrido " << endl;     
+  cout << "Distancia recorrida: " << MINIMO[0] << " uds" << endl;
+  cout << "Recorrido " << endl;
        for (int i = 0; i < (A+1); i++) {
 		for (int j=0; j<B;j++){
-			
+
 		if(j==0){
 			if((i==0) || (i==A)){
 			cout <<"      [ " << puntos_recorrido[i][j] << ", ";
 		    }
 		    else{
-			cout <<"  " << aux[0].recorrido[i] << ":  [ " << puntos_recorrido[i][j] << ", ";				
+			cout <<"  " << aux[0].recorrido[i] << ":  [ " << puntos_recorrido[i][j] << ", ";
 			}
 		}
-		
+
 		else {
 			if(j==(B-1)){
-				
+
 			if (i==0){
             cout << puntos_recorrido[i][j] << " ]   INICIO  (PUNTO BLANCO)" << endl;
 		    }
@@ -938,7 +941,7 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
 		    if (i>0 && i<A){
             cout << puntos_recorrido[i][j] << " ]   (PUNTO VERDE)" << endl;
 		    }
-            
+
             if(i<A){
 				if(B==3){
             cout <<"           | " << endl;
@@ -951,16 +954,16 @@ void imprimir_resultados(int cont_repeticion,int A, int B,
             cout <<"         | " << endl;
             cout <<"         V " << endl;}
 		    }
-			
+
 			}
 			else{
 			cout << puntos_recorrido[i][j] << ", ";
-			}   
+			}
 		}}
 	}
-   cout << "Óptimo alcanzado en iteración: " << (vital+1) << endl; 
+   cout << "Óptimo alcanzado en iteración: " << (vital+1) << endl;
    cout << endl;
-	
+
 }
 
 
@@ -978,12 +981,12 @@ ros::init(argc, argv, "tsp_script");
   ros::NodeHandle n;
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
   ros::Rate r(30);
-  float f = 0.0; 
+  float f = 0.0;
 
 int A,B,cont_repeticion;
    vector<vector<float>> puntos,fff;
    vector<float> punto_final;
-  
+
 vector<vector<float>> puntos_recorrido;
 s_dev_hijo salida,salida2,sss;
 s_desg_nodo salida_dn,ss;
@@ -1020,10 +1023,10 @@ B=3;A=3;
 puntos=mmm.reserva(A,B);
       puntos=mmm.llenar();
       mmm.imprimir_2(puntos);
-      
+
 // INICIALIZAR Y LLENAR "PUNTO_FINAL"
 
-punto_final.resize(B); 
+punto_final.resize(B);
 punto_final[0]=13;
 punto_final[1]=4;
 punto_final[2]=6;
@@ -1032,7 +1035,7 @@ punto_final[2]=6;
 uno_tal.resize(1);
 dos_tal.resize(puntos.size()-1);
 
- r2.resize(B); c.resize(1); 
+ r2.resize(B); c.resize(1);
 
 
 for (int j=0;j<puntos.size()-1;j++){
@@ -1050,18 +1053,18 @@ padre.distancia_recorrida=0;
 padre.punto_act=0;
 padre.indicador=0;
  padre.recorrido=uno_tal;
- padre.punto_sig=dos_tal; 
+ padre.punto_sig=dos_tal;
 
 
-// DATOS PREVIOS A "REPETICION" 
+// DATOS PREVIOS A "REPETICION"
  counter=0;
   distancia=nodo_1.distancia_recorrida;
-  salir=0; 
+  salir=0;
  nodo_desglosable.push_back(padre);
  INDICE=0;
  tope=puntos.size()-1;
- 
- 
+
+
 //salida_dn=desglosa_nodo(B,padre,puntos,0,0);
 
 repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
@@ -1070,90 +1073,15 @@ tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
 
 //cout<<endl;cout<< "TOPE: "<< tope <<endl;
 
-
-
-
-/*
-cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.size()<<endl;cout<<endl;
-
-cout<< "nodo_desglosable[0].punto_sig: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[0].punto_sig);
-
-cout<< "nodo_desglosable[1].punto_sig: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[1].punto_sig);
-
-cout<< "nodo_desglosable[2].punto_sig: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[2].punto_sig);
-
-cout<< "nodo_desglosable[3].punto_sig: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[3].punto_sig);
-
-cout<< "nodo_desglosable[0].recorrido: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[0].recorrido);
-
-cout<< "nodo_desglosable[1].recorrido: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[1].recorrido);
-
-cout<< "nodo_desglosable[2].recorrido: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[2].recorrido);
-
-cout<< "nodo_desglosable[3].recorrido: "<<endl;cout<<endl;
-mmm.imprimir_1(nodo_desglosable[3].recorrido);
-*/
-/*
-cout<< "nodo_desglosable[1].punto_sig: "<<endl;
-mmm.imprimir_2(nodo_desglosable[1].punto_sig);
-
-cout<< "nodo_desglosable[2].punto_sig: "<<endl;
-mmm.imprimir_2(nodo_desglosable[2].punto_sig);
-
-cout<< "nodo_desglosable[3].punto_sig: "<<endl;
-mmm.imprimir_2(nodo_desglosable[3].punto_sig);   */
-
-//cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.punto_sig.size()<<endl;cout<<endl;
-//cout<< "TAMAÑO NODO DESGLOSABLE: "<<nodo_desglosable.recorrido.size()<<endl;
-
-
-
-/*
-		cout<<"PADRE: "<<endl;
-		cout<<"camino: "<<endl;
-		mmm.imprimir_1(salida_dn.p.camino);
-		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(salida_dn.p.camino_activo);
-		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(salida_dn.p.recorrido);
-		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(salida_dn.p.punto_sig);
-		
-		
-        cout<<"TAMAÑO DE A: "<< salida_dn.a.size()<<endl;
-		
-		cout<<"HIJO_1: "<<endl;
-		cout<<"camino: "<<endl;
-		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].camino);
-		cout<<"camino_activo: "<<endl;
-		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].camino_activo);
-		cout<<"recorrido: "<<endl;
-		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].recorrido);
-		cout<<"punto_sig: "<<endl;
-		mmm.imprimir_1(salida_dn.a[salida_dn.a.size()-1].punto_sig);
-		*/
-		
- 
- 
- // EMPIEZA REPETICION
- /*
- for(int xz=0;xz<cont_repeticion;xz++){
- 
- repeticion(B,salir,nodo_1,nodo_desglosable,INDICE,distancia,
-puntos, punto_final,salida_dn, counter, v_n_maduros,
-tope, nodo_pre, c, r1,auxx, nodo_final, v,flag);
-
-}
-
-
-
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // EMPIEZA "BUSCA RECORRIDO"
 
 for (int i = 0; i < nodo_final.size(); i++) {
@@ -1162,13 +1090,19 @@ for (int i = 0; i < nodo_final.size(); i++) {
 	}// fin del if
 }// fin del "for"
 
+std::cout<< "VITAL:"<< vital <<std::endl;
+
+
 MINIMO.push_back(minimo(nodo_final));
+/*
+// -----------------------------------------------------------------------------
+// ------------EMPIEZA COMENTARIO DE BUSCA RECORRIDO----------------------------
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 errorr=pow(10,-4);
 
-
 // INICIO DEPURAR
-
 
 for(int i=0; i<nodo_desglosable.size(); i++){
  for (int j=0; j<nodo_desglosable[i].punto_sig.size();j++){
@@ -1193,18 +1127,18 @@ cout<<endl;
 // FIN DEPURAR
 
 for(int i=0; i<nodo_desglosable.size(); i++){
-	
+
 	distancia=norma(resta(punto_final,cut_matrix(puntos,nodo_desglosable[i].punto_act,-1)));
-	
+
 	c11= nodo_desglosable[i].punto_sig.size()==0;
-	c1= nodo_desglosable[i].nivel==(tope+1); 
+	c1= nodo_desglosable[i].nivel==(tope+1);
 	c2=distancia-(nodo_final[vital]-nodo_pre[vital])<errorr;
 	c3=nodo_desglosable[i].distancia_recorrida==nodo_pre[vital];
-	
-	if (c1 && c2 && c3){		
-		aux.push_back(nodo_desglosable[i]);	  
+
+	if (c1 && c2 && c3){
+		aux.push_back(nodo_desglosable[i]);
 	}// fin del if
-	
+
 }// fin del for
 
 // DEPURAR
@@ -1219,8 +1153,8 @@ for(int i=0; i<aux.size(); i++){
 }
 cout<<endl;
 
-cout<< "TOPE: "<< tope <<endl; 
-cout<< "VITAL: "<< vital <<endl; 
+cout<< "TOPE: "<< tope <<endl;
+cout<< "VITAL: "<< vital <<endl;
 //
 
 if(aux.size()>1){
@@ -1231,15 +1165,15 @@ if(aux.size()>1){
 
 // EN CUALQUIER CASO, AUX TENDRÁ DIMENSIÓN 1
 
-  cout << endl;	
+  cout << endl;
   cout << "RECORRIDO CIUDADES INTERMEDIAS: " << endl;
 	for (int j = 1; j < aux[0].recorrido.size(); j++) {
             cout << aux[0].recorrido[j] << " ";
-        }   
+        }
   cout << endl;cout << endl;
-  
-  
-  // AHORA SOLO ME FALTA VOLCAR EN "PUNTOS_RECORRIDO" 
+
+
+  // AHORA SOLO ME FALTA VOLCAR EN "PUNTOS_RECORRIDO"
   // LOS PUNTOS EN EL ORDEN EN EL QUE SE UNIRÁN EN RVIZ (puntos2(ordenado) + punto_final)
 
 puntos_recorrido.resize(A+1);
@@ -1251,21 +1185,23 @@ for (int i = 0; i < (A); i++) {
 		puntos_recorrido[i][j]=puntos[aux[0].recorrido[i]][j];
 		}
         }
-                
-        puntos_recorrido[A].resize(B); 
+
+        puntos_recorrido[A].resize(B);
         for (int j = 0; j < (B); j++) {
 		puntos_recorrido[A][j]=punto_final[j];
-		}  
-   
-// IMPRIMO RESULTADOS POR PANTALLA   
-       
+		}
+
+// IMPRIMO RESULTADOS POR PANTALLA
+
  imprimir_resultados(cont_repeticion,A,B,puntos_recorrido,puntos,MINIMO,
    aux,vital);
-       
-       
-//FIN PRUEBAS
 
-  */
+
+*/
+// ---------------------------------------------------------------------
+// ---------------------FINAL DE BUSCO RECORRIDO------------------------
+// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 
 
 /*
@@ -1273,7 +1209,7 @@ for (int i = 0; i < (A); i++) {
   {
 
     visualization_msgs::Marker points ,pf, po, line_strip, line_list;
-    
+
     po.header.frame_id =pf.header.frame_id =points.header.frame_id = line_strip.header.frame_id = line_list.header.frame_id = "/my_frame";
     po.header.stamp =pf.header.stamp =points.header.stamp = line_strip.header.stamp = line_list.header.stamp = ros::Time::now();
     po.ns =pf.ns =points.ns = line_strip.ns = line_list.ns = "tsp_script";
@@ -1288,7 +1224,7 @@ for (int i = 0; i < (A); i++) {
 
 
 
-    points.type = visualization_msgs::Marker::POINTS; 
+    points.type = visualization_msgs::Marker::POINTS;
     po.type = visualization_msgs::Marker::POINTS;
     pf.type = visualization_msgs::Marker::POINTS;
     line_strip.type = visualization_msgs::Marker::LINE_STRIP;
@@ -1299,10 +1235,10 @@ for (int i = 0; i < (A); i++) {
     // POINTS markers use x and y scale for width/height respectively
     points.scale.x = 0.2;
     points.scale.y = 0.2;
-    
+
     po.scale.x = 0.2;
     po.scale.y = 0.2;
-    
+
     pf.scale.x = 0.2;
     pf.scale.y = 0.2;
 
@@ -1315,18 +1251,18 @@ for (int i = 0; i < (A); i++) {
     // Ciudades intermedias verdes
     points.color.g = 1.0f;
     points.color.a = 1.0;
-    
+
     // Ciudad partida blanca
     po.color.r = 1.0f;
     po.color.g = 1.0f;
     po.color.b = 1.0f;
     po.color.a = 1.0;
-    
+
     // Ciudad destino roja
     pf.color.r = 1.0f;
     pf.color.a = 1.0;
-    
-    
+
+
 
     // Line strip is blue
     line_strip.color.b = 1.0;
@@ -1336,7 +1272,7 @@ for (int i = 0; i < (A); i++) {
     line_list.color.r = 1.0;
     line_list.color.a = 1.0;
 
-      
+
 
 
     // Create the vertices for the points and lines
@@ -1345,11 +1281,11 @@ for (int i = 0; i < (A); i++) {
       geometry_msgs::Point p;
       p.x = (float)puntos_recorrido[i][0] ;
       p.y = (float)puntos_recorrido[i][1] ;
-      
+
       if(B==3){
      p.z = (float)puntos_recorrido[i][2];
 	}
-	
+
 	if(i==0){
       po.points.push_back(p);
       line_strip.points.push_back(p);
@@ -1376,4 +1312,4 @@ for (int i = 0; i < (A); i++) {
   }
   */
   return 0;
- } 
+ }
