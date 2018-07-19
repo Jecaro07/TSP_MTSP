@@ -11,7 +11,7 @@
 #include "clases/funciones.h" //
 #include "clases/nodo_c.h"    //
 #include "clases/desglosa_hijo.h"    //
-#include "clases/desglosa_nodo.h"
+#include "clases/des_nodo.h"
 
 
 #include <fstream>
@@ -19,7 +19,6 @@
 
 using namespace std;
  using std::vector;
-using namespace std;
 
 float es_ultimo_c(int &B, nodo_c n,const vector<vector<float> > &dots, vector<float> punto_final){
 
@@ -245,8 +244,8 @@ int main( int argc, char** argv ){
   float f = 0.0;
 
 vector <vector<float>> puntos;
- matriz_c m;nodo_c padre_argumento;
-  desglosa_nodo bb;
+ matriz_c m; nodo_c padre_argumento;
+  des_nodo bb;
 int contador,contador_def,B=3; float ind;
 
 //VARIABLES ENTRADA (BEGIN)

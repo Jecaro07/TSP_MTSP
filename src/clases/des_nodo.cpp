@@ -1,14 +1,15 @@
+
 #include "matriz_c.h"
 #include "nodo_c.h"
 #include "desglosa_hijo.h"
-#include "desglosa_nodo.h"
+#include "des_nodo.h"
 
 using namespace std;
  using std::vector;
 
 
 
-    void desglosa_nodo::des_nodo_c(nodo_c &padre_argumento, vector <vector<float>> &puntos,
+ void des_nodo::des_nodo_c(nodo_c &padre_argumento, vector <vector<float>> &puntos,
                  float dis,int &contador_def){
 
 		int salir,contador; //d_h aa;
@@ -45,18 +46,18 @@ using namespace std;
     //POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
      }
 
-     void desglosa_nodo::inicializo(vector <vector<float>> puntos){
+     void des_nodo::inicializo(vector <vector<float>> puntos){
 		aa.inicializo(puntos);
 
 		}
 
-	 void desglosa_nodo::llena_nodo_des(vector <nodo_c> &nodo_desglosable
+	 void des_nodo::llena_nodo_des(vector <nodo_c> &nodo_desglosable
 	 ,nodo_c &padre_argumento){
 	    aa.llena_nodo_des(nodo_desglosable,padre_argumento);
 		}
 
 
-	void desglosa_nodo::vuelca_resultados_1(vector <vector<float>> puntos,int &contador,
+	void des_nodo::vuelca_resultados_1(vector <vector<float>> puntos,int &contador,
 	 vector<nodo_c> &v_n_maduros,nodo_c &padre_argumento,float &distancia,
 	vector<nodo_c> &nodo_desglosable,int tope,vector<float> &nodo_pre,
 	vector<float> &c,vector<float> &r1,
