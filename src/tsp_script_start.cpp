@@ -7,19 +7,19 @@
 #include <stack>
 #include <algorithm>
 
-#include "clases/matriz_c.h"  // INDEPENDIENTE DE TODAS LAS DEMÁS CLASES
-#include "clases/funciones.h" //
-#include "clases/nodo_c.h"    //
-#include "clases/desglosa_hijo.h"    //
-#include "clases/des_nodo.h"
-
+#include "mtsp_files/clases/matriz_c.h"  // INDEPENDIENTE DE TODAS LAS DEMÁS CLASES
+#include "mtsp_files/clases/funciones.h" //
+#include "mtsp_files/clases/nodo_c.h"    //
+#include "mtsp_files/clases/desglosa_hijo.h"    //
+#include "mtsp_files/clases/des_nodo.h"
+#include "mtsp_files/clases/cabecera_esultimo.h"
 
 #include <fstream>
 #include <sstream>
 
 using namespace std;
  using std::vector;
-
+/*
 float es_ultimo_c(int &B, nodo_c n,const vector<vector<float> > &dots, vector<float> punto_final){
 
 vector<float> c,r1;
@@ -28,211 +28,9 @@ r1.resize(B); c.resize(1); //numero de coordenadas
 n.es_ultimo(&distancia,r1,c,punto_final,dots);
 
 return distancia;
-}
+}*/
 
-/*
- class d_h
-{
-    private:
-        nodo_c padre;
-        nodo_c hijo;
-        int contador;
 
-    public:
-
- void dev_hijo_c(nodo_c &padre_argumento,vector <vector<float>> &puntos,
-		float dis,int &contador_def){
-
-		float dist;
-		int flag,valor;//,counter;
-		bal ret;vector<float> mul;
-
-	//
-      //padre.ini_padre(puntos);	// SOLO LO PONGO LA PRIMERA VEZ QUE LLAMO "DEVUELVE_HIJO"
-
-      padre_argumento.devuelve_nivel(valor);
-
-      hijo.ini_hijo(contador_def,valor);
-
-      padre=padre_argumento;
-      padre.madura();
-
-
-      ret=padre.actu_padre(dis,puntos);
-	  flag=0;
-	  for(int i=0 ; i < ret.camino_activo.size() ; i++){
-		if(flag==0 && ret.camino_activo[i]==1){
-			flag=1;
-			dist=padre.actu_padre_2(i);
-			hijo.actu_hijo(dist,dis,ret.punto_sig,i);}}
-
-	  mul=padre.actu_padre_3();
-	  hijo.actu_hijo_2(mul,ret.recorrido);
-    //  contador=contador_def;
-	//  padre.imprime();	 hijo.imprime();
-
-		}
-
-  void imprime_hijo()
-       {
-		hijo.imprime();
-        }
-
-  void imprime_padre()
-       {
-		padre.imprime();
-        }
-
-
-  void inicializo(vector <vector<float>> puntos){
-		padre.ini_padre(puntos);
-		}
-
-  void vuelca_contador(int *contador_){
-		(*contador_)=contador;
-		}
-
-
-
-  void funcion(vector <nodo_c> &a,int &salir,nodo_c &padre_argumento){
-		a.push_back(hijo);
-
-		//cout<<"PRIMERA VEZ A[0]: "<<endl;
-		//a[0]->imprime();
-
-		padre.funcion(salir);  // esta bien??
-		padre_argumento=padre;    // SALIDA "DEV_HIJO"
-
-		}
-
-
-	void funcion2(int *contador_){
-		(*contador_)=contador;
-		}
-
-	void llena_nodo_des(vector <nodo_c> &nodo_desglosable
-	,nodo_c &padre_argumento){
-		nodo_desglosable.push_back(padre_argumento);
-		}
-
-};
-*/
-
-
-/*
-class d_n
-{
-    private:
-        vector <nodo_c> a;
-		nodo_c p;
-		int contador; // antes; "contardor_"
-
-		desglosa_hijo aa; // CREO QUE TENDRÍA QUE PONERLO.
-
-    public:
-
- void des_nodo_c(nodo_c &padre_argumento, vector <vector<float>> &puntos,
-                 float dis,int &contador_def){
-
-		int salir,contador; //d_h aa;
-		salir=0; contador=1;
-		 a.clear();
-
-    while(salir==0){
-    aa.dev_hijo_c(padre_argumento,puntos,dis,contador_def);
-
-    cout<<endl;cout<<"PADRE: "<<endl;
-    aa.imprime_padre();
-
-    cout<<endl;cout<<"HIJO: "<<endl;
-    aa.imprime_hijo();
-
-
-	contador=contador+1;
-	aa.funcion(a,salir,padre_argumento); // se supone que aquí modifico "a" por primera vez
-
-   // aa.vuelca_contador(&contador_);
-   // contador_def=contador_;
-    }
-
-	p=padre_argumento;
-	//aa.funcion2(&contador_);
-
-
-	//POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
-
-	//padree.imprime();
-    //cout<<"TAMAÑO DE A: "<< a.size()<<endl;
-    //a[a.size()-1].imprime();
-
-    //POR SI QUIERO COMPARAR SALIDA CON "SCRIPT_SUCIO"
-     }
-
-     void inicializo(vector <vector<float>> puntos){
-		aa.inicializo(puntos);
-
-		}
-
-	 void llena_nodo_des(vector <nodo_c> &nodo_desglosable
-	 ,nodo_c &padre_argumento){
-	    aa.llena_nodo_des(nodo_desglosable,padre_argumento);
-		}
-
-
-	void vuelca_resultados_1(vector <vector<float>> puntos,int &contador,
-	 vector<nodo_c> &v_n_maduros,nodo_c &padre_argumento,float &distancia,
-	vector<nodo_c> &nodo_desglosable,int tope,vector<float> &nodo_pre,
-	vector<float> &c,vector<float> &r1,
-	float &auxx,vector<float> &nodo_final,int &salir,
-	vector <float> &punto_final){
-
-		int valor; float vv;
-
-		//(*contador)=contador_;
-		v_n_maduros.push_back(p);
-		padre_argumento=a[0];
-
-
-		a[0].vuelca_distancia(distancia);
-
-		for (int j=0;j<a.size();j++){
-		nodo_desglosable.push_back(a[j]);}
-
-		a[0].devuelve_nivel(valor);
-
-		cout<<endl;
-		cout<<"VALOR_COMPARA: "<<valor<<endl;
-		cout<<"(TOPE+1): "<<(tope+1)<<endl;cout<<endl;
-
-
-		// valor_compara
-
-
-	if (valor>=(tope+1)){
-
-	for(int ii=0;ii<a.size();ii++){
-
-		// ANOTHER METHOD (BEGIN)
-		vv=a[ii].f_nodo_pre(nodo_pre); // vv será c[0] por simplicidad
-		//c[0]=vv;
-		// ANOTHER METHOD (END)
-
-		r1=cut_matrix(puntos,vv,-1);
-		auxx=norma(resta(r1,punto_final));
-
-		// ANOTHER METHOD (BEGIN)
-		a[ii].f_nodo_final(nodo_final,auxx);
-		// ANOTHER METHOD (END)
-
-	} // FIN DEL FOR
-		salir=1;
-	} // FIN DEL IF
-
-
-		}
-
-};
-*/
 
 
 int main( int argc, char** argv ){
@@ -243,10 +41,13 @@ int main( int argc, char** argv ){
   ros::Rate r(30);
   float f = 0.0;
 
-vector <vector<float>> puntos;
+vector <vector<float>> puntos, puntos_recorrido;
  matriz_c m; nodo_c padre_argumento;
   des_nodo bb;
-int contador,contador_def,B=3; float ind;
+int contador,contador_def,B=6, // B = FILAS ; A=COLUMNAS=3
+ A=3; float ind;
+
+
 
 //VARIABLES ENTRADA (BEGIN)
   int salir,vital;
@@ -266,13 +67,22 @@ float auxx;
 int flag;
 //VARIABLES ENTRADA (END)
 
+// VARIABLES DE "BUSCA_RECORRIDO"
+bool c11, c1,c2,c3;
+float errorr;
+vector<nodo_c> aux;
+int valor; vector<float> ps,rec; float pa;
+nodo_c aux_var;
+
+
 	  contador_def=0;
       puntos=m.reserva(B,3);
-      puntos=m.llenar();
+//      puntos=m.llenar();
+      puntos=m.llena_auto();
       m.imprimir_2(puntos);
 
 
-      punto_final.resize(3);
+      punto_final.resize(A);
 		punto_final[0]=13;
 		punto_final[1]=4;
 		punto_final[2]=6;
@@ -371,11 +181,248 @@ m.imprimir_1(v);
  	}// fin del if
  }// fin del "for"
 
- std::cout<< "VITAL:"<< vital <<std::endl;
+ std::cout<< "VITAL:"<< vital << std::endl << std::endl;
 
 
 
  MINIMO.push_back(minimo(nodo_final));
+
+std::cout << "VALOR DE MÍNIMO: "  << std::endl;
+ m.imprimir_1(MINIMO);
+ std::cout << std::endl;
+
+
+// EMPIEZA COMENTARIO DE BUSCA RECORRIDO
+
+errorr=pow(10,-4);
+
+// INICIO DEPURAR
+
+
+for(int i=0; i<nodo_desglosable.size(); i++){
+  nodo_desglosable[i].devuelve_punto_sig(ps);
+ for (int j=0; j<ps.size();j++){
+	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< ps[j]  << endl;
+}}
+std::cout<<std::endl;
+
+for(int i=0; i<nodo_desglosable.size(); i++){
+  nodo_desglosable[i].vuelca_distancia(distancia);
+	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< distancia << endl;
+}
+cout<<endl;
+
+
+for(int i=0; i<nodo_final.size(); i++){
+	cout<< "Componente "<< i <<" de NODO FINAL: "<< nodo_final[i]  << endl;
+}
+cout<<endl;
+
+for(int i=0; i<nodo_pre.size(); i++){
+	cout<< "Componente "<< i <<" de NODO PRE: "<< nodo_pre[i]  << endl;
+}
+cout<<endl;
+
+// FIN DEPURAR (HASTA AQUÍ BIEN)
+
+for(int i=0; i<nodo_desglosable.size(); i++){ //
+
+  nodo_desglosable[i].devuelve_punto_sig(ps);
+  nodo_desglosable[i].devuelve_punto_act( pa );
+  nodo_desglosable[i].devuelve_nivel(valor);
+
+	distancia=norma(resta(punto_final,cut_matrix(puntos,pa,-1)));
+
+	c11= ps.size()==0;
+	c1= valor==(tope+1);
+	c2=distancia-(nodo_final[vital]-nodo_pre[vital])<errorr;
+  nodo_desglosable[i].vuelca_distancia(distancia); // PONERLO
+  // AQUÍ PARA NO RESETEAR EL PRIMER VALOR DE "DISTANCIA" (LÍNEA DE ANTES)
+  c3=distancia==nodo_pre[vital];
+
+	if (c1 && c2 && c3){
+		aux.push_back(nodo_desglosable[i]);
+	}// fin del if
+
+}// fin del for
+
+// DEPURAR
+for(int i=0; i<aux.size(); i++){
+  aux[i].devuelve_punto_sig(ps);
+ for (int j=0; j<ps.size();j++){
+	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_pto_sig: "<< ps[j]  << endl;
+}}
+cout<<endl;
+
+for(int i=0; i<aux.size(); i++){
+  aux[i].vuelca_distancia(distancia);
+	cout<< "Componente "<< i <<" de NODO DESGLOSABLE_dist_rec: "<< distancia << endl;
+}
+cout<<endl;
+
+cout<< "TOPE: "<< tope <<endl;
+cout<< "VITAL: "<< vital <<endl;
+
+
+
+if(aux.size()>1){
+	aux_var=aux[0];
+	aux.clear();
+	aux.push_back(aux_var);
+}
+
+// EN CUALQUIER CASO, AUX TENDRÁ DIMENSIÓN 1 (HASTA AQUÍ BIEN)
+
+cout << endl;
+cout << "RECORRIDO CIUDADES INTERMEDIAS: " << endl;
+aux[0].devuelve_recorrido(rec);
+for (int j = 1; j < rec.size(); j++) {
+          cout << rec[j] << " ";
+      }
+cout << endl;cout << endl;
+
+// AHORA SOLO ME FALTA VOLCAR EN "PUNTOS_RECORRIDO"
+// LOS PUNTOS EN EL ORDEN EN EL QUE SE UNIRÁN EN RVIZ (puntos2(ordenado) + punto_final)
+// (hasta aqui bien)
+
+
+
+aux[0].devuelve_recorrido(rec);
+puntos_recorrido.resize(B+1);
+
+for (int i = 0; i < (B); i++) {
+    puntos_recorrido[i].resize(A);
+    for (int j = 0; j < (A); j++) {
+        puntos_recorrido[i][j]=puntos[rec[i]][j];
+        }
+        }
+
+puntos_recorrido[B].resize(A);
+for (int j = 0; j < (A); j++) {
+puntos_recorrido[B][j]=punto_final[j];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    while (ros::ok())
+    {
+
+      visualization_msgs::Marker points ,pf, po, line_strip, line_list;
+
+      po.header.frame_id =pf.header.frame_id =points.header.frame_id = line_strip.header.frame_id = line_list.header.frame_id = "/my_frame";
+      po.header.stamp =pf.header.stamp =points.header.stamp = line_strip.header.stamp = line_list.header.stamp = ros::Time::now();
+      po.ns =pf.ns =points.ns = line_strip.ns = line_list.ns = "tsp_script";
+      po.action =pf.action =points.action = line_strip.action = line_list.action = visualization_msgs::Marker::ADD;
+      po.pose.orientation.w =pf.pose.orientation.w =points.pose.orientation.w = line_strip.pose.orientation.w = line_list.pose.orientation.w = 1.0;
+
+
+      points.id = 0;
+      line_strip.id = 1;
+      line_list.id = 2;
+      pf.id = 3; po.id = 4;
+
+
+
+      points.type = visualization_msgs::Marker::POINTS;
+      po.type = visualization_msgs::Marker::POINTS;
+      pf.type = visualization_msgs::Marker::POINTS;
+      line_strip.type = visualization_msgs::Marker::LINE_STRIP;
+      line_list.type = visualization_msgs::Marker::LINE_LIST;
+
+
+
+      // POINTS markers use x and y scale for width/height respectively
+      points.scale.x = 0.2;
+      points.scale.y = 0.2;
+
+      po.scale.x = 0.2;
+      po.scale.y = 0.2;
+
+      pf.scale.x = 0.2;
+      pf.scale.y = 0.2;
+
+      // LINE_STRIP/LINE_LIST markers use only the x component of scale, for the line width
+      line_strip.scale.x = 0.1;
+      line_list.scale.x = 0.1;
+
+
+
+      // Ciudades intermedias verdes
+      points.color.g = 1.0f;
+      points.color.a = 1.0;
+
+      // Ciudad partida blanca
+      po.color.r = 1.0f;
+      po.color.g = 1.0f;
+      po.color.b = 1.0f;
+      po.color.a = 1.0;
+
+      // Ciudad destino roja
+      pf.color.r = 1.0f;
+      pf.color.a = 1.0;
+
+
+
+      // Line strip is blue
+      line_strip.color.b = 1.0;
+      line_strip.color.a = 1.0;
+
+      // Line list is red
+      line_list.color.r = 1.0;
+      line_list.color.a = 1.0;
+
+
+
+
+      // Create the vertices for the points and lines
+      for (uint32_t i = 0; i < (B+1); ++i)
+      {
+        geometry_msgs::Point p;
+        p.x = (float)puntos_recorrido[i][0] ;
+        p.y = (float)puntos_recorrido[i][1] ;
+
+   //     if(B==3){
+       p.z = (float)puntos_recorrido[i][2];
+   //	}
+
+  	if(i==0){
+        po.points.push_back(p);
+        line_strip.points.push_back(p);
+       }
+       if(i==B){
+        pf.points.push_back(p);
+        line_strip.points.push_back(p);
+       }
+       if(i>0 && i<B){
+        points.points.push_back(p);
+        line_strip.points.push_back(p);
+       }
+
+      }
+
+
+  	marker_pub.publish(po);
+  	marker_pub.publish(pf);
+      marker_pub.publish(points);
+      marker_pub.publish(line_strip);
+
+      r.sleep();
+
+    }
+
+    return 0;
+   }
 
 
 /*
@@ -512,5 +559,5 @@ else{
     a[a.size()-1].imprime(); */
 
 
-  return 0;
- }
+//  return 0;
+// }
